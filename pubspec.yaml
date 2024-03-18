@@ -7,30 +7,72 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
+  auto_route: ^7.8.4
+  dio: ^5.4.1
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-
-  # Dependency Injection
+  flutter_bloc: ^8.1.4
   get_it: ^7.6.4
   injectable: ^2.3.2
+  retrofit: ^4.1.0
+  flutter_svg: ^2.0.7
 
-  # State Management
-  flutter_bloc: ^8.1.3
+
+  sdugram_profile:
+    path: modules/sdugram_profile
+
+  sdugram_auth:
+    path: modules/sdugram_auth
+
+  sdugram_home:
+    path: modules/sdugram_home
+
+  sdugram_core:
+    path: modules/sdugram_core
 
 
-  cupertino_icons: ^1.0.6
+  sdugram_mentoring:
+    path: modules/sdugram_mentoring
+
+  sdugram_tickets:
+    path: modules/sdugram_tickets
+
+  sdugram_post:
+    path: modules/sdugram_post
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  build_runner: any
-  injectable_generator: any
+  build_runner: ^2.4.8
   auto_route_generator: ^7.3.2
-  json_serializable: any
+  freezed: ^2.4.7
+  retrofit_generator: ^8.1.0
+  json_serializable: ^6.7.1
+  injectable_generator: ^2.4.1
+  flutter_gen_runner: null
+
+flutter_gen:
+  output: modules/sdugram_core/lib/src/common/presentation/assets
+  integrations:
+    flutter_svg: true
+  assets:
+    outputs:
+      class_name: AssetsGen
+
+
 
 flutter:
+  uses-material-design: true
   assets:
-    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700

@@ -1,0 +1,29 @@
+index_generator:
+  exclude:
+    - '**.g.dart'
+    - '**.freezed.dart'
+    - '**.gm.dart'
+    - '**.gr.dart'
+    - '**.module.dart'
+    - '**/generated/**.dart'
+  indexes:
+    - path: lib
+      include:
+        - "src/common/config/**"
+        - "src/features/**/config/**"
+      name: config
+    - path: lib
+      include:
+        - "src/common/data/**"
+        - "src/features/**/data/**"
+      name: data
+    - path: lib
+      include:
+        - "src/common/domain/**"
+        - "src/features/**/domain/**"
+      name: domain
+    - path: lib
+      include:
+        - "src/common/presentation/**"
+        - "src/features/**/presentation/**"
+      name: presentation

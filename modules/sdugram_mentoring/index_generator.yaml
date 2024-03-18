@@ -1,0 +1,17 @@
+index_generator:
+  exclude:
+    - '**.g.dart'
+    - '**.freezed.dart'
+    - '**.gm.dart'
+    - '**.gr.dart'
+    - '**.module.dart'
+    - '**/generated/**.dart'
+  indexes:
+    - path: lib
+      include:
+        - '**_screen.dart'
+      name: screens
+    - path: lib
+      exclude:
+        - '**_screen.dart'
+      name: sdugram_mentoring
