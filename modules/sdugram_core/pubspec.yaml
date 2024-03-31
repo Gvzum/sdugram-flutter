@@ -16,6 +16,8 @@ dependencies:
   injectable: ^2.3.5
   retrofit: ^4.1.0
   flutter_svg: ^2.0.9
+  sliver_tools: ^0.2.12
+  mask_text_input_formatter: ^2.5.0
 
 dev_dependencies:
   flutter_test:
