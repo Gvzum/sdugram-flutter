@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:sdugram_core/presentation.dart';
+import 'package:sdugram_home/src/common/presentation/screens/events_screen.dart';
+import 'package:sdugram_home/src/common/presentation/screens/clubs_screen.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -8,14 +11,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const SduInputSearch(),
+        backgroundColor: kBackgroundColor,
       ),
-      body: const Center(
-          child: Text(
-        'Home',
-        style: TextStyle(fontSize: 40, color: Colors.red),
-      )),
+      body: const SduSegmentedControlTab(
+        options: [
+          TabOption(title: 'Events', view: EventsScreen()),
+          TabOption(title: 'Clubs', view: ClubsScreen())
+        ],
+      ),
     );
   }
 }

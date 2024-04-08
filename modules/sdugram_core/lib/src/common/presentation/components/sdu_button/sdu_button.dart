@@ -6,17 +6,17 @@ enum SduButtonType { primary, secondary }
 enum SduButtonSize { first, second }
 
 TextStyle get buttonPrimaryTextStyle => const TextStyle(
-    fontFamily: 'Poppins-Regular',
-    fontSize: 14.0,
-    fontWeight: FontWeight.w600,
+    fontFamily: 'Poppins',
+    fontSize: 16.0,
+    fontWeight: FontWeight.w400,
     height: 1.4,
     letterSpacing: 0.04,
     color: kBackgroundColor);
 
 TextStyle get buttonSecondaryTextStyle => const TextStyle(
-    fontFamily: 'Poppins-Regular',
-    fontSize: 14.0,
-    fontWeight: FontWeight.w600,
+    fontFamily: 'Poppins',
+    fontSize: 16.0,
+    fontWeight: FontWeight.w400,
     height: 1.4,
     letterSpacing: 0.04,
     color: kPrimaryColor);

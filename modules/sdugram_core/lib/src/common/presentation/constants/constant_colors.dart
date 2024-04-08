@@ -9,6 +9,7 @@ const kTextColor = Color(0xff8e8e93);
 const kBackgroundColor = Color(0xF5F6F6F6);
 const kSecondaryColor = Color(0xFFFFFFFF);
 const kLightGrey = Color(0xffd0cece);
+const kButtonBackgroundColor = Color(0x176F7EEF);
 
 //button color
 const kPressedPrimaryButtonColor = Color(0xFF0000D7);

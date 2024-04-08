@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:sdugram_core/presentation.dart';
 
 @RoutePage()
 class PostScreen extends StatelessWidget {
@@ -12,10 +13,7 @@ class PostScreen extends StatelessWidget {
         title: const Text('Post'),
       ),
       body: const Center(
-          child: Text(
-            'Post',
-            style: TextStyle(fontSize: 40, color: Colors.red),
-          )),
+          child: SduInput(labelText: 'Email',)),
     );
   }
 }

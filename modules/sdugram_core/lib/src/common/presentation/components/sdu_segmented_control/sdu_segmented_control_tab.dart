@@ -36,6 +36,7 @@ class _SduSegmentedControlTabState extends State<SduSegmentedControlTab>
     return DefaultTabController(
       length: widget.options.length,
       child: Scaffold(
+        backgroundColor: kBackgroundColor,
         extendBody: true,
         // backgroundColor: kBackgroundColor,
         body: SafeArea(

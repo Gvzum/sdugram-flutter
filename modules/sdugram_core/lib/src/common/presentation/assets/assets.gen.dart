@@ -14,6 +14,9 @@ import 'package:flutter/services.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Logo.svg
+  SvgGenImage get logo => const SvgGenImage('assets/icons/Logo.svg');
+
   /// File path: assets/icons/account-circle.svg
   SvgGenImage get accountCircle =>
       const SvgGenImage('assets/icons/account-circle.svg');
@@ -37,6 +40,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+        logo,
         accountCircle,
         addCircle,
         confirmationNumber,
@@ -49,11 +53,20 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/barcode.svg
+  SvgGenImage get barcode => const SvgGenImage('assets/images/barcode.svg');
+
+  /// File path: assets/images/eventBg.png
+  AssetGenImage get eventBg => const AssetGenImage('assets/images/eventBg.png');
+
   /// File path: assets/images/headBg.png
   AssetGenImage get headBg => const AssetGenImage('assets/images/headBg.png');
 
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [headBg];
+  List<dynamic> get values => [barcode, eventBg, headBg, logo];
 }
 
 class AssetsGen {
