@@ -65,8 +65,33 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/onboarding1.png
+  AssetGenImage get onboarding1 =>
+      const AssetGenImage('assets/images/onboarding1.png');
+
+  /// File path: assets/images/onboarding2.png
+  AssetGenImage get onboarding2 =>
+      const AssetGenImage('assets/images/onboarding2.png');
+
+  /// File path: assets/images/onboarding3.png
+  AssetGenImage get onboarding3 =>
+      const AssetGenImage('assets/images/onboarding3.png');
+
+  /// File path: assets/images/onboarding4.svg
+  SvgGenImage get onboarding4 =>
+      const SvgGenImage('assets/images/onboarding4.svg');
+
   /// List of all assets
-  List<dynamic> get values => [barcode, eventBg, headBg, logo];
+  List<dynamic> get values => [
+        barcode,
+        eventBg,
+        headBg,
+        logo,
+        onboarding1,
+        onboarding2,
+        onboarding3,
+        onboarding4
+      ];
 }
 
 class AssetsGen {

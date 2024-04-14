@@ -15,7 +15,9 @@ ArticleDto _$ArticleDtoFromJson(Map<String, dynamic> json) => ArticleDto(
       categories: (json['categories'] as List<dynamic>)
           .map((e) => CategoryDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      event: EventDto.fromJson(json['event'] as Map<String, dynamic>),
+      event: json['event'] == null
+          ? null
+          : EventDto.fromJson(json['event'] as Map<String, dynamic>),
       publishedDate: DateTime.parse(json['published_date'] as String),
       author: AuthorDto.fromJson(json['author'] as Map<String, dynamic>),
     );
@@ -36,7 +38,7 @@ Map<String, dynamic> _$ArticleDtoToJson(ArticleDto instance) {
   writeNotNull('background_image', instance.backgroundImage);
   val['id'] = instance.id;
   val['categories'] = instance.categories.map((e) => e.toJson()).toList();
-  val['event'] = instance.event.toJson();
+  writeNotNull('event', instance.event?.toJson());
   val['published_date'] = instance.publishedDate.toIso8601String();
   val['author'] = instance.author.toJson();
   return val;

@@ -9,9 +9,21 @@ part of 'author_dto.dart';
 AuthorDto _$AuthorDtoFromJson(Map<String, dynamic> json) => AuthorDto(
       id: json['id'] as int,
       username: json['username'] as String,
+      avatar: json['avatar'] as String?,
     );
 
-Map<String, dynamic> _$AuthorDtoToJson(AuthorDto instance) => <String, dynamic>{
-      'id': instance.id,
-      'username': instance.username,
-    };
+Map<String, dynamic> _$AuthorDtoToJson(AuthorDto instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'username': instance.username,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('avatar', instance.avatar);
+  return val;
+}

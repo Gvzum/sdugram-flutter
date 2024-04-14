@@ -15,7 +15,7 @@ extension ListArticleResponseDtoMapperX on ListArticleResponseDto {
               backgroundImage: e.backgroundImage,
               id: e.id,
               categories: e.categories,
-              event: e.event.toModel(),
+              event: e.event?.toModel(),
               publishedDate: e.publishedDate,
               author: e.author))
           .toList());

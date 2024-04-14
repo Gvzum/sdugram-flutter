@@ -5,7 +5,7 @@ part 'author_dto.g.dart';
 
 @JsonSerializable()
 class AuthorDto extends AuthorModel {
-  AuthorDto({required super.id, required super.username});
+  AuthorDto({required super.id, required super.username, super.avatar});
 
   factory AuthorDto.fromJson(Map<String, dynamic> json) =>
       _$AuthorDtoFromJson(json);

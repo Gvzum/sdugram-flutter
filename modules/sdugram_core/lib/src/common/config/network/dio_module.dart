@@ -45,4 +45,23 @@ abstract class DioModule {
             logInterceptor,
           ],
         );
+
+  @Named('no-auth-dio')
+  @injectable
+  Dio getNoAuthDio(
+      @Named('log-interceptor') Interceptor logInterceptor,
+      ) =>
+      Dio(
+        BaseOptions(
+          baseUrl: '',
+          receiveTimeout:
+          const Duration(milliseconds: HttpConfig.receivedTimeout),
+          connectTimeout:
+          const Duration(milliseconds: HttpConfig.connectionTimeout),
+        ),
+      )..interceptors.addAll(
+        [
+          logInterceptor,
+        ],
+      );
 }

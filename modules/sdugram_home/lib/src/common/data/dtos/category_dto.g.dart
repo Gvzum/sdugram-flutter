@@ -8,11 +8,20 @@ part of 'category_dto.dart';
 
 CategoryDto _$CategoryDtoFromJson(Map<String, dynamic> json) => CategoryDto(
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
     );
 
-Map<String, dynamic> _$CategoryDtoToJson(CategoryDto instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'description': instance.description,
-    };
+Map<String, dynamic> _$CategoryDtoToJson(CategoryDto instance) {
+  final val = <String, dynamic>{
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  return val;
+}

@@ -9,22 +9,33 @@ import 'dart:async' as _i2;
 import 'package:dio/dio.dart' as _i5;
 import 'package:injectable/injectable.dart' as _i1;
 import 'package:sdugram_auth/sdugram_auth.dart' as _i4;
-import 'package:sdugram_auth/src/common/config/auth_module.dart' as _i14;
+import 'package:sdugram_auth/src/common/config/auth_module.dart' as _i20;
 import 'package:sdugram_auth/src/common/config/network/auth_interceptor.dart'
-    as _i12;
+    as _i18;
 import 'package:sdugram_auth/src/common/data/services/auth_service.dart' as _i7;
 import 'package:sdugram_auth/src/common/data/services/login_service.dart'
+    as _i9;
+import 'package:sdugram_auth/src/common/data/services/register_service.dart'
+    as _i11;
+import 'package:sdugram_auth/src/common/data/sources/auth_source.dart' as _i10;
+import 'package:sdugram_auth/src/common/data/sources/register_source.dart'
     as _i8;
 import 'package:sdugram_auth/src/common/data/sources/secure_storage_source.dart'
     as _i3;
 import 'package:sdugram_auth/src/common/domain/behaviors/get_access_token_behavior.dart'
-    as _i13;
+    as _i19;
 import 'package:sdugram_auth/src/common/domain/behaviors/get_login_token_behavior.dart'
-    as _i10;
+    as _i16;
+import 'package:sdugram_auth/src/common/domain/behaviors/register_user_behavior.dart'
+    as _i13;
 import 'package:sdugram_auth/src/common/domain/use_cases/get_login_token_use_case.dart'
-    as _i9;
+    as _i15;
+import 'package:sdugram_auth/src/common/domain/use_cases/register_user_use_case.dart'
+    as _i12;
 import 'package:sdugram_auth/src/common/presentation/blocs/login_bloc/login_bloc.dart'
-    as _i11;
+    as _i17;
+import 'package:sdugram_auth/src/common/presentation/blocs/register_bloc/register_bloc.dart'
+    as _i14;
 import 'package:sdugram_core/config.dart' as _i6;
 
 class SdugramAuthPackageModule extends _i1.MicroPackageModule {
@@ -39,23 +50,37 @@ class SdugramAuthPackageModule extends _i1.MicroPackageModule {
         ));
     gh.lazySingleton<_i7.AuthService>(
         () => _i7.AuthService(gh<_i3.SecureStorageSource>()));
-    gh.lazySingleton<_i8.LoginService>(() => _i8.LoginService(
-          gh<_i4.AuthSource>(),
-          gh<_i4.AuthService>(),
+    gh.factory<_i8.RegisterSource>(() => authModule.registerSource(
+          gh<_i5.Dio>(instanceName: 'no-auth-dio'),
+          gh<_i6.EnvironmentConfig>(),
         ));
+    gh.lazySingleton<_i9.LoginService>(() => _i9.LoginService(
+          gh<_i10.AuthSource>(),
+          gh<_i7.AuthService>(),
+        ));
+    gh.lazySingleton<_i11.RegisterService>(() => _i11.RegisterService(
+          gh<_i8.RegisterSource>(),
+          gh<_i7.AuthService>(),
+        ));
+    gh.factory<_i4.RegisterUserBehavior>(
+        () => authModule.register(gh<_i4.RegisterService>()));
     gh.factory<_i4.GetLoginTokenBehavior>(
         () => authModule.getLogin(gh<_i4.LoginService>()));
+    gh.factory<_i12.RegisterUserUseCase>(
+        () => _i12.RegisterUserUseCase(gh<_i13.RegisterUserBehavior>()));
     gh.factory<_i4.GetAccessTokenBehavior>(
         () => authModule.getAccessToken(gh<_i4.AuthService>()));
-    gh.factory<_i9.GetLoginTokenUseCase>(
-        () => _i9.GetLoginTokenUseCase(gh<_i10.GetLoginTokenBehavior>()));
-    gh.factory<_i11.LoginBloc>(
-        () => _i11.LoginBloc(gh<_i9.GetLoginTokenUseCase>()));
+    gh.factory<_i14.RegisterBloc>(
+        () => _i14.RegisterBloc(gh<_i12.RegisterUserUseCase>()));
+    gh.factory<_i15.GetLoginTokenUseCase>(
+        () => _i15.GetLoginTokenUseCase(gh<_i16.GetLoginTokenBehavior>()));
+    gh.factory<_i17.LoginBloc>(
+        () => _i17.LoginBloc(gh<_i15.GetLoginTokenUseCase>()));
     gh.lazySingleton<_i5.Interceptor>(
-      () => _i12.AuthInterceptor(gh<_i13.GetAccessTokenBehavior>()),
+      () => _i18.AuthInterceptor(gh<_i19.GetAccessTokenBehavior>()),
       instanceName: 'auth-interceptor',
     );
   }
 }
 
-class _$AuthModule extends _i14.AuthModule {}
+class _$AuthModule extends _i20.AuthModule {}

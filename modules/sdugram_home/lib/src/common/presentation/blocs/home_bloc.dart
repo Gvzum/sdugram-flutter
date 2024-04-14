@@ -23,13 +23,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Emitter<HomeState> emit,
       ) async {
     emit(HomeLoading());
-
+    Future.delayed(const Duration(seconds: 3));
     final result = await _fetchArticlesUseCase(null);
 
     final listArticles = result.value;
 
     if (listArticles == null) {
-      emit(HomeFailure(message: result.failureOrDefault.message));
+      emit(HomeFailure(failure: result.failureOrDefault));
       return;
     }
 

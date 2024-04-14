@@ -7,7 +7,7 @@ class ArticleModel {
   final String? backgroundImage;
   final int id;
   final List<CategoryModel> categories;
-  final EventModel event;
+  final EventModel? event;
   final DateTime publishedDate;
   final AuthorModel author;
 
@@ -18,7 +18,7 @@ class ArticleModel {
       this.backgroundImage,
       required this.id,
       required this.categories,
-      required this.event,
+      this.event,
       required this.publishedDate,
       required this.author});
 }

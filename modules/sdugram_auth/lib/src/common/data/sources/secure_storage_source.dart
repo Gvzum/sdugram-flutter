@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sdugram_auth/src/common/data/dtos/token_dto.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
 class SecureStorageSource {
@@ -22,11 +23,14 @@ class SecureStorageSource {
   }
 
   Future<TokenDto?> getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = await _secureStorage.read(key: SecureStorageKeys.tokenKey);
     if (token != null) {
       final tokenJson = jsonDecode(token);
+      await prefs.setBool('isLoggedIn', true);
       return TokenDto.fromJson(tokenJson);
     }
+    await prefs.setBool('isLoggedIn', false);
     return null;
   }
 

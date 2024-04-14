@@ -33,6 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     if (login == null) {
       emit(LoginFailure(message: result.failureOrDefault.message));
+      return;
     }
 
     emit(LoginSuccess());

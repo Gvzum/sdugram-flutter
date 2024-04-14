@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sdugram_home/src/common/data/dtos/author_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/category_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/event_dto.dart';
-import 'package:sdugram_home/src/common/domain/models/article_model.dart';
 
 part 'article_dto.g.dart';
 
@@ -15,7 +14,7 @@ class ArticleDto {
   final String? backgroundImage;
   final int id;
   final List<CategoryDto> categories;
-  final EventDto event;
+  final EventDto? event;
   @JsonKey(name: 'published_date')
   final DateTime publishedDate;
   final AuthorDto author;
@@ -27,7 +26,7 @@ class ArticleDto {
       this.backgroundImage,
       required this.id,
       required this.categories,
-      required this.event,
+      this.event,
       required this.publishedDate,
       required this.author});
 

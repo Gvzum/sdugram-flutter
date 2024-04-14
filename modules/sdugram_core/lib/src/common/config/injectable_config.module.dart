@@ -34,6 +34,11 @@ class SdugramCorePackageModule extends _i1.MicroPackageModule {
       ),
       instanceName: 'session-code-auth-dio',
     );
+    gh.factory<_i5.Dio>(
+      () => dioModule
+          .getNoAuthDio(gh<_i5.Interceptor>(instanceName: 'log-interceptor')),
+      instanceName: 'no-auth-dio',
+    );
     gh.singleton<_i6.CoreLogger>(() => _i6.CoreLogger(gh<_i3.Talker>()));
     gh.factory<_i5.Dio>(
       () => dioModule.getProtectedDio(

@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:sdugram_auth/sdugram_auth.dart' as _i11;
+import 'package:sdugram_core/config.dart' as _i12;
 import 'package:sdugram_flutter/presentation/widgets/main_screen.dart' as _i1;
 import 'package:sdugram_flutter/screen/setting_screen.dart' as _i2;
 import 'package:sdugram_flutter/screen/song_detail_screen.dart' as _i3;
@@ -55,6 +56,7 @@ abstract class $AppRouter extends _i5.RootStackRouter {
     ..._i9.PostRouteModule().pagesMap,
     ..._i10.MentoringRouteModule().pagesMap,
     ..._i11.AuthRouteModule().pagesMap,
+    ..._i12.CoreRouteModule().pagesMap,
   };
 }
 

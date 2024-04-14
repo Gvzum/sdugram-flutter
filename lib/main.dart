@@ -4,7 +4,6 @@ import 'package:sdugram_flutter/config/injector/injector.dart';
 import 'package:sdugram_flutter/config/utils/error_util.dart';
 import 'package:sdugram_flutter/presentation/routes/app_router.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const String kEnvironment = String.fromEnvironment(
   'ENVIRONMENT',
@@ -12,7 +11,6 @@ const String kEnvironment = String.fromEnvironment(
 );
 
 void main() async {
-  // final SharedPreferences prefs = await SharedPreferences.getInstance();
   await dotenv.load(
     fileName: '.env',
   );
@@ -29,6 +27,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();

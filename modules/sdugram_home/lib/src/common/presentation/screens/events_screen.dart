@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sdugram_core/config.dart';
+import 'package:sdugram_core/domain.dart';
 import 'package:sdugram_core/presentation.dart';
 import 'package:sdugram_home/src/common/presentation/blocs/home_bloc.dart';
 import 'package:sdugram_home/src/common/presentation/blocs/home_state.dart';
 import 'package:sdugram_home/src/common/presentation/widgets/event_card_view.dart';
+import 'package:sdugram_home/src/common/presentation/widgets/event_detail_screen_popover.dart';
 
 @RoutePage()
 class EventsScreen extends StatelessWidget {
@@ -13,10 +14,17 @@ class EventsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (_) => context.di<HomeBloc>(),
-        child: BlocConsumer<HomeBloc, HomeState>(
-            listener: (blocContext, state) {},
+    return  BlocConsumer<HomeBloc, HomeState>(
+            listener: (blocContext, state) {
+              switch(state) {
+
+                case HomeFailure(failure: final failure):
+                  if (failure is UnauthorizedFailure) {
+                    blocContext.router.replaceNamed('/login');
+                  }
+                default: break;
+              }
+            },
             builder: (blocContext, state) {
               switch (state) {
                 case HomeLoading():
@@ -29,17 +37,37 @@ class EventsScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final article = articles.results[index];
                           return EventCardView(
-                            logoUrl: article.backgroundImage ?? '',
+                            bgUrl: article.backgroundImage ?? 'https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png',
+                            logoUrl: article.author.avatar ?? 'https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png',
                             clubName: article.author.username,
                             info: article.title,
                             time:
                                 '${DateTime.now().difference(article.publishedDate).inHours} hours ago published',
+                            onTap: () {
+                              openConfirmPopup(blocContext);
+                            },
                           );
                         }),
                   );
                 default:
                   return const Scaffold(body: Center(child: CircularLoader()));
               }
-            }));
+            });
+  }
+
+  Future<void> openConfirmPopup(
+    BuildContext blocContext,
+  ) async {
+    await bccPopover(
+      context: blocContext,
+      pages: [
+        BccPopoverPage(
+          pageBuilder: (context) {
+            return EventDetailScreenPopover();
+          },
+          routeName: '/',
+        ),
+      ],
+    );
   }
 }

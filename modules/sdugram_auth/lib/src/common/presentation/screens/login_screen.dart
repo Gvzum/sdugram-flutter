@@ -7,7 +7,12 @@ import 'package:sdugram_core/presentation.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({
+    super.key,
+    @pathParam this.username,
+  });
+
+  final String? username;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -38,7 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
         child:
             BlocConsumer<LoginBloc, LoginState>(listener: (blocContext, state) {
           if (state is LoginSuccess) {
-            blocContext.router.replaceNamed('/sdugram');
+            if ((widget.username ?? '') == _emailInput.text) {
+              blocContext.router.replaceNamed('/onboarding');
+            } else {
+              blocContext.router.replaceNamed('/sdugram');
+            }
           }
         }, builder: (blocContext, state) {
           return state is LoginLoading
@@ -79,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: 15,
                                   ),
                                   SduInput(
+                                    obscureText: true,
                                     labelText: 'Password',
                                     controller: _passwordInput,
                                   ),
@@ -128,7 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontFamily: 'Poppins',
                                     decoration: TextDecoration.underline),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                context.router.replaceNamed('/register');
+                              },
                             ),
                           ],
                         ),

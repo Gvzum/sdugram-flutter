@@ -252,7 +252,7 @@ class _SduInputState extends State<SduInput> {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
           selectionColor: Colors.green,
         ),
       ),
@@ -332,12 +332,12 @@ class _SduInputState extends State<SduInput> {
                       disabledBorder: UnderlineInputBorder(
                         borderSide: _resolveWith((states) {
                           if (states.contains(_InputState.error)) {
-                            return BorderSide(
+                            return const BorderSide(
                               color: Colors.redAccent,
                               style: BorderStyle.solid,
                             );
                           }
-                          return BorderSide(
+                          return const BorderSide(
                             color: kMainTextColor,
                             style: BorderStyle.solid,
                           );
@@ -346,31 +346,32 @@ class _SduInputState extends State<SduInput> {
                       enabledBorder: UnderlineInputBorder(
                         borderSide: _resolveWith((states) {
                           if (states.contains(_InputState.error)) {
-                            return BorderSide(
+                            return const BorderSide(
                               color: Colors.redAccent,
                               style: BorderStyle.solid,
                             );
                           }
-                          return BorderSide(
+                          return const BorderSide(
                             color: kMainTextColor,
                             style: BorderStyle.solid,
+                            width: 0.5,
                           );
                         }),
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: _resolveWith((states) {
                           if (states.contains(_InputState.error)) {
-                            return BorderSide(
+                            return const BorderSide(
                               color: Colors.redAccent,
                               style: BorderStyle.solid,
                             );
                           } else if (states.contains(_InputState.focused)) {
-                            return BorderSide(
+                            return const BorderSide(
                               color: kPrimaryColor,
                               style: BorderStyle.solid,
                             );
                           }
-                          return BorderSide(
+                          return const BorderSide(
                             color: kMainTextColor,
                             style: BorderStyle.solid,
                           );
