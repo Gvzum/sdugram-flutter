@@ -6,7 +6,7 @@ class ArticleModel {
   final String? body;
   final String? backgroundImage;
   final int id;
-  final List<CategoryModel> categories;
+  final List<String> categories;
   final EventModel? event;
   final DateTime publishedDate;
   final AuthorModel author;
@@ -25,7 +25,7 @@ class ArticleModel {
 
 class ListArticleModel {
   final int count;
-  final int? next;
+  final String? next;
   final int? previous;
   final List<ArticleModel> results;
 

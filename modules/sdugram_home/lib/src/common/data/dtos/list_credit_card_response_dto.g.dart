@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'list_article_response_dto.dart';
+part of 'list_credit_card_response_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ListArticleResponseDto _$ListArticleResponseDtoFromJson(
+ListCreditCardResponseDto _$ListCreditCardResponseDtoFromJson(
         Map<String, dynamic> json) =>
-    ListArticleResponseDto(
+    ListCreditCardResponseDto(
       count: json['count'] as int,
-      next: json['next'] as String?,
+      next: json['next'] as int?,
       previous: json['previous'] as int?,
       results: (json['results'] as List<dynamic>)
-          .map((e) => ArticleDto.fromJson(e as Map<String, dynamic>))
+          .map((e) => CreditCardDto.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ListArticleResponseDtoToJson(
-    ListArticleResponseDto instance) {
+Map<String, dynamic> _$ListCreditCardResponseDtoToJson(
+    ListCreditCardResponseDto instance) {
   final val = <String, dynamic>{
     'count': instance.count,
   };

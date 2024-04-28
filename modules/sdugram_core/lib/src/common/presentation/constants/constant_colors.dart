@@ -10,6 +10,7 @@ const kBackgroundColor = Color(0xF5F6F6F6);
 const kSecondaryColor = Color(0xFFFFFFFF);
 const kLightGrey = Color(0xffd0cece);
 const kButtonBackgroundColor = Color(0x176F7EEF);
+const kChipsColor = Color(0xFF1D8DE1);
 
 //button color
 const kPressedPrimaryButtonColor = Color(0xFF0000D7);
@@ -21,5 +22,5 @@ const kSecondaryPressedButtonColor = Color(0x276373EE);
 const kSearchIconColor = Color(0x993c3c43);
 const kSearchInputFillColor = Color(0x1F767680);
 
-// aler color
-const kAlerFillColor = Color(0xFFF1F1F1);
+// alert color
+const kAlertFillColor = Color(0xFFF1F1F1);

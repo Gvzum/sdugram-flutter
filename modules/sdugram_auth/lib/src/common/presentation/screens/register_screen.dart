@@ -44,7 +44,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         create: (_) => context.di<RegisterBloc>(),
         child: BlocConsumer<RegisterBloc, RegisterState>(
             listener: (blocContext, state) {
-              // state.status.mapOrNull(loading: () {});
           if (state.status is RegisterSuccess) {
             blocContext.router.replaceNamed('/login/${_username.text}');
           }
@@ -202,7 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     decoration: TextDecoration.underline),
                               ),
                               onTap: () {
-                                context.router.replaceNamed('/login');
+                                context.router.replaceNamed('/login/nothing');
                               },
                             ),
                           ],

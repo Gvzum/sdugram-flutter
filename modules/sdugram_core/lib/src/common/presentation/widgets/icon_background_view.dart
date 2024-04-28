@@ -16,7 +16,7 @@ class IconBackgroundView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: kBackgroundColor,
+        color: kSecondaryPressedButtonColor,
       ),
       padding: const EdgeInsets.all(8),
       child: icon,

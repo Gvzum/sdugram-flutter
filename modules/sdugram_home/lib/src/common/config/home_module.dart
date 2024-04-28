@@ -2,7 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sdugram_core/config.dart';
 import 'package:sdugram_home/src/common/data/sources/home_source.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/create_card_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_article_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_articles_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_cards_behavior.dart';
 
 import '../data/services/home_service.dart';
 
@@ -24,5 +27,21 @@ abstract class HomeModule {
       ) =>
       homeService;
 
+  @factoryMethod
+  FetchArticleBehavior fetchArticleDetailBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
 
+  @factoryMethod
+  FetchCardsBehavior fetchCardsBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
+
+  @factoryMethod
+  CreateCardBehavior createCardsBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
 }

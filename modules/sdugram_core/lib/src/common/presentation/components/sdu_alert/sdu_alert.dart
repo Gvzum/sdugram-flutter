@@ -25,7 +25,7 @@ class SduAlert extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 300),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: kAlerFillColor,
+          color: kAlertFillColor,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

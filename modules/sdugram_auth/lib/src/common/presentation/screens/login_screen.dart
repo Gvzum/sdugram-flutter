@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: 24,
                                   ),
                                   SduInput(
-                                    labelText: 'Email',
+                                    labelText: 'Username',
                                     controller: _emailInput,
                                   ),
                                   const SizedBox(
@@ -92,6 +92,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     labelText: 'Password',
                                     controller: _passwordInput,
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  state is LoginFailure
+                                      ? const Text(
+                                          "Incorrect username or password",
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
                                 ],
                               ),
                             ),

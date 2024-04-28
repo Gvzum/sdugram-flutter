@@ -28,6 +28,10 @@ class $AssetsIconsGen {
   SvgGenImage get confirmationNumber =>
       const SvgGenImage('assets/icons/confirmation-number.svg');
 
+  /// File path: assets/icons/emptyState.svg
+  SvgGenImage get emptyState =>
+      const SvgGenImage('assets/icons/emptyState.svg');
+
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
@@ -38,15 +42,24 @@ class $AssetsIconsGen {
   SvgGenImage get supervisorAccount =>
       const SvgGenImage('assets/icons/supervisor-account.svg');
 
+  /// File path: assets/icons/visa.svg
+  SvgGenImage get visa => const SvgGenImage('assets/icons/visa.svg');
+
+  /// File path: assets/icons/warning.svg
+  SvgGenImage get warning => const SvgGenImage('assets/icons/warning.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         logo,
         accountCircle,
         addCircle,
         confirmationNumber,
+        emptyState,
         home,
         search,
-        supervisorAccount
+        supervisorAccount,
+        visa,
+        warning
       ];
 }
 
