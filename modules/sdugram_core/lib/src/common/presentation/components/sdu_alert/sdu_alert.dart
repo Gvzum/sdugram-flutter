@@ -6,13 +6,15 @@ class SduAlert extends StatelessWidget {
   final String description;
   final String buttonLabel;
   final Function()? onPressed;
+  final Function()? onPressedCancel;
 
   const SduAlert(
       {super.key,
       required this.title,
       required this.description,
       required this.buttonLabel,
-      required this.onPressed});
+      required this.onPressed,
+      this.onPressedCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class SduAlert extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: onPressedCancel ?? () => Navigator.pop(context),
                   child: const Text(
                     'Отмена',
                     style: TextStyle(color: Colors.grey, fontFamily: 'Poppins'),
@@ -57,7 +59,11 @@ class SduAlert extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: onPressed,
-                  child: Text(buttonLabel, style: const TextStyle(color: Colors.black, fontFamily: 'Poppins'),),
+                  child: Text(
+                    buttonLabel,
+                    style: const TextStyle(
+                        color: Colors.black, fontFamily: 'Poppins'),
+                  ),
                 ),
               ],
             ),

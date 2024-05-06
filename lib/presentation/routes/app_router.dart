@@ -77,17 +77,16 @@ class AppRouter extends $AppRouter {
           path: '/success',
         ),
         AutoRoute(
+          page: EventsDetailRouteFailure.page,
+          path: '/error/:failure',
+        ),
+        AutoRoute(
           page: MainRoute.page,
           path: '/sdugram',
           initial: true,
           guards: [AuthGuard()],
           children: [
-            AutoRoute(page: HomeRoute.page, path: 'home', children: [
-              AutoRoute(
-                page: EventsDetailRouteFailure.page,
-                path: 'error/:failure',
-              ),
-            ]),
+            AutoRoute(page: HomeRoute.page, path: 'home'),
             AutoRoute(page: MentoringRoute.page, path: 'mentoring'),
             AutoRoute(page: PostRoute.page, path: 'post'),
             AutoRoute(page: TicketsRoute.page, path: 'tickets'),

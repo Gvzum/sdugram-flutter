@@ -7,7 +7,7 @@ part of 'club_dto.dart';
 // **************************************************************************
 
 ClubDto _$ClubDtoFromJson(Map<String, dynamic> json) => ClubDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       email: json['email'] as String,
       username: json['username'] as String,
       profileType: json['profile_type'] as String,

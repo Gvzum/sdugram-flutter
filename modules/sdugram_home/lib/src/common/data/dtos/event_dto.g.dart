@@ -7,11 +7,11 @@ part of 'event_dto.dart';
 // **************************************************************************
 
 EventDto _$EventDtoFromJson(Map<String, dynamic> json) => EventDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       startTime: DateTime.parse(json['start_time'] as String),
       location: json['location'] as String?,
       price: json['price'] as String?,
-      quantity: json['quantity'] as int?,
+      quantity: (json['quantity'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$EventDtoToJson(EventDto instance) {

@@ -98,9 +98,9 @@ class _PaymentAddCardPopupState extends State<PaymentAddCardPopup> {
                             cardNumber: _cardNumberInput.text,
                             cardholderName: _cvvInput.text,
                             expirationMonth:
-                                int.parse((_dateInput.text).substring(0, 1)),
+                                int.parse((_dateInput.text).substring(0, 2)),
                             expirationYear:
-                                int.parse((_dateInput.text).substring(3, 4))));
+                                int.parse((_dateInput.text).substring(3, 5))));
                       },
                       size: SduButtonSize.first,
                     ),

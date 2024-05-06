@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:retrofit/http.dart';
 import 'package:sdugram_home/src/common/data/dtos/add_card_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/article_detail_dto.dart';
+import 'package:sdugram_home/src/common/data/dtos/confirm_ticket_request.dart';
+import 'package:sdugram_home/src/common/data/dtos/create_ticket_dto.dart';
+import 'package:sdugram_home/src/common/data/dtos/create_ticket_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/list_article_response_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/list_credit_card_response_dto.dart';
 
@@ -25,8 +29,23 @@ abstract class HomeSource {
   @GET('/integration/user/credit-card?page=1')
   Future<ListCreditCardResponseDto> getCards();
 
-  @POST('/integration/user/credit-card')
+  @POST('/integration/user/credit-card/')
   Future<void> createCard({
     @Body() required AddCardRequest request,
+  });
+
+  @POST('/integration/blog/ticket/')
+  Future<CreateTicketDto> createTicket({
+    @Body() required CreateTicketRequest request,
+  });
+
+  @DELETE('/integration/blog/ticket/')
+  Future<void> deleteTicket({
+    @Path() required String ticketId,
+  });
+
+  @POST('/integration/blog/confirm-ticket/')
+  Future<String> confirmTicket({
+    @Body() required ConfirmTicketRequest request,
   });
 }

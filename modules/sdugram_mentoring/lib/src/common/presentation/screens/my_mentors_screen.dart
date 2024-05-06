@@ -50,7 +50,7 @@ class MyMentorsScreen extends StatelessWidget {
 class ChatItem extends StatelessWidget {
   final ChatMessage message;
 
-  const ChatItem({Key? key, required this.message}) : super(key: key);
+  const ChatItem({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -61,19 +61,19 @@ class ChatItem extends StatelessWidget {
       title: Text(message.name),
       subtitle: Text(message.message),
       trailing: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.blue,
           borderRadius: BorderRadius.circular(12),
-          border: Border(bottom: BorderSide(color: Colors.grey))
+          border: const Border(bottom: BorderSide(color: Colors.grey))
         ),
-        constraints: BoxConstraints(
+        constraints: const BoxConstraints(
           minWidth: 24,
           minHeight: 24,
         ),
         child: Text(
           message.unreadCount.toString(),
-          style: TextStyle(color: Colors.white, fontSize: 12),
+          style: const TextStyle(color: Colors.white, fontSize: 12),
           textAlign: TextAlign.center,
         ),
       ),

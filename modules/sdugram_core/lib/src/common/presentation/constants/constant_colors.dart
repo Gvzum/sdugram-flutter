@@ -15,7 +15,7 @@ const kChipsColor = Color(0xFF1D8DE1);
 //button color
 const kPressedPrimaryButtonColor = Color(0xFF0000D7);
 const kDisabledPrimaryButtonColor = Color(0xFF6A82F5);
-const kSecondaryButtonColor = Color(0x2E46FF);
+const kSecondaryButtonColor = Color(0x002e46ff);
 const kSecondaryPressedButtonColor = Color(0x276373EE);
 
 //search bar color

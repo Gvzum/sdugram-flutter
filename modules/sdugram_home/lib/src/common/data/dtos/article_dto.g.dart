@@ -11,7 +11,7 @@ ArticleDto _$ArticleDtoFromJson(Map<String, dynamic> json) => ArticleDto(
       subtitle: json['subtitle'] as String?,
       body: json['body'] as String?,
       backgroundImage: json['background_image'] as String?,
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       categories: (json['categories'] as List<dynamic>)
           .map((e) => CategoryDto.fromJson(e as Map<String, dynamic>))
           .toList(),

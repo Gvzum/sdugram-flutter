@@ -22,12 +22,12 @@ abstract class _$HomeRouteModule extends AutoRouterModule {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<EventsDetailRouteFailureArgs>(
           orElse: () => EventsDetailRouteFailureArgs(
-              message: pathParams.getString('message')));
+              failure: pathParams.getString('failure')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: EventsDetailScreenFailure(
           key: args.key,
-          message: args.message,
+          failure: args.failure,
         ),
       );
     },
@@ -72,15 +72,15 @@ class EventsDetailRouteFailure
     extends PageRouteInfo<EventsDetailRouteFailureArgs> {
   EventsDetailRouteFailure({
     Key? key,
-    required String message,
+    required String failure,
     List<PageRouteInfo>? children,
   }) : super(
           EventsDetailRouteFailure.name,
           args: EventsDetailRouteFailureArgs(
             key: key,
-            message: message,
+            failure: failure,
           ),
-          rawPathParams: {'message': message},
+          rawPathParams: {'failure': failure},
           initialChildren: children,
         );
 
@@ -93,16 +93,16 @@ class EventsDetailRouteFailure
 class EventsDetailRouteFailureArgs {
   const EventsDetailRouteFailureArgs({
     this.key,
-    required this.message,
+    required this.failure,
   });
 
   final Key? key;
 
-  final String message;
+  final String failure;
 
   @override
   String toString() {
-    return 'EventsDetailRouteFailureArgs{key: $key, message: $message}';
+    return 'EventsDetailRouteFailureArgs{key: $key, failure: $failure}';
   }
 }
 

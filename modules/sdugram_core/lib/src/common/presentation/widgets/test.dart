@@ -21,7 +21,7 @@ class Test extends StatelessWidget {
                     onPressed: () {},
                   );
                 },
-                child: Text('press'),
+                child: const Text('press'),
               )));
     }
 

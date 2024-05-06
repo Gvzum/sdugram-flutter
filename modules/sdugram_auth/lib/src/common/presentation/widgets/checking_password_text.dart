@@ -18,7 +18,7 @@ class CheckingPasswordText extends StatelessWidget {
             isCorrect ? Icons.check : Icons.close,
             color: isCorrect ? Colors.green : Colors.red,
           ),
-          SizedBox(width: 4,),
+          const SizedBox(width: 4,),
           Text(
             text,
             style: TextStyle(

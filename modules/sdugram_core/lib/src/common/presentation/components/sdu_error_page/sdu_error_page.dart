@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sdugram_core/presentation.dart';
 
@@ -52,13 +53,29 @@ class SduErrorPage extends StatelessWidget {
             child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: AssetsGen.icons.warning.svg(),
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: AssetsGen.icons.warning.svg(),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Text(statusTitle,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 20, fontFamily: 'Poppins')),
+                        ],
                       ),
                     ),
                     if (customButton != null)

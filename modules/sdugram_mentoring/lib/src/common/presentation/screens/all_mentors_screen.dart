@@ -7,7 +7,7 @@ class AllMentorsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: [
+      children: const [
         MentorshipCard(),
         MentorshipCard()
       ], // Add as many cards as you need
@@ -22,7 +22,7 @@ class MentorshipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card.filled(
       color: kSecondaryColor,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -35,7 +35,7 @@ class MentorshipCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundImage:
                       NetworkImage('https://via.placeholder.com/150'),
                   radius: 40,
@@ -46,7 +46,7 @@ class MentorshipCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Askar Aitulov',
                           style: TextStyle(
                             fontFamily: 'Poppins',
@@ -54,7 +54,7 @@ class MentorshipCard extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           'Fullstack developer',
                           style: TextStyle(
@@ -62,8 +62,8 @@ class MentorshipCard extends StatelessWidget {
                             fontFamily: 'Poppins',
                           ),
                         ),
-                        SizedBox(height: 4),
-                        Text(
+                        const SizedBox(height: 4),
+                        const Text(
                           'Yandex.com',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -75,11 +75,11 @@ class MentorshipCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(Icons.more_vert),
+                const Icon(Icons.more_vert),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
               child: Text(
                 'I learned a lot during our mentorship; I was troubled about how I could have an edge in the industry as a career shifter with less than a year in UX design, and she helped me understand how I can utilize the skills I gained from my previous work experience in UX Design. I am grateful to her for everything she has shared with me.',
                 style: TextStyle(
@@ -89,7 +89,7 @@ class MentorshipCard extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
                 color: kSecondaryPressedButtonColor,
                 borderRadius: BorderRadius.circular(12),
@@ -97,7 +97,7 @@ class MentorshipCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
+                  const SizedBox(
                     width: 200,
                     child: Row(
                       children: [

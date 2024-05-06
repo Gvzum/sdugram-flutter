@@ -19,6 +19,11 @@ mixin _$HomeState {
   HomeEventState get eventState => throw _privateConstructorUsedError;
   HomeEventDetailState get detailEventState =>
       throw _privateConstructorUsedError;
+  String get ticketId => throw _privateConstructorUsedError;
+  int get eventId => throw _privateConstructorUsedError;
+  int? get cardId => throw _privateConstructorUsedError;
+  String get paymentMethod => throw _privateConstructorUsedError;
+  String get amount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -30,7 +35,14 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({HomeEventState eventState, HomeEventDetailState detailEventState});
+  $Res call(
+      {HomeEventState eventState,
+      HomeEventDetailState detailEventState,
+      String ticketId,
+      int eventId,
+      int? cardId,
+      String paymentMethod,
+      String amount});
 
   $HomeEventStateCopyWith<$Res> get eventState;
   $HomeEventDetailStateCopyWith<$Res> get detailEventState;
@@ -51,6 +63,11 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? eventState = null,
     Object? detailEventState = null,
+    Object? ticketId = null,
+    Object? eventId = null,
+    Object? cardId = freezed,
+    Object? paymentMethod = null,
+    Object? amount = null,
   }) {
     return _then(_value.copyWith(
       eventState: null == eventState
@@ -61,6 +78,26 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.detailEventState
           : detailEventState // ignore: cast_nullable_to_non_nullable
               as HomeEventDetailState,
+      ticketId: null == ticketId
+          ? _value.ticketId
+          : ticketId // ignore: cast_nullable_to_non_nullable
+              as String,
+      eventId: null == eventId
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as int,
+      cardId: freezed == cardId
+          ? _value.cardId
+          : cardId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -90,7 +127,14 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({HomeEventState eventState, HomeEventDetailState detailEventState});
+  $Res call(
+      {HomeEventState eventState,
+      HomeEventDetailState detailEventState,
+      String ticketId,
+      int eventId,
+      int? cardId,
+      String paymentMethod,
+      String amount});
 
   @override
   $HomeEventStateCopyWith<$Res> get eventState;
@@ -111,6 +155,11 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? eventState = null,
     Object? detailEventState = null,
+    Object? ticketId = null,
+    Object? eventId = null,
+    Object? cardId = freezed,
+    Object? paymentMethod = null,
+    Object? amount = null,
   }) {
     return _then(_$HomeStateImpl(
       eventState: null == eventState
@@ -121,6 +170,26 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.detailEventState
           : detailEventState // ignore: cast_nullable_to_non_nullable
               as HomeEventDetailState,
+      ticketId: null == ticketId
+          ? _value.ticketId
+          : ticketId // ignore: cast_nullable_to_non_nullable
+              as String,
+      eventId: null == eventId
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as int,
+      cardId: freezed == cardId
+          ? _value.cardId
+          : cardId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -130,7 +199,12 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
       {this.eventState = const HomeEventInitial(),
-      this.detailEventState = const HomeEventDetailInitial()});
+      this.detailEventState = const HomeEventDetailInitial(),
+      this.ticketId = 'x',
+      this.eventId = 0,
+      this.cardId = null,
+      this.paymentMethod = 'Free',
+      this.amount = '0'});
 
   @override
   @JsonKey()
@@ -138,10 +212,25 @@ class _$HomeStateImpl implements _HomeState {
   @override
   @JsonKey()
   final HomeEventDetailState detailEventState;
+  @override
+  @JsonKey()
+  final String ticketId;
+  @override
+  @JsonKey()
+  final int eventId;
+  @override
+  @JsonKey()
+  final int? cardId;
+  @override
+  @JsonKey()
+  final String paymentMethod;
+  @override
+  @JsonKey()
+  final String amount;
 
   @override
   String toString() {
-    return 'HomeState(eventState: $eventState, detailEventState: $detailEventState)';
+    return 'HomeState(eventState: $eventState, detailEventState: $detailEventState, ticketId: $ticketId, eventId: $eventId, cardId: $cardId, paymentMethod: $paymentMethod, amount: $amount)';
   }
 
   @override
@@ -152,11 +241,19 @@ class _$HomeStateImpl implements _HomeState {
             (identical(other.eventState, eventState) ||
                 other.eventState == eventState) &&
             (identical(other.detailEventState, detailEventState) ||
-                other.detailEventState == detailEventState));
+                other.detailEventState == detailEventState) &&
+            (identical(other.ticketId, ticketId) ||
+                other.ticketId == ticketId) &&
+            (identical(other.eventId, eventId) || other.eventId == eventId) &&
+            (identical(other.cardId, cardId) || other.cardId == cardId) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, eventState, detailEventState);
+  int get hashCode => Object.hash(runtimeType, eventState, detailEventState,
+      ticketId, eventId, cardId, paymentMethod, amount);
 
   @JsonKey(ignore: true)
   @override
@@ -168,12 +265,27 @@ class _$HomeStateImpl implements _HomeState {
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {final HomeEventState eventState,
-      final HomeEventDetailState detailEventState}) = _$HomeStateImpl;
+      final HomeEventDetailState detailEventState,
+      final String ticketId,
+      final int eventId,
+      final int? cardId,
+      final String paymentMethod,
+      final String amount}) = _$HomeStateImpl;
 
   @override
   HomeEventState get eventState;
   @override
   HomeEventDetailState get detailEventState;
+  @override
+  String get ticketId;
+  @override
+  int get eventId;
+  @override
+  int? get cardId;
+  @override
+  String get paymentMethod;
+  @override
+  String get amount;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
@@ -785,6 +897,9 @@ mixin _$HomeEventDetailState {
     required TResult Function(ArticleDetailModel article) success,
     required TResult Function(ListCreditCardModel cards) cards,
     required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -795,6 +910,9 @@ mixin _$HomeEventDetailState {
     TResult? Function(ArticleDetailModel article)? success,
     TResult? Function(ListCreditCardModel cards)? cards,
     TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -805,6 +923,9 @@ mixin _$HomeEventDetailState {
     TResult Function(ArticleDetailModel article)? success,
     TResult Function(ListCreditCardModel cards)? cards,
     TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -816,6 +937,12 @@ mixin _$HomeEventDetailState {
     required TResult Function(HomeEventDetailSuccess value) success,
     required TResult Function(HomeEventDetailCards value) cards,
     required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -826,6 +953,9 @@ mixin _$HomeEventDetailState {
     TResult? Function(HomeEventDetailSuccess value)? success,
     TResult? Function(HomeEventDetailCards value)? cards,
     TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -836,6 +966,9 @@ mixin _$HomeEventDetailState {
     TResult Function(HomeEventDetailSuccess value)? success,
     TResult Function(HomeEventDetailCards value)? cards,
     TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -908,6 +1041,9 @@ class _$HomeEventDetailInitialImpl implements HomeEventDetailInitial {
     required TResult Function(ArticleDetailModel article) success,
     required TResult Function(ListCreditCardModel cards) cards,
     required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
   }) {
     return initial();
   }
@@ -921,6 +1057,9 @@ class _$HomeEventDetailInitialImpl implements HomeEventDetailInitial {
     TResult? Function(ArticleDetailModel article)? success,
     TResult? Function(ListCreditCardModel cards)? cards,
     TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
   }) {
     return initial?.call();
   }
@@ -934,6 +1073,9 @@ class _$HomeEventDetailInitialImpl implements HomeEventDetailInitial {
     TResult Function(ArticleDetailModel article)? success,
     TResult Function(ListCreditCardModel cards)? cards,
     TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -951,6 +1093,12 @@ class _$HomeEventDetailInitialImpl implements HomeEventDetailInitial {
     required TResult Function(HomeEventDetailSuccess value) success,
     required TResult Function(HomeEventDetailCards value) cards,
     required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
   }) {
     return initial(this);
   }
@@ -964,6 +1112,9 @@ class _$HomeEventDetailInitialImpl implements HomeEventDetailInitial {
     TResult? Function(HomeEventDetailSuccess value)? success,
     TResult? Function(HomeEventDetailCards value)? cards,
     TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
   }) {
     return initial?.call(this);
   }
@@ -977,6 +1128,9 @@ class _$HomeEventDetailInitialImpl implements HomeEventDetailInitial {
     TResult Function(HomeEventDetailSuccess value)? success,
     TResult Function(HomeEventDetailCards value)? cards,
     TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1038,6 +1192,9 @@ class _$HomeEventDetailLoadingImpl implements HomeEventDetailLoading {
     required TResult Function(ArticleDetailModel article) success,
     required TResult Function(ListCreditCardModel cards) cards,
     required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
   }) {
     return loading();
   }
@@ -1051,6 +1208,9 @@ class _$HomeEventDetailLoadingImpl implements HomeEventDetailLoading {
     TResult? Function(ArticleDetailModel article)? success,
     TResult? Function(ListCreditCardModel cards)? cards,
     TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
   }) {
     return loading?.call();
   }
@@ -1064,6 +1224,9 @@ class _$HomeEventDetailLoadingImpl implements HomeEventDetailLoading {
     TResult Function(ArticleDetailModel article)? success,
     TResult Function(ListCreditCardModel cards)? cards,
     TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1081,6 +1244,12 @@ class _$HomeEventDetailLoadingImpl implements HomeEventDetailLoading {
     required TResult Function(HomeEventDetailSuccess value) success,
     required TResult Function(HomeEventDetailCards value) cards,
     required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
   }) {
     return loading(this);
   }
@@ -1094,6 +1263,9 @@ class _$HomeEventDetailLoadingImpl implements HomeEventDetailLoading {
     TResult? Function(HomeEventDetailSuccess value)? success,
     TResult? Function(HomeEventDetailCards value)? cards,
     TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
   }) {
     return loading?.call(this);
   }
@@ -1107,6 +1279,9 @@ class _$HomeEventDetailLoadingImpl implements HomeEventDetailLoading {
     TResult Function(HomeEventDetailSuccess value)? success,
     TResult Function(HomeEventDetailCards value)? cards,
     TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1194,6 +1369,9 @@ class _$HomeEventDetailFailureImpl implements HomeEventDetailFailure {
     required TResult Function(ArticleDetailModel article) success,
     required TResult Function(ListCreditCardModel cards) cards,
     required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
   }) {
     return failure(this.failure);
   }
@@ -1207,6 +1385,9 @@ class _$HomeEventDetailFailureImpl implements HomeEventDetailFailure {
     TResult? Function(ArticleDetailModel article)? success,
     TResult? Function(ListCreditCardModel cards)? cards,
     TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
   }) {
     return failure?.call(this.failure);
   }
@@ -1220,6 +1401,9 @@ class _$HomeEventDetailFailureImpl implements HomeEventDetailFailure {
     TResult Function(ArticleDetailModel article)? success,
     TResult Function(ListCreditCardModel cards)? cards,
     TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -1237,6 +1421,12 @@ class _$HomeEventDetailFailureImpl implements HomeEventDetailFailure {
     required TResult Function(HomeEventDetailSuccess value) success,
     required TResult Function(HomeEventDetailCards value) cards,
     required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
   }) {
     return failure(this);
   }
@@ -1250,6 +1440,9 @@ class _$HomeEventDetailFailureImpl implements HomeEventDetailFailure {
     TResult? Function(HomeEventDetailSuccess value)? success,
     TResult? Function(HomeEventDetailCards value)? cards,
     TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
   }) {
     return failure?.call(this);
   }
@@ -1263,6 +1456,9 @@ class _$HomeEventDetailFailureImpl implements HomeEventDetailFailure {
     TResult Function(HomeEventDetailSuccess value)? success,
     TResult Function(HomeEventDetailCards value)? cards,
     TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -1356,6 +1552,9 @@ class _$HomeEventDetailSuccessImpl implements HomeEventDetailSuccess {
     required TResult Function(ArticleDetailModel article) success,
     required TResult Function(ListCreditCardModel cards) cards,
     required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
   }) {
     return success(article);
   }
@@ -1369,6 +1568,9 @@ class _$HomeEventDetailSuccessImpl implements HomeEventDetailSuccess {
     TResult? Function(ArticleDetailModel article)? success,
     TResult? Function(ListCreditCardModel cards)? cards,
     TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
   }) {
     return success?.call(article);
   }
@@ -1382,6 +1584,9 @@ class _$HomeEventDetailSuccessImpl implements HomeEventDetailSuccess {
     TResult Function(ArticleDetailModel article)? success,
     TResult Function(ListCreditCardModel cards)? cards,
     TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -1399,6 +1604,12 @@ class _$HomeEventDetailSuccessImpl implements HomeEventDetailSuccess {
     required TResult Function(HomeEventDetailSuccess value) success,
     required TResult Function(HomeEventDetailCards value) cards,
     required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
   }) {
     return success(this);
   }
@@ -1412,6 +1623,9 @@ class _$HomeEventDetailSuccessImpl implements HomeEventDetailSuccess {
     TResult? Function(HomeEventDetailSuccess value)? success,
     TResult? Function(HomeEventDetailCards value)? cards,
     TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
   }) {
     return success?.call(this);
   }
@@ -1425,6 +1639,9 @@ class _$HomeEventDetailSuccessImpl implements HomeEventDetailSuccess {
     TResult Function(HomeEventDetailSuccess value)? success,
     TResult Function(HomeEventDetailCards value)? cards,
     TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -1516,6 +1733,9 @@ class _$HomeEventDetailCardsImpl implements HomeEventDetailCards {
     required TResult Function(ArticleDetailModel article) success,
     required TResult Function(ListCreditCardModel cards) cards,
     required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
   }) {
     return cards(this.cards);
   }
@@ -1529,6 +1749,9 @@ class _$HomeEventDetailCardsImpl implements HomeEventDetailCards {
     TResult? Function(ArticleDetailModel article)? success,
     TResult? Function(ListCreditCardModel cards)? cards,
     TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
   }) {
     return cards?.call(this.cards);
   }
@@ -1542,6 +1765,9 @@ class _$HomeEventDetailCardsImpl implements HomeEventDetailCards {
     TResult Function(ArticleDetailModel article)? success,
     TResult Function(ListCreditCardModel cards)? cards,
     TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
     required TResult orElse(),
   }) {
     if (cards != null) {
@@ -1559,6 +1785,12 @@ class _$HomeEventDetailCardsImpl implements HomeEventDetailCards {
     required TResult Function(HomeEventDetailSuccess value) success,
     required TResult Function(HomeEventDetailCards value) cards,
     required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
   }) {
     return cards(this);
   }
@@ -1572,6 +1804,9 @@ class _$HomeEventDetailCardsImpl implements HomeEventDetailCards {
     TResult? Function(HomeEventDetailSuccess value)? success,
     TResult? Function(HomeEventDetailCards value)? cards,
     TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
   }) {
     return cards?.call(this);
   }
@@ -1585,6 +1820,9 @@ class _$HomeEventDetailCardsImpl implements HomeEventDetailCards {
     TResult Function(HomeEventDetailSuccess value)? success,
     TResult Function(HomeEventDetailCards value)? cards,
     TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
     required TResult orElse(),
   }) {
     if (cards != null) {
@@ -1653,6 +1891,9 @@ class _$HomeEventDetailAddCardSuccessImpl
     required TResult Function(ArticleDetailModel article) success,
     required TResult Function(ListCreditCardModel cards) cards,
     required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
   }) {
     return addSuccess();
   }
@@ -1666,6 +1907,9 @@ class _$HomeEventDetailAddCardSuccessImpl
     TResult? Function(ArticleDetailModel article)? success,
     TResult? Function(ListCreditCardModel cards)? cards,
     TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
   }) {
     return addSuccess?.call();
   }
@@ -1679,6 +1923,9 @@ class _$HomeEventDetailAddCardSuccessImpl
     TResult Function(ArticleDetailModel article)? success,
     TResult Function(ListCreditCardModel cards)? cards,
     TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
     required TResult orElse(),
   }) {
     if (addSuccess != null) {
@@ -1696,6 +1943,12 @@ class _$HomeEventDetailAddCardSuccessImpl
     required TResult Function(HomeEventDetailSuccess value) success,
     required TResult Function(HomeEventDetailCards value) cards,
     required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
   }) {
     return addSuccess(this);
   }
@@ -1709,6 +1962,9 @@ class _$HomeEventDetailAddCardSuccessImpl
     TResult? Function(HomeEventDetailSuccess value)? success,
     TResult? Function(HomeEventDetailCards value)? cards,
     TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
   }) {
     return addSuccess?.call(this);
   }
@@ -1722,6 +1978,9 @@ class _$HomeEventDetailAddCardSuccessImpl
     TResult Function(HomeEventDetailSuccess value)? success,
     TResult Function(HomeEventDetailCards value)? cards,
     TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
     required TResult orElse(),
   }) {
     if (addSuccess != null) {
@@ -1734,4 +1993,465 @@ class _$HomeEventDetailAddCardSuccessImpl
 abstract class HomeEventDetailAddCardSuccess implements HomeEventDetailState {
   const factory HomeEventDetailAddCardSuccess() =
       _$HomeEventDetailAddCardSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$HomeEventDetailAddTicketSuccessImplCopyWith<$Res> {
+  factory _$$HomeEventDetailAddTicketSuccessImplCopyWith(
+          _$HomeEventDetailAddTicketSuccessImpl value,
+          $Res Function(_$HomeEventDetailAddTicketSuccessImpl) then) =
+      __$$HomeEventDetailAddTicketSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$HomeEventDetailAddTicketSuccessImplCopyWithImpl<$Res>
+    extends _$HomeEventDetailStateCopyWithImpl<$Res,
+        _$HomeEventDetailAddTicketSuccessImpl>
+    implements _$$HomeEventDetailAddTicketSuccessImplCopyWith<$Res> {
+  __$$HomeEventDetailAddTicketSuccessImplCopyWithImpl(
+      _$HomeEventDetailAddTicketSuccessImpl _value,
+      $Res Function(_$HomeEventDetailAddTicketSuccessImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$HomeEventDetailAddTicketSuccessImpl
+    implements HomeEventDetailAddTicketSuccess {
+  const _$HomeEventDetailAddTicketSuccessImpl();
+
+  @override
+  String toString() {
+    return 'HomeEventDetailState.addTicketSuccess()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HomeEventDetailAddTicketSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(Failure failure) failure,
+    required TResult Function(ArticleDetailModel article) success,
+    required TResult Function(ListCreditCardModel cards) cards,
+    required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
+  }) {
+    return addTicketSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(Failure failure)? failure,
+    TResult? Function(ArticleDetailModel article)? success,
+    TResult? Function(ListCreditCardModel cards)? cards,
+    TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
+  }) {
+    return addTicketSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(Failure failure)? failure,
+    TResult Function(ArticleDetailModel article)? success,
+    TResult Function(ListCreditCardModel cards)? cards,
+    TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
+    required TResult orElse(),
+  }) {
+    if (addTicketSuccess != null) {
+      return addTicketSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeEventDetailInitial value) initial,
+    required TResult Function(HomeEventDetailLoading value) loading,
+    required TResult Function(HomeEventDetailFailure value) failure,
+    required TResult Function(HomeEventDetailSuccess value) success,
+    required TResult Function(HomeEventDetailCards value) cards,
+    required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
+  }) {
+    return addTicketSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeEventDetailInitial value)? initial,
+    TResult? Function(HomeEventDetailLoading value)? loading,
+    TResult? Function(HomeEventDetailFailure value)? failure,
+    TResult? Function(HomeEventDetailSuccess value)? success,
+    TResult? Function(HomeEventDetailCards value)? cards,
+    TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
+  }) {
+    return addTicketSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeEventDetailInitial value)? initial,
+    TResult Function(HomeEventDetailLoading value)? loading,
+    TResult Function(HomeEventDetailFailure value)? failure,
+    TResult Function(HomeEventDetailSuccess value)? success,
+    TResult Function(HomeEventDetailCards value)? cards,
+    TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
+    required TResult orElse(),
+  }) {
+    if (addTicketSuccess != null) {
+      return addTicketSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HomeEventDetailAddTicketSuccess implements HomeEventDetailState {
+  const factory HomeEventDetailAddTicketSuccess() =
+      _$HomeEventDetailAddTicketSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$HomeEventDetailConfirmTicketSuccessImplCopyWith<$Res> {
+  factory _$$HomeEventDetailConfirmTicketSuccessImplCopyWith(
+          _$HomeEventDetailConfirmTicketSuccessImpl value,
+          $Res Function(_$HomeEventDetailConfirmTicketSuccessImpl) then) =
+      __$$HomeEventDetailConfirmTicketSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$HomeEventDetailConfirmTicketSuccessImplCopyWithImpl<$Res>
+    extends _$HomeEventDetailStateCopyWithImpl<$Res,
+        _$HomeEventDetailConfirmTicketSuccessImpl>
+    implements _$$HomeEventDetailConfirmTicketSuccessImplCopyWith<$Res> {
+  __$$HomeEventDetailConfirmTicketSuccessImplCopyWithImpl(
+      _$HomeEventDetailConfirmTicketSuccessImpl _value,
+      $Res Function(_$HomeEventDetailConfirmTicketSuccessImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$HomeEventDetailConfirmTicketSuccessImpl
+    implements HomeEventDetailConfirmTicketSuccess {
+  const _$HomeEventDetailConfirmTicketSuccessImpl();
+
+  @override
+  String toString() {
+    return 'HomeEventDetailState.confirmTicket()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HomeEventDetailConfirmTicketSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(Failure failure) failure,
+    required TResult Function(ArticleDetailModel article) success,
+    required TResult Function(ListCreditCardModel cards) cards,
+    required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
+  }) {
+    return confirmTicket();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(Failure failure)? failure,
+    TResult? Function(ArticleDetailModel article)? success,
+    TResult? Function(ListCreditCardModel cards)? cards,
+    TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
+  }) {
+    return confirmTicket?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(Failure failure)? failure,
+    TResult Function(ArticleDetailModel article)? success,
+    TResult Function(ListCreditCardModel cards)? cards,
+    TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
+    required TResult orElse(),
+  }) {
+    if (confirmTicket != null) {
+      return confirmTicket();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeEventDetailInitial value) initial,
+    required TResult Function(HomeEventDetailLoading value) loading,
+    required TResult Function(HomeEventDetailFailure value) failure,
+    required TResult Function(HomeEventDetailSuccess value) success,
+    required TResult Function(HomeEventDetailCards value) cards,
+    required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
+  }) {
+    return confirmTicket(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeEventDetailInitial value)? initial,
+    TResult? Function(HomeEventDetailLoading value)? loading,
+    TResult? Function(HomeEventDetailFailure value)? failure,
+    TResult? Function(HomeEventDetailSuccess value)? success,
+    TResult? Function(HomeEventDetailCards value)? cards,
+    TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
+  }) {
+    return confirmTicket?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeEventDetailInitial value)? initial,
+    TResult Function(HomeEventDetailLoading value)? loading,
+    TResult Function(HomeEventDetailFailure value)? failure,
+    TResult Function(HomeEventDetailSuccess value)? success,
+    TResult Function(HomeEventDetailCards value)? cards,
+    TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
+    required TResult orElse(),
+  }) {
+    if (confirmTicket != null) {
+      return confirmTicket(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HomeEventDetailConfirmTicketSuccess
+    implements HomeEventDetailState {
+  const factory HomeEventDetailConfirmTicketSuccess() =
+      _$HomeEventDetailConfirmTicketSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$HomeEventDetailDeleteTicketSuccessImplCopyWith<$Res> {
+  factory _$$HomeEventDetailDeleteTicketSuccessImplCopyWith(
+          _$HomeEventDetailDeleteTicketSuccessImpl value,
+          $Res Function(_$HomeEventDetailDeleteTicketSuccessImpl) then) =
+      __$$HomeEventDetailDeleteTicketSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$HomeEventDetailDeleteTicketSuccessImplCopyWithImpl<$Res>
+    extends _$HomeEventDetailStateCopyWithImpl<$Res,
+        _$HomeEventDetailDeleteTicketSuccessImpl>
+    implements _$$HomeEventDetailDeleteTicketSuccessImplCopyWith<$Res> {
+  __$$HomeEventDetailDeleteTicketSuccessImplCopyWithImpl(
+      _$HomeEventDetailDeleteTicketSuccessImpl _value,
+      $Res Function(_$HomeEventDetailDeleteTicketSuccessImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$HomeEventDetailDeleteTicketSuccessImpl
+    implements HomeEventDetailDeleteTicketSuccess {
+  const _$HomeEventDetailDeleteTicketSuccessImpl();
+
+  @override
+  String toString() {
+    return 'HomeEventDetailState.deleteTicket()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HomeEventDetailDeleteTicketSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(Failure failure) failure,
+    required TResult Function(ArticleDetailModel article) success,
+    required TResult Function(ListCreditCardModel cards) cards,
+    required TResult Function() addSuccess,
+    required TResult Function() addTicketSuccess,
+    required TResult Function() confirmTicket,
+    required TResult Function() deleteTicket,
+  }) {
+    return deleteTicket();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(Failure failure)? failure,
+    TResult? Function(ArticleDetailModel article)? success,
+    TResult? Function(ListCreditCardModel cards)? cards,
+    TResult? Function()? addSuccess,
+    TResult? Function()? addTicketSuccess,
+    TResult? Function()? confirmTicket,
+    TResult? Function()? deleteTicket,
+  }) {
+    return deleteTicket?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(Failure failure)? failure,
+    TResult Function(ArticleDetailModel article)? success,
+    TResult Function(ListCreditCardModel cards)? cards,
+    TResult Function()? addSuccess,
+    TResult Function()? addTicketSuccess,
+    TResult Function()? confirmTicket,
+    TResult Function()? deleteTicket,
+    required TResult orElse(),
+  }) {
+    if (deleteTicket != null) {
+      return deleteTicket();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HomeEventDetailInitial value) initial,
+    required TResult Function(HomeEventDetailLoading value) loading,
+    required TResult Function(HomeEventDetailFailure value) failure,
+    required TResult Function(HomeEventDetailSuccess value) success,
+    required TResult Function(HomeEventDetailCards value) cards,
+    required TResult Function(HomeEventDetailAddCardSuccess value) addSuccess,
+    required TResult Function(HomeEventDetailAddTicketSuccess value)
+        addTicketSuccess,
+    required TResult Function(HomeEventDetailConfirmTicketSuccess value)
+        confirmTicket,
+    required TResult Function(HomeEventDetailDeleteTicketSuccess value)
+        deleteTicket,
+  }) {
+    return deleteTicket(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HomeEventDetailInitial value)? initial,
+    TResult? Function(HomeEventDetailLoading value)? loading,
+    TResult? Function(HomeEventDetailFailure value)? failure,
+    TResult? Function(HomeEventDetailSuccess value)? success,
+    TResult? Function(HomeEventDetailCards value)? cards,
+    TResult? Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult? Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult? Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult? Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
+  }) {
+    return deleteTicket?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HomeEventDetailInitial value)? initial,
+    TResult Function(HomeEventDetailLoading value)? loading,
+    TResult Function(HomeEventDetailFailure value)? failure,
+    TResult Function(HomeEventDetailSuccess value)? success,
+    TResult Function(HomeEventDetailCards value)? cards,
+    TResult Function(HomeEventDetailAddCardSuccess value)? addSuccess,
+    TResult Function(HomeEventDetailAddTicketSuccess value)? addTicketSuccess,
+    TResult Function(HomeEventDetailConfirmTicketSuccess value)? confirmTicket,
+    TResult Function(HomeEventDetailDeleteTicketSuccess value)? deleteTicket,
+    required TResult orElse(),
+  }) {
+    if (deleteTicket != null) {
+      return deleteTicket(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HomeEventDetailDeleteTicketSuccess
+    implements HomeEventDetailState {
+  const factory HomeEventDetailDeleteTicketSuccess() =
+      _$HomeEventDetailDeleteTicketSuccessImpl;
 }

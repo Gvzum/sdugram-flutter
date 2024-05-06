@@ -44,6 +44,11 @@ class HomeState with _$HomeState {
   const factory HomeState({
     @Default(HomeEventInitial()) HomeEventState eventState,
     @Default(HomeEventDetailInitial()) HomeEventDetailState detailEventState,
+    @Default('x') String ticketId,
+    @Default(0) int eventId,
+    @Default(null) int? cardId,
+    @Default('Free') String paymentMethod,
+    @Default('0') String amount,
   }) = _HomeState;
 }
 
@@ -81,4 +86,13 @@ sealed class HomeEventDetailState with _$HomeEventDetailState {
 
   const factory HomeEventDetailState.addSuccess() =
   HomeEventDetailAddCardSuccess;
+
+  const factory HomeEventDetailState.addTicketSuccess() =
+  HomeEventDetailAddTicketSuccess;
+
+  const factory HomeEventDetailState.confirmTicket() =
+  HomeEventDetailConfirmTicketSuccess;
+
+  const factory HomeEventDetailState.deleteTicket() =
+  HomeEventDetailDeleteTicketSuccess;
 }

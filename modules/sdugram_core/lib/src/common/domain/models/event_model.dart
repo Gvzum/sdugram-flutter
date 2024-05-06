@@ -1,4 +1,3 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 class EventModel {
   final int id;

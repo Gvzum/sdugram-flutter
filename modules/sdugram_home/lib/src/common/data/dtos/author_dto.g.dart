@@ -7,7 +7,7 @@ part of 'author_dto.dart';
 // **************************************************************************
 
 AuthorDto _$AuthorDtoFromJson(Map<String, dynamic> json) => AuthorDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       username: json['username'] as String,
       avatar: json['avatar'] as String?,
     );

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sdugram_core/domain.dart';
 import 'package:sdugram_core/presentation.dart';
 import 'package:sdugram_home/src/common/domain/models/article_detail_model.dart';
@@ -11,6 +12,7 @@ import 'package:sdugram_home/src/common/presentation/blocs/home_state.dart';
 import 'package:sdugram_home/src/common/presentation/widgets/event_card_view.dart';
 import 'package:sdugram_home/src/common/presentation/widgets/event_detail_screen_popover.dart';
 import 'package:sdugram_home/src/common/presentation/widgets/payment_method_popup.dart';
+// import 'package:intl/intl.dart';
 
 @RoutePage()
 class EventsScreen extends StatelessWidget {
@@ -39,7 +41,9 @@ class EventsScreen extends StatelessWidget {
           SduOverlayLoader().show(context);
         },
         failure: (failure) {
-          context.router.replaceNamed('error/:${failure.message}');
+          SduOverlayLoader().hide();
+          context.router.navigateNamed('/error/${failure.message}');
+          // print(failure.message);
         },
         success: (article) {
           SduOverlayLoader().hide();
@@ -47,10 +51,31 @@ class EventsScreen extends StatelessWidget {
         },
         cards: (cards) {
           SduOverlayLoader().hide();
-          _showPaymentMethodPopup(blocContext, cards);
+          _showPaymentMethodPopup(blocContext, cards, state.eventId);
         },
         addSuccess: () {
           SduOverlayLoader().hide();
+          // print('success add card');
+        },
+        addTicketSuccess: () {
+          SduOverlayLoader().hide();
+          showAlert(context,
+              title: 'Are you sure you have a seat?',
+              description: '13:40',
+              buttonLabel: 'Yes', onPressed: () {
+            blocContext.read<HomeBloc>().add(HomeYesButtonPressed());
+          }, onPressedCancel: () {
+            blocContext.read<HomeBloc>().add(HomeCancelButtonPressed());
+          });
+        },
+        confirmTicket: () {
+          SduOverlayLoader().hide();
+          context.router.popForced();
+          context.router.replaceNamed('/success');
+        },
+        deleteTicket: () {
+          SduOverlayLoader().hide();
+          context.router.popForced();
         },
       );
     }, builder: (blocContext, state) {
@@ -91,8 +116,10 @@ class EventsScreen extends StatelessWidget {
       pages: [
         BccPopoverPage(
           pageBuilder: (context) {
+            final String date =
+                DateFormat("MMM d yyyy • HH:mm").format(article.publishedDate);
             return EventDetailScreenPopover(
-              startTime: article.publishedDate.toString(),
+              startTime: date,
               location: article.event?.location ?? 'SDU',
               quantity: article.event?.quantity ?? 0,
               price: article.event?.price,
@@ -108,16 +135,9 @@ class EventsScreen extends StatelessWidget {
                           blocContext.read<HomeBloc>().add(HomeBuyPressed());
                         }
                       : () {
-                          showAlert(
-                            context,
-                            title: 'Are you sure you have a seat?',
-                            description: '13:40',
-                            buttonLabel: 'Yes',
-                            onPressed: () {
-                              context.router.popForced();
-                              context.router.replaceNamed('/success');
-                            },
-                          );
+                          blocContext.read<HomeBloc>().add(HomePayTicketPressed(
+                                eventId: article.event?.id ?? 0,
+                              ));
                         },
               username: article.author.username,
             );
@@ -129,13 +149,21 @@ class EventsScreen extends StatelessWidget {
   }
 
   Future<void> _showPaymentMethodPopup(
-      BuildContext blocContext, ListCreditCardModel cards) async {
+      BuildContext blocContext, ListCreditCardModel cards, int eventId) async {
     await bccPopover(
       context: blocContext,
       pages: [
         BccPopoverPage(
           pageBuilder: (context) {
-            return PaymentMethodPopup(cards: cards);
+            return PaymentMethodPopup(
+              cards: cards,
+              eventId: eventId,
+              onPressed: () {
+                blocContext
+                    .read<HomeBloc>()
+                    .add(HomePayTicketPressed(eventId: eventId));
+              },
+            );
           },
           routeName: '/',
         ),
@@ -150,6 +178,7 @@ void showAlert(
   required String description,
   required String buttonLabel,
   required Function()? onPressed,
+  Function()? onPressedCancel,
 }) {
   showDialog(
     context: context,
@@ -159,6 +188,7 @@ void showAlert(
         description: description,
         buttonLabel: buttonLabel,
         onPressed: onPressed,
+        onPressedCancel: onPressedCancel,
       );
     },
   );

@@ -9,9 +9,9 @@ part of 'list_credit_card_response_dto.dart';
 ListCreditCardResponseDto _$ListCreditCardResponseDtoFromJson(
         Map<String, dynamic> json) =>
     ListCreditCardResponseDto(
-      count: json['count'] as int,
-      next: json['next'] as int?,
-      previous: json['previous'] as int?,
+      count: (json['count'] as num).toInt(),
+      next: (json['next'] as num?)?.toInt(),
+      previous: (json['previous'] as num?)?.toInt(),
       results: (json['results'] as List<dynamic>)
           .map((e) => CreditCardDto.fromJson(e as Map<String, dynamic>))
           .toList(),

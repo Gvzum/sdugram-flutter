@@ -9,9 +9,9 @@ part of 'list_article_response_dto.dart';
 ListArticleResponseDto _$ListArticleResponseDtoFromJson(
         Map<String, dynamic> json) =>
     ListArticleResponseDto(
-      count: json['count'] as int,
+      count: (json['count'] as num).toInt(),
       next: json['next'] as String?,
-      previous: json['previous'] as int?,
+      previous: (json['previous'] as num?)?.toInt(),
       results: (json['results'] as List<dynamic>)
           .map((e) => ArticleDto.fromJson(e as Map<String, dynamic>))
           .toList(),

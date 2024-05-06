@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sdugram_core/presentation.dart';
+
 
 class EventDetailScreenPopover extends StatelessWidget {
   const EventDetailScreenPopover(

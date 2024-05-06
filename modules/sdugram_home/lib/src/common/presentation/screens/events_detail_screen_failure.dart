@@ -7,14 +7,14 @@ import 'package:sdugram_home/sdugram_home.dart';
 @RoutePage()
 class EventsDetailScreenFailure extends StatelessWidget {
   const EventsDetailScreenFailure(
-      {super.key, @pathParam required this.message});
+      {super.key, @PathParam('failure') required this.failure});
 
-  final String message;
+  final String failure;
 
   @override
   Widget build(BuildContext context) {
     return SduErrorPage(
-      statusTitle: message,
+      statusTitle: failure,
       primaryOnPress: () {
         context.read<HomeBloc>().add(HomeStarted());
       },

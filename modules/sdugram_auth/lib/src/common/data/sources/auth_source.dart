@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sdugram_auth/sdugram_auth.dart';
-import 'package:sdugram_auth/src/common/data/dtos/register_request_dto.dart';
-import 'package:sdugram_auth/src/common/data/dtos/register_response_dto.dart';
 
 part 'auth_source.g.dart';
 

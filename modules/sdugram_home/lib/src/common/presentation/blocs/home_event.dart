@@ -10,6 +10,7 @@ class HomeEventPressed extends HomeEvent {
 
 class HomeBuyPressed extends HomeEvent {}
 
+
 class HomeAddCardPressed extends HomeEvent {
   final String cardNumber;
   final String cardholderName;
@@ -22,6 +23,17 @@ class HomeAddCardPressed extends HomeEvent {
       required this.expirationMonth,
       required this.expirationYear});
 }
+
+class HomePayTicketPressed extends HomeEvent {
+  final int eventId;
+  final int? cardId;
+
+  HomePayTicketPressed({required this.eventId, this.cardId});
+}
+
+class HomeYesButtonPressed extends HomeEvent {}
+
+class HomeCancelButtonPressed extends HomeEvent {}
 
 // class LoginButtonPressed extends LoginEvent {
 //   final String username;

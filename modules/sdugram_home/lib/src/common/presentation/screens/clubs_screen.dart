@@ -9,7 +9,7 @@ class ClubsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: kBackgroundColor,
       body: ClubList(),
     );
@@ -17,6 +17,8 @@ class ClubsScreen extends StatelessWidget {
 }
 
 class ClubList extends StatelessWidget {
+  const ClubList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,7 @@ class ClubList extends StatelessWidget {
       body: ListView.builder(
           itemCount: 3,
           itemBuilder: (context, index) {
-            return ClubListItem(
+            return const ClubListItem(
               name: 'name',
               description: 'description',
               imageUrl: 'imageUrl',
