@@ -8,7 +8,10 @@ import 'package:sdugram_home/src/common/domain/behaviors/create_ticket_behavior.
 import 'package:sdugram_home/src/common/domain/behaviors/delete_ticket_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_article_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_articles_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_articles_by_author_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_cards_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_club_detail_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_clubs_behavior.dart';
 
 import '../data/services/home_service.dart';
 
@@ -26,6 +29,12 @@ abstract class HomeModule {
 
   @factoryMethod
   FetchArticlesBehavior fetchArticleBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
+
+  @factoryMethod
+  FetchClubsBehavior fetchClubs(
       HomeService homeService,
       ) =>
       homeService;
@@ -62,6 +71,18 @@ abstract class HomeModule {
 
   @factoryMethod
   ConfirmTicketBehavior confirmTicketBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
+
+  @factoryMethod
+  FetchClubDetailBehavior clubDetailBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
+
+  @factoryMethod
+  FetchArticlesByAuthorBehavior articlesByAuthor(
       HomeService homeService,
       ) =>
       homeService;

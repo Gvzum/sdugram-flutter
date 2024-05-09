@@ -3,11 +3,13 @@ import 'package:retrofit/retrofit.dart';
 import 'package:retrofit/http.dart';
 import 'package:sdugram_home/src/common/data/dtos/add_card_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/article_detail_dto.dart';
+import 'package:sdugram_home/src/common/data/dtos/club_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/confirm_ticket_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/create_ticket_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/create_ticket_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/list_article_response_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/list_credit_card_response_dto.dart';
+import 'package:sdugram_core/data.dart';
 
 part 'home_source.g.dart';
 
@@ -39,7 +41,7 @@ abstract class HomeSource {
     @Body() required CreateTicketRequest request,
   });
 
-  @DELETE('/integration/blog/ticket/')
+  @DELETE('/integration/blog/ticket/{ticketId}')
   Future<void> deleteTicket({
     @Path() required String ticketId,
   });
@@ -47,5 +49,18 @@ abstract class HomeSource {
   @POST('/integration/blog/confirm-ticket/')
   Future<String> confirmTicket({
     @Body() required ConfirmTicketRequest request,
+  });
+
+  @GET('/integration/user/user-profile/?profile_type_in=club')
+  Future<BaseListResponseDto<ClubDto>> getClubs();
+
+  @GET('/integration/user/user-profile/{clubId}')
+  Future<ClubDto> getClubDetail({
+    @Path() required String clubId,
+  });
+
+  @GET('/integration/blog/articles/?status=ACTIVE&author={author}')
+  Future<ListArticleResponseDto> getActiveArticlesByAuthor({
+    @Query('author') required String author,
   });
 }

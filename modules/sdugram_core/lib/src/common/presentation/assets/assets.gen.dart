@@ -94,6 +94,9 @@ class $AssetsImagesGen {
   SvgGenImage get onboarding4 =>
       const SvgGenImage('assets/images/onboarding4.svg');
 
+  /// File path: assets/images/qr.png
+  AssetGenImage get qr => const AssetGenImage('assets/images/qr.png');
+
   /// List of all assets
   List<dynamic> get values => [
         barcode,
@@ -103,7 +106,8 @@ class $AssetsImagesGen {
         onboarding1,
         onboarding2,
         onboarding3,
-        onboarding4
+        onboarding4,
+        qr
       ];
 }
 

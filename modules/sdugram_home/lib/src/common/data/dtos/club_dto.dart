@@ -1,16 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sdugram_home/sdugram_home.dart';
 import 'package:sdugram_home/src/common/data/dtos/profile_club_dto.dart';
+import 'package:sdugram_home/src/common/domain/models/club_model.dart';
 
 part 'club_dto.g.dart';
 
 @JsonSerializable()
-class ClubDto {
+class ClubDto implements ClubModel{
+  @override
   final int id;
+  @override
   final String email;
+  @override
   final String username;
+  @override
   @JsonKey(name: 'profile_type')
   final String profileType;
+  @override
   @JsonKey(name: 'profile_data')
   final ProfileClubDto profileData;
 

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:sdugram_core/presentation.dart';
 
-
 class EventDetailScreenPopover extends StatelessWidget {
   const EventDetailScreenPopover(
       {super.key,
@@ -16,11 +15,13 @@ class EventDetailScreenPopover extends StatelessWidget {
       required this.onPressed,
       this.categories,
       this.subtitle,
-      required this.image});
+      required this.image,
+      required this.availableTickets});
 
   final String startTime;
   final String location;
   final int quantity;
+  final int availableTickets;
   final String? price;
   final String title;
   final String body;
@@ -173,7 +174,7 @@ class EventDetailScreenPopover extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '$quantity ticket',
+                        '$availableTickets ticket',
                         style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 14.0,

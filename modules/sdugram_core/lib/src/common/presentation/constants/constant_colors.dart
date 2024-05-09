@@ -11,6 +11,8 @@ const kSecondaryColor = Color(0xFFFFFFFF);
 const kLightGrey = Color(0xffd0cece);
 const kButtonBackgroundColor = Color(0x176F7EEF);
 const kChipsColor = Color(0xFF1D8DE1);
+const kClubDetailsColor = Color(0xFFA2BDFF);
+const kClubDetailsDescriptionColor = Color(0xFF203B7D);
 
 //button color
 const kPressedPrimaryButtonColor = Color(0xFF0000D7);

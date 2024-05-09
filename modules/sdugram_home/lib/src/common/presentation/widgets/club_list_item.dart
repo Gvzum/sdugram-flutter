@@ -20,7 +20,7 @@ class ClubListItem extends StatelessWidget {
         leading: CircleAvatar(
             backgroundImage: NetworkImage(imageUrl)),
         title: Text(name),
-        subtitle: Text(description),
+        subtitle: Text(description, overflow: TextOverflow.ellipsis, maxLines: 1,),
         trailing: const Icon(Icons.chevron_right),
         onTap: onPressed
       ),

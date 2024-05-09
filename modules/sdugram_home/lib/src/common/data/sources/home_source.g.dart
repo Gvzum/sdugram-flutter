@@ -166,7 +166,7 @@ class _HomeSource implements HomeSource {
     )
         .compose(
           _dio.options,
-          '/integration/blog/ticket/',
+          '/integration/blog/ticket/${ticketId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -201,6 +201,91 @@ class _HomeSource implements HomeSource {
           baseUrl,
         ))));
     final value = _result.data!;
+    return value;
+  }
+
+  @override
+  Future<BaseListResponseDto<ClubDto>> getClubs() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseListResponseDto<ClubDto>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/integration/user/user-profile/?profile_type_in=club',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = BaseListResponseDto<ClubDto>.fromJson(
+      _result.data!,
+      (json) => ClubDto.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ClubDto> getClubDetail({required String clubId}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<ClubDto>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/integration/user/user-profile/${clubId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ClubDto.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ListArticleResponseDto> getActiveArticlesByAuthor(
+      {required String author}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'author': author};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ListArticleResponseDto>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/integration/blog/articles/?status=ACTIVE&author={author}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ListArticleResponseDto.fromJson(_result.data!);
     return value;
   }
 

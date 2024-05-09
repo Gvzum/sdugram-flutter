@@ -45,8 +45,13 @@ class _HomeSuccessScreenState extends State<HomeSuccessScreen> {
         ),
         body: Column(children: [
           Container(
-              decoration: BoxDecoration(
-                  color: kPrimaryColor, borderRadius: BorderRadius.circular(6)),
+              decoration: const BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(6),
+                      bottomRight: Radius.circular(
+                        6,
+                      ))),
               child: const Column(
                 children: [
                   Icon(

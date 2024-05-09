@@ -14,10 +14,14 @@ import 'package:sdugram_home/src/common/domain/behaviors/create_ticket_behavior.
 import 'package:sdugram_home/src/common/domain/behaviors/delete_ticket_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_article_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_articles_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_articles_by_author_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_cards_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_club_detail_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/fetch_clubs_behavior.dart';
 import 'package:sdugram_home/src/common/domain/models/article_detail_model.dart';
 import 'package:sdugram_home/src/common/domain/models/article_model.dart';
 import 'package:sdugram_core/config.dart';
+import 'package:sdugram_home/src/common/domain/models/club_model.dart';
 import 'package:sdugram_home/src/common/domain/models/create_ticket.dart';
 import 'package:sdugram_home/src/common/domain/models/credit_card_model.dart';
 
@@ -30,7 +34,10 @@ class HomeService
         CreateCardBehavior,
         CreateTicketBehavior,
         DeleteTicketBehavior,
-        ConfirmTicketBehavior {
+        ConfirmTicketBehavior,
+        FetchClubsBehavior,
+        FetchClubDetailBehavior,
+        FetchArticlesByAuthorBehavior {
   final HomeSource _homeSource;
 
   HomeService({required HomeSource homeSource}) : _homeSource = homeSource;
@@ -117,6 +124,41 @@ class HomeService
         cardId: cardId,
       ));
       return SuccessResult(result);
+    } on DioException catch (e) {
+      return ErrorResult(
+          e.handleError('Error occurred while fetching some data'));
+    }
+  }
+
+  @override
+  Future<Result<List<ClubModel>>> fetchClubs() async {
+    try {
+      final result = await _homeSource.getClubs();
+      return SuccessResult(result.results);
+    } on DioException catch (e) {
+      return ErrorResult(
+          e.handleError('Error occurred while fetching some data'));
+    }
+  }
+
+  @override
+  Future<Result<ClubModel>> fetchClubDetail({required String clubId}) async {
+    try {
+      final result = await _homeSource.getClubDetail(clubId: clubId);
+      return SuccessResult(result);
+    } on DioException catch (e) {
+      return ErrorResult(
+          e.handleError('Error occurred while fetching some data'));
+    }
+  }
+
+  @override
+  Future<Result<ListArticleModel>> fetchArticleByAuthor(
+      {required String authorId}) async {
+    try {
+      final result =
+          await _homeSource.getActiveArticlesByAuthor(author: authorId);
+      return SuccessResult(result.toModel());
     } on DioException catch (e) {
       return ErrorResult(
           e.handleError('Error occurred while fetching some data'));

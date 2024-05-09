@@ -12,6 +12,7 @@ EventDto _$EventDtoFromJson(Map<String, dynamic> json) => EventDto(
       location: json['location'] as String?,
       price: json['price'] as String?,
       quantity: (json['quantity'] as num?)?.toInt(),
+      availableTickets: (json['available_tickets'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$EventDtoToJson(EventDto instance) {
@@ -29,5 +30,6 @@ Map<String, dynamic> _$EventDtoToJson(EventDto instance) {
   writeNotNull('location', instance.location);
   writeNotNull('price', instance.price);
   writeNotNull('quantity', instance.quantity);
+  writeNotNull('available_tickets', instance.availableTickets);
   return val;
 }

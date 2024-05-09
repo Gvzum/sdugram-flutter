@@ -17,7 +17,6 @@ export 'src/common/data/dtos/confirm_ticket_request.dart';
 export 'src/common/data/dtos/create_ticket_dto.dart';
 export 'src/common/data/dtos/create_ticket_request.dart';
 export 'src/common/data/dtos/credit_card_dto.dart';
-export 'src/common/data/dtos/event_dto.dart';
 export 'src/common/data/dtos/list_article_response_dto.dart';
 export 'src/common/data/dtos/list_credit_card_response_dto.dart';
 export 'src/common/data/dtos/profile_club_dto.dart';

@@ -128,7 +128,7 @@ class EventsScreen extends StatelessWidget {
               categories: article.categories,
               subtitle: article.subtitle,
               image: article.backgroundImage ?? kDefaultImageUrl,
-              onPressed: (article.event?.quantity ?? 0) == 0
+              onPressed: (article.event?.availableTickets ?? 0) == 0
                   ? null
                   : article.event?.price != null
                       ? () {
@@ -140,6 +140,7 @@ class EventsScreen extends StatelessWidget {
                               ));
                         },
               username: article.author.username,
+              availableTickets: article.event?.availableTickets ?? 0,
             );
           },
           routeName: '/',

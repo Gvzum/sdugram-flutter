@@ -12,6 +12,18 @@ part of 'home_route_module.dart';
 abstract class _$HomeRouteModule extends AutoRouterModule {
   @override
   final Map<String, PageFactory> pagesMap = {
+    ClubDetailRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ClubDetailRouteArgs>(
+          orElse: () => ClubDetailRouteArgs(id: pathParams.getInt('id')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ClubDetailScreen(
+          key: args.key,
+          id: args.id,
+        ),
+      );
+    },
     ClubsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -50,6 +62,45 @@ abstract class _$HomeRouteModule extends AutoRouterModule {
       );
     },
   };
+}
+
+/// generated route for
+/// [ClubDetailScreen]
+class ClubDetailRoute extends PageRouteInfo<ClubDetailRouteArgs> {
+  ClubDetailRoute({
+    Key? key,
+    required int id,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ClubDetailRoute.name,
+          args: ClubDetailRouteArgs(
+            key: key,
+            id: id,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'ClubDetailRoute';
+
+  static const PageInfo<ClubDetailRouteArgs> page =
+      PageInfo<ClubDetailRouteArgs>(name);
+}
+
+class ClubDetailRouteArgs {
+  const ClubDetailRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'ClubDetailRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

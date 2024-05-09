@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/presentation.dart';
-import 'package:sdugram_home/sdugram_home.dart';
 
 @RoutePage()
 class EventsDetailScreenFailure extends StatelessWidget {
@@ -16,7 +14,7 @@ class EventsDetailScreenFailure extends StatelessWidget {
     return SduErrorPage(
       statusTitle: failure,
       primaryOnPress: () {
-        context.read<HomeBloc>().add(HomeStarted());
+        context.router.popForced();
       },
       primaryTitle: 'Back',
       reverseButtons: false,

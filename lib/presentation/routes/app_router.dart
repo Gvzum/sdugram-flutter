@@ -81,6 +81,10 @@ class AppRouter extends $AppRouter {
           path: '/error/:failure',
         ),
         AutoRoute(
+          page: ClubDetailRoute.page,
+          path: '/club/:id',
+        ),
+        AutoRoute(
           page: MainRoute.page,
           path: '/sdugram',
           initial: true,

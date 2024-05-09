@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sdugram_home/src/common/data/dtos/author_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/category_dto.dart';
-import 'package:sdugram_home/src/common/data/dtos/event_dto.dart';
+import 'package:sdugram_core/src/common/data/dtos/event_dto.dart';
 
 part 'article_dto.g.dart';
 
