@@ -15,6 +15,7 @@ dependencies:
   flutter_bloc: ^8.1.4
   injectable: ^2.3.5
   retrofit: ^4.1.0
+  shared_preferences: ^2.2.2
 
   sdugram_core:
     path: ../sdugram_core

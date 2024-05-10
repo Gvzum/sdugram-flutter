@@ -5,19 +5,42 @@ import 'package:sdugram_home/sdugram_home.dart';
 import 'package:sdugram_mentoring/sdugram_mentoring.dart';
 import 'package:sdugram_profile/sdugram_profile.dart';
 import 'package:sdugram_tickets/sdugram_tickets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  bool isGuest = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isGuestOnly();
+  }
+
+  void isGuestOnly() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool boo = prefs.getBool('isGuest') ?? false;
+    setState(() {
+      isGuest = boo;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
-      routes: const [
-        HomeRoute(),
-        MentoringRoute(),
-        TicketsRoute(),
-        ProfileRoute(),
+      routes: [
+        const HomeRoute(),
+        if (!isGuest)
+        const MentoringRoute(),
+        const TicketsRoute(),
+        const ProfileRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -47,26 +70,17 @@ class MainScreen extends StatelessWidget {
                 ),
                 label: 'Home',
               ),
-              BottomNavigationBarItem(
-                icon: AssetsGen.icons.supervisorAccount.svg(),
-                activeIcon: AssetsGen.icons.supervisorAccount.svg(
-                  colorFilter: const ColorFilter.mode(
-                    kPrimaryColor,
-                    BlendMode.srcIn,
+              if (!isGuest)
+                BottomNavigationBarItem(
+                  icon: AssetsGen.icons.supervisorAccount.svg(),
+                  activeIcon: AssetsGen.icons.supervisorAccount.svg(
+                    colorFilter: const ColorFilter.mode(
+                      kPrimaryColor,
+                      BlendMode.srcIn,
+                    ),
                   ),
+                  label: 'Mentoring',
                 ),
-                label: 'Mentoring',
-              ),
-              // BottomNavigationBarItem(
-              //   icon: AssetsGen.icons.addCircle.svg(),
-              //   activeIcon: AssetsGen.icons.addCircle.svg(
-              //     colorFilter: const ColorFilter.mode(
-              //       kPrimaryColor,
-              //       BlendMode.srcIn,
-              //     ),
-              //   ),
-              //   label: 'Post',
-              // ),
               BottomNavigationBarItem(
                 icon: AssetsGen.icons.confirmationNumber.svg(),
                 activeIcon: AssetsGen.icons.confirmationNumber.svg(

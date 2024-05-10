@@ -155,7 +155,7 @@ mixin _$HomeClubsStatus {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Failure failure) failure,
-    required TResult Function(List<ClubModel> listClubs) success,
+    required TResult Function(List<UserProfileModel> listClubs) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -163,7 +163,7 @@ mixin _$HomeClubsStatus {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(Failure failure)? failure,
-    TResult? Function(List<ClubModel> listClubs)? success,
+    TResult? Function(List<UserProfileModel> listClubs)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -171,7 +171,7 @@ mixin _$HomeClubsStatus {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Failure failure)? failure,
-    TResult Function(List<ClubModel> listClubs)? success,
+    TResult Function(List<UserProfileModel> listClubs)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -261,7 +261,7 @@ class _$HomeClubsInitialImpl implements HomeClubsInitial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Failure failure) failure,
-    required TResult Function(List<ClubModel> listClubs) success,
+    required TResult Function(List<UserProfileModel> listClubs) success,
   }) {
     return initial();
   }
@@ -272,7 +272,7 @@ class _$HomeClubsInitialImpl implements HomeClubsInitial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(Failure failure)? failure,
-    TResult? Function(List<ClubModel> listClubs)? success,
+    TResult? Function(List<UserProfileModel> listClubs)? success,
   }) {
     return initial?.call();
   }
@@ -283,7 +283,7 @@ class _$HomeClubsInitialImpl implements HomeClubsInitial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Failure failure)? failure,
-    TResult Function(List<ClubModel> listClubs)? success,
+    TResult Function(List<UserProfileModel> listClubs)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -375,7 +375,7 @@ class _$HomeClubsLoadingImpl implements HomeClubsLoading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Failure failure) failure,
-    required TResult Function(List<ClubModel> listClubs) success,
+    required TResult Function(List<UserProfileModel> listClubs) success,
   }) {
     return loading();
   }
@@ -386,7 +386,7 @@ class _$HomeClubsLoadingImpl implements HomeClubsLoading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(Failure failure)? failure,
-    TResult? Function(List<ClubModel> listClubs)? success,
+    TResult? Function(List<UserProfileModel> listClubs)? success,
   }) {
     return loading?.call();
   }
@@ -397,7 +397,7 @@ class _$HomeClubsLoadingImpl implements HomeClubsLoading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Failure failure)? failure,
-    TResult Function(List<ClubModel> listClubs)? success,
+    TResult Function(List<UserProfileModel> listClubs)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -516,7 +516,7 @@ class _$HomeClubsFailureImpl implements HomeClubsFailure {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Failure failure) failure,
-    required TResult Function(List<ClubModel> listClubs) success,
+    required TResult Function(List<UserProfileModel> listClubs) success,
   }) {
     return failure(this.failure);
   }
@@ -527,7 +527,7 @@ class _$HomeClubsFailureImpl implements HomeClubsFailure {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(Failure failure)? failure,
-    TResult? Function(List<ClubModel> listClubs)? success,
+    TResult? Function(List<UserProfileModel> listClubs)? success,
   }) {
     return failure?.call(this.failure);
   }
@@ -538,7 +538,7 @@ class _$HomeClubsFailureImpl implements HomeClubsFailure {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Failure failure)? failure,
-    TResult Function(List<ClubModel> listClubs)? success,
+    TResult Function(List<UserProfileModel> listClubs)? success,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -601,7 +601,7 @@ abstract class _$$HomeClubsSuccessImplCopyWith<$Res> {
           $Res Function(_$HomeClubsSuccessImpl) then) =
       __$$HomeClubsSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ClubModel> listClubs});
+  $Res call({List<UserProfileModel> listClubs});
 }
 
 /// @nodoc
@@ -621,7 +621,7 @@ class __$$HomeClubsSuccessImplCopyWithImpl<$Res>
       null == listClubs
           ? _value._listClubs
           : listClubs // ignore: cast_nullable_to_non_nullable
-              as List<ClubModel>,
+              as List<UserProfileModel>,
     ));
   }
 }
@@ -629,12 +629,12 @@ class __$$HomeClubsSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HomeClubsSuccessImpl implements HomeClubsSuccess {
-  const _$HomeClubsSuccessImpl(final List<ClubModel> listClubs)
+  const _$HomeClubsSuccessImpl(final List<UserProfileModel> listClubs)
       : _listClubs = listClubs;
 
-  final List<ClubModel> _listClubs;
+  final List<UserProfileModel> _listClubs;
   @override
-  List<ClubModel> get listClubs {
+  List<UserProfileModel> get listClubs {
     if (_listClubs is EqualUnmodifiableListView) return _listClubs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_listClubs);
@@ -671,7 +671,7 @@ class _$HomeClubsSuccessImpl implements HomeClubsSuccess {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Failure failure) failure,
-    required TResult Function(List<ClubModel> listClubs) success,
+    required TResult Function(List<UserProfileModel> listClubs) success,
   }) {
     return success(listClubs);
   }
@@ -682,7 +682,7 @@ class _$HomeClubsSuccessImpl implements HomeClubsSuccess {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(Failure failure)? failure,
-    TResult? Function(List<ClubModel> listClubs)? success,
+    TResult? Function(List<UserProfileModel> listClubs)? success,
   }) {
     return success?.call(listClubs);
   }
@@ -693,7 +693,7 @@ class _$HomeClubsSuccessImpl implements HomeClubsSuccess {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Failure failure)? failure,
-    TResult Function(List<ClubModel> listClubs)? success,
+    TResult Function(List<UserProfileModel> listClubs)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -741,10 +741,10 @@ class _$HomeClubsSuccessImpl implements HomeClubsSuccess {
 }
 
 abstract class HomeClubsSuccess implements HomeClubsStatus {
-  const factory HomeClubsSuccess(final List<ClubModel> listClubs) =
+  const factory HomeClubsSuccess(final List<UserProfileModel> listClubs) =
       _$HomeClubsSuccessImpl;
 
-  List<ClubModel> get listClubs;
+  List<UserProfileModel> get listClubs;
   @JsonKey(ignore: true)
   _$$HomeClubsSuccessImplCopyWith<_$HomeClubsSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;

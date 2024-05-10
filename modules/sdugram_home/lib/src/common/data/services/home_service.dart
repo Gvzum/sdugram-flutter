@@ -21,7 +21,7 @@ import 'package:sdugram_home/src/common/domain/behaviors/fetch_clubs_behavior.da
 import 'package:sdugram_home/src/common/domain/models/article_detail_model.dart';
 import 'package:sdugram_home/src/common/domain/models/article_model.dart';
 import 'package:sdugram_core/config.dart';
-import 'package:sdugram_home/src/common/domain/models/club_model.dart';
+import 'package:sdugram_core/src/common/domain/models/user_profile_model.dart';
 import 'package:sdugram_home/src/common/domain/models/create_ticket.dart';
 import 'package:sdugram_home/src/common/domain/models/credit_card_model.dart';
 
@@ -131,7 +131,7 @@ class HomeService
   }
 
   @override
-  Future<Result<List<ClubModel>>> fetchClubs() async {
+  Future<Result<List<UserProfileModel>>> fetchClubs() async {
     try {
       final result = await _homeSource.getClubs();
       return SuccessResult(result.results);
@@ -142,7 +142,7 @@ class HomeService
   }
 
   @override
-  Future<Result<ClubModel>> fetchClubDetail({required String clubId}) async {
+  Future<Result<UserProfileModel>> fetchClubDetail({required String clubId}) async {
     try {
       final result = await _homeSource.getClubDetail(clubId: clubId);
       return SuccessResult(result);

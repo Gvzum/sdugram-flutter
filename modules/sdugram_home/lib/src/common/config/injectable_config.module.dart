@@ -47,7 +47,7 @@ import 'package:sdugram_home/src/common/domain/use_cases/fetch_articles_use_case
 import 'package:sdugram_home/src/common/domain/use_cases/fetch_cards_use_case.dart'
     as _i23;
 import 'package:sdugram_home/src/common/domain/use_cases/fetch_club_detail_use_case.dart'
-    as _i26;
+    as _i27;
 import 'package:sdugram_home/src/common/domain/use_cases/fetch_clubs_use_case.dart'
     as _i18;
 import 'package:sdugram_home/src/common/presentation/blocs/clubs/home_clubs_bloc.dart'
@@ -55,7 +55,7 @@ import 'package:sdugram_home/src/common/presentation/blocs/clubs/home_clubs_bloc
 import 'package:sdugram_home/src/common/presentation/blocs/detail/home_club_detail_bloc.dart'
     as _i28;
 import 'package:sdugram_home/src/common/presentation/blocs/home_bloc.dart'
-    as _i27;
+    as _i26;
 
 class SdugramHomePackageModule extends _i1.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -106,11 +106,7 @@ class SdugramHomePackageModule extends _i1.MicroPackageModule {
         () => _i24.FetchArticleUseCase(gh<_i9.FetchArticleBehavior>()));
     gh.factory<_i25.FetchArticlesUseCase>(
         () => _i25.FetchArticlesUseCase(gh<_i7.FetchArticlesBehavior>()));
-    gh.factory<_i26.FetchClubDetailUseCase>(() => _i26.FetchClubDetailUseCase(
-          gh<_i16.FetchArticlesByAuthorBehavior>(),
-          gh<_i15.FetchClubDetailBehavior>(),
-        ));
-    gh.factory<_i27.HomeBloc>(() => _i27.HomeBloc(
+    gh.factory<_i26.HomeBloc>(() => _i26.HomeBloc(
           gh<_i25.FetchArticlesUseCase>(),
           gh<_i24.FetchArticleUseCase>(),
           gh<_i23.FetchCardsUseCase>(),
@@ -119,13 +115,17 @@ class SdugramHomePackageModule extends _i1.MicroPackageModule {
           gh<_i22.DeleteTicketUseCase>(),
           gh<_i17.ConfirmTicketUseCase>(),
         ));
+    gh.factory<_i27.FetchClubDetailUseCase>(() => _i27.FetchClubDetailUseCase(
+          gh<_i16.FetchArticlesByAuthorBehavior>(),
+          gh<_i15.FetchClubDetailBehavior>(),
+        ));
     gh.factoryParam<_i28.HomeClubDetailBloc, int, dynamic>((
       id,
       _,
     ) =>
         _i28.HomeClubDetailBloc(
           id,
-          gh<_i26.FetchClubDetailUseCase>(),
+          gh<_i27.FetchClubDetailUseCase>(),
         ));
   }
 }

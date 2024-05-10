@@ -10,9 +10,7 @@ import 'package:sdugram_auth/src/common/domain/behaviors/get_access_token_behavi
 class AuthService implements GetAccessTokenBehavior {
   final SecureStorageSource _secureStorageDataSource;
 
-  AuthService(
-    this._secureStorageDataSource,
-  );
+  AuthService(this._secureStorageDataSource,);
 
   Future<void> storeUserDataToSecureStorage({
     required String username,
@@ -31,6 +29,12 @@ class AuthService implements GetAccessTokenBehavior {
       case TokenCleared():
         await _secureStorageDataSource.clearToken();
     }
+  }
+
+  Future<void> setUserRole({
+    required String role,
+  }) async {
+    await _secureStorageDataSource.storeUserRole(role);
   }
 
   @override

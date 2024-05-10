@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:sdugram_auth/sdugram_auth.dart';
 import 'package:sdugram_auth/src/common/data/sources/register_source.dart';
 import 'package:sdugram_core/config.dart';
+import 'package:sdugram_core/domain.dart';
 
 @module
 abstract class AuthModule {
@@ -43,4 +44,10 @@ abstract class AuthModule {
     AuthService authService,
   ) =>
       authService;
+
+  @factoryMethod
+  FetchUserDataBehavior getUserData(
+      LoginService loginService,
+      ) =>
+      loginService;
 }

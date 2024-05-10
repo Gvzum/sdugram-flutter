@@ -3,7 +3,6 @@ import 'package:retrofit/retrofit.dart';
 import 'package:retrofit/http.dart';
 import 'package:sdugram_home/src/common/data/dtos/add_card_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/article_detail_dto.dart';
-import 'package:sdugram_home/src/common/data/dtos/club_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/confirm_ticket_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/create_ticket_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/create_ticket_request.dart';
@@ -52,10 +51,10 @@ abstract class HomeSource {
   });
 
   @GET('/integration/user/user-profile/?profile_type_in=club')
-  Future<BaseListResponseDto<ClubDto>> getClubs();
+  Future<BaseListResponseDto<UserProfileResponseDto>> getClubs();
 
   @GET('/integration/user/user-profile/{clubId}')
-  Future<ClubDto> getClubDetail({
+  Future<UserProfileResponseDto> getClubDetail({
     @Path() required String clubId,
   });
 

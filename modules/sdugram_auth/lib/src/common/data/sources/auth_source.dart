@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sdugram_auth/sdugram_auth.dart';
+import 'package:sdugram_core/data.dart';
 
 part 'auth_source.g.dart';
 
@@ -21,4 +22,6 @@ abstract class AuthSource {
     @Body() required RegisterRequestDto body,
   });
 
+  @GET('/integration/user/get-user-data/')
+  Future<UserDataDto> getUserRole();
 }

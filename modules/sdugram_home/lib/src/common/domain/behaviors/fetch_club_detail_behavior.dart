@@ -1,6 +1,6 @@
 import 'package:sdugram_core/domain.dart';
-import 'package:sdugram_home/src/common/domain/models/club_model.dart';
+import 'package:sdugram_core/src/common/domain/models/user_profile_model.dart';
 
 abstract class FetchClubDetailBehavior {
-  Future<Result<ClubModel>> fetchClubDetail({required String clubId});
+  Future<Result<UserProfileModel>> fetchClubDetail({required String clubId});
 }

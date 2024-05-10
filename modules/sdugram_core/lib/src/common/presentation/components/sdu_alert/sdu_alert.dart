@@ -5,6 +5,7 @@ class SduAlert extends StatelessWidget {
   final String title;
   final String description;
   final String buttonLabel;
+  final Widget? input;
   final Function()? onPressed;
   final Function()? onPressedCancel;
 
@@ -14,7 +15,8 @@ class SduAlert extends StatelessWidget {
       required this.description,
       required this.buttonLabel,
       required this.onPressed,
-      this.onPressedCancel});
+      this.onPressedCancel,
+      this.input});
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,7 @@ class SduAlert extends StatelessWidget {
               description,
               textAlign: TextAlign.center,
             ),
+            input ?? const SizedBox(),
             const SizedBox(height: 24.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

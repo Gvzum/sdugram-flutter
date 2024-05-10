@@ -8,11 +8,14 @@ import 'dart:async' as _i2;
 
 import 'package:dio/dio.dart' as _i5;
 import 'package:injectable/injectable.dart' as _i1;
-import 'package:sdugram_core/src/common/config/core_module.dart' as _i7;
+import 'package:sdugram_core/domain.dart' as _i8;
+import 'package:sdugram_core/src/common/config/core_module.dart' as _i9;
 import 'package:sdugram_core/src/common/config/logger/core_logger.dart' as _i6;
-import 'package:sdugram_core/src/common/config/network/dio_module.dart' as _i8;
+import 'package:sdugram_core/src/common/config/network/dio_module.dart' as _i10;
 import 'package:sdugram_core/src/common/config/utils/environment_config.dart'
     as _i4;
+import 'package:sdugram_core/src/common/domain/use_cases/fetch_user_data_use_case.dart'
+    as _i7;
 import 'package:talker_flutter/talker_flutter.dart' as _i3;
 
 class SdugramCorePackageModule extends _i1.MicroPackageModule {
@@ -40,6 +43,8 @@ class SdugramCorePackageModule extends _i1.MicroPackageModule {
       instanceName: 'no-auth-dio',
     );
     gh.singleton<_i6.CoreLogger>(() => _i6.CoreLogger(gh<_i3.Talker>()));
+    gh.factory<_i7.FetchUserDataUseCase>(
+        () => _i7.FetchUserDataUseCase(gh<_i8.FetchUserDataBehavior>()));
     gh.factory<_i5.Dio>(
       () => dioModule.getProtectedDio(
         gh<_i5.Interceptor>(instanceName: 'auth-interceptor'),
@@ -50,6 +55,6 @@ class SdugramCorePackageModule extends _i1.MicroPackageModule {
   }
 }
 
-class _$CoreModule extends _i7.CoreModule {}
+class _$CoreModule extends _i9.CoreModule {}
 
-class _$DioModule extends _i8.DioModule {}
+class _$DioModule extends _i10.DioModule {}

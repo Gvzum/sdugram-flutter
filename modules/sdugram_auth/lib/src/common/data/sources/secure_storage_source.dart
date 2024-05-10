@@ -78,6 +78,17 @@ class SecureStorageSource {
     return _secureStorage.read(key: SecureStorageKeys.passwordKey);
   }
 
+  Future<String?> getUserRole() async {
+    return _secureStorage.read(key: SecureStorageKeys.userRoleKey);
+  }
+
+  Future<void> storeUserRole(String role) {
+    return _secureStorage.write(
+      key: SecureStorageKeys.userRoleKey,
+      value: role,
+    );
+  }
+
   Future<void> storeDeviceId(String deviceId) {
     return _secureStorage.write(
       key: SecureStorageKeys.deviceId,
@@ -146,6 +157,7 @@ mixin SecureStorageKeys {
   static const String pinCodeKey = 'app_pin_code';
   static const String userLoginKey = 'app_user_login';
   static const String userNameKey = 'app_user_name';
+  static const String userRoleKey = 'app_user_role';
   static const String passwordKey = 'app_password';
   static const String pinCodeStatusKey = 'app_pin_code_status';
   static const String localAuthStatusKey = 'app_local_auth_status';

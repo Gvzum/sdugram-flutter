@@ -205,13 +205,13 @@ class _HomeSource implements HomeSource {
   }
 
   @override
-  Future<BaseListResponseDto<ClubDto>> getClubs() async {
+  Future<BaseListResponseDto<UserProfileResponseDto>> getClubs() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseListResponseDto<ClubDto>>(Options(
+        _setStreamType<BaseListResponseDto<UserProfileResponseDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -227,21 +227,21 @@ class _HomeSource implements HomeSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = BaseListResponseDto<ClubDto>.fromJson(
+    final value = BaseListResponseDto<UserProfileResponseDto>.fromJson(
       _result.data!,
-      (json) => ClubDto.fromJson(json as Map<String, dynamic>),
+      (json) => UserProfileResponseDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<ClubDto> getClubDetail({required String clubId}) async {
+  Future<UserProfileResponseDto> getClubDetail({required String clubId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<ClubDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UserProfileResponseDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -257,7 +257,7 @@ class _HomeSource implements HomeSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ClubDto.fromJson(_result.data!);
+    final value = UserProfileResponseDto.fromJson(_result.data!);
     return value;
   }
 

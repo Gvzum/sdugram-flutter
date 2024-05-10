@@ -14,7 +14,7 @@ import 'package:sdugram_core/domain.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class LoginService implements GetLoginTokenBehavior {
+class LoginService implements GetLoginTokenBehavior, FetchUserDataBehavior {
   final AuthSource _authSource;
   final AuthService _authService;
 
@@ -46,6 +46,17 @@ class LoginService implements GetLoginTokenBehavior {
       await _authService.setTokenState(TokenUpdated(token));
 
       return SuccessResult(result.toModel());
+    } on DioException catch (e) {
+      return ErrorResult(
+          e.handleError('Error occurred while fetching some data'));
+    }
+  }
+
+  @override
+  Future<Result<CoreUserDataModel>> fetchUserData() async {
+    try {
+      final result = await _authSource.getUserRole();
+      return SuccessResult(result);
     } on DioException catch (e) {
       return ErrorResult(
           e.handleError('Error occurred while fetching some data'));

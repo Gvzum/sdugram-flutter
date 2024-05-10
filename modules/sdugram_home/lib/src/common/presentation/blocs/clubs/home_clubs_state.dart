@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sdugram_core/domain.dart';
-import 'package:sdugram_home/src/common/domain/models/club_model.dart';
+import 'package:sdugram_core/src/common/domain/models/user_profile_model.dart';
 
 part 'home_clubs_state.freezed.dart';
 
@@ -21,6 +21,6 @@ sealed class HomeClubsStatus with _$HomeClubsStatus {
   const factory HomeClubsStatus.failure(Failure failure) =
   HomeClubsFailure;
 
-  const factory HomeClubsStatus.success(List<ClubModel> listClubs) =
+  const factory HomeClubsStatus.success(List<UserProfileModel> listClubs) =
   HomeClubsSuccess;
 }
