@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Mentor Request',
+          title: const Text('Profile',
               style: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w500,
