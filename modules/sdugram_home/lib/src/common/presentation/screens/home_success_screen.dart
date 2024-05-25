@@ -98,7 +98,7 @@ class _HomeSuccessScreenState extends State<HomeSuccessScreen> {
                     child: SduButton.secondary(
                       label: 'See ticket',
                       onPressed: () {
-                        context.router.replaceNamed('/sdugram');
+                        context.router.replaceNamed('/sdugram/tickets');
                       },
                       size: SduButtonSize.first,
                     ),

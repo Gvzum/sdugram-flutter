@@ -14,16 +14,14 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Profile',
+          title: const Text('Mentor Request',
               style: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w500,
                   fontSize: 18)),
           actions: [
             TextButton(
-              onPressed: () {
-                // Handle edit profile action
-              },
+              onPressed: () {},
               child: const Text(
                 'Edit',
                 style: TextStyle(color: Colors.blue, fontFamily: 'Poppins'),
@@ -77,15 +75,15 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 32),
-                    const ProfileOption(icon: Icons.save, text: 'Saved posts'),
-                    const ProfileOption(
-                        icon: Icons.help_outline, text: 'Help and support'),
-                    const ProfileOption(
-                        icon: Icons.privacy_tip, text: 'Privacy policy'),
-                    const ProfileOption(
-                        icon: Icons.info_outline,
-                        text: 'About SDUgram',
-                        isNew: true),
+                    // const ProfileOption(icon: Icons.save, text: 'Saved posts'),
+                    // const ProfileOption(
+                    //     icon: Icons.help_outline, text: 'Help and support'),
+                    // const ProfileOption(
+                    //     icon: Icons.privacy_tip, text: 'Privacy policy'),
+                    // const ProfileOption(
+                    //     icon: Icons.info_outline,
+                    //     text: 'About SDUgram',
+                    //     isNew: true),
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 4),
@@ -108,6 +106,19 @@ class ProfileScreen extends StatelessWidget {
                           child: const Icon(Icons.chevron_right,
                               color: kPrimaryColor),
                         ),
+                        onTap: () {
+                          context.router.navigateNamed('/profile-form');
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: SduButton.primary(
+                        label: 'logout',
+                        size: SduButtonSize.first,
+                        onPressed: () {
+                          context.router.replaceNamed('/login/nothing');
+                        },
                       ),
                     ),
                   ],

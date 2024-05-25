@@ -85,6 +85,10 @@ class AppRouter extends $AppRouter {
           path: '/club/:id',
         ),
         AutoRoute(
+          page: ProfileMentorRequestFormRoute.page,
+          path: '/profile-form',
+        ),
+        AutoRoute(
           page: MainRoute.page,
           path: '/sdugram',
           initial: true,

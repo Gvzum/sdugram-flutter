@@ -6,7 +6,6 @@ import 'package:sdugram_core/presentation.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/chat/mentoring_chat_bloc.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/mentoring_bloc.dart';
 import 'package:sdugram_mentoring/src/common/presentation/screens/all_mentors_screen.dart';
-import 'package:sdugram_mentoring/src/common/presentation/screens/my_mentors_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
@@ -18,7 +17,7 @@ class MentoringScreen extends StatefulWidget {
 }
 
 class _MentoringScreenState extends State<MentoringScreen> {
-   bool isMentor = false;
+  bool isMentor = false;
 
   @override
   void initState() {
@@ -51,9 +50,8 @@ class _MentoringScreenState extends State<MentoringScreen> {
         body: SduSegmentedControlTab(
           options: [
             const TabOption(title: 'All mentors', view: AllMentorsScreen()),
-            TabOption(
-                title: isMentor ? 'My Students' : 'My mentors',
-                view: const MyMentorsScreen())
+            // if (isMentor)
+            //   TabOption(title: 'My Students', view: const MyMentorsScreen()),
           ],
         ),
       ),

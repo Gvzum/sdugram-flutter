@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sdugram_core/config.dart';
+import 'package:sdugram_profile/src/common/data/services/profile_service.dart';
 import 'package:sdugram_profile/src/common/data/sources/profile_source.dart';
+import 'package:sdugram_profile/src/common/domain/behaviors/create_mentor_behavior.dart';
 
 @module
 abstract class ProfileModule {
@@ -15,9 +17,9 @@ abstract class ProfileModule {
         baseUrl: '${repositoryConfig.baseUrl}/api',
       );
 
-  // @factoryMethod
-  // FetchUserDataBehavior fetchUserBehavior(
-  //   ProfileService mentoringService,
-  // ) =>
-  //     mentoringService;
+  @factoryMethod
+  CreateMentorBehavior fetchUserBehavior(
+    ProfileService mentoringService,
+  ) =>
+      mentoringService;
 }

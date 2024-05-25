@@ -1,62 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sdugram_core/domain.dart';
 import 'package:sdugram_core/presentation.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/mentoring_bloc.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/mentoring_event.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/mentoring_state.dart';
+import 'package:sdugram_mentoring/sdugram_mentoring.dart';
+import 'package:sdugram_mentoring/src/common/domain/models/mentee_request_model.dart';
 
-class AllMentorsScreen extends StatelessWidget {
-  const AllMentorsScreen({super.key});
+class StudentCardView extends StatefulWidget {
+  const StudentCardView({super.key, required this.mentor});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<MentoringBloc, MentoringState>(
-      listener: (context, state) {
-        state.navigation.whenOrNull(
-          loading: () {
-            SduOverlayLoader().show(context);
-          },
-          createSuccess: () {
-            SduOverlayLoader().hide();
-            context.router.popForced();
-          },
-        );
-      },
-      builder: (context, state) {
-        return state.mentoringStatus.maybeWhen(success: (mentors) {
-          return Scaffold(
-            backgroundColor: kBackgroundColor,
-            body: ListView.builder(
-                itemCount: mentors.length,
-                itemBuilder: (context, index) {
-                  final mentor = mentors[index];
-                  return MentorshipCard(
-                    mentor: mentor,
-                  );
-                }),
-          );
-        }, loading: () {
-          return const Scaffold(body: Center(child: CircularLoader()));
-        }, orElse: () {
-          return const SizedBox();
-        });
-      },
-    );
-  }
-}
-
-class MentorshipCard extends StatefulWidget {
-  const MentorshipCard({super.key, required this.mentor});
-
-  final UserProfileModel mentor;
+  final MenteeRequestModel mentor;
 
   @override
-  State<MentorshipCard> createState() => _MentorshipCardState();
+  State<StudentCardView> createState() => _MentorshipCardState();
 }
 
-class _MentorshipCardState extends State<MentorshipCard> {
+class _MentorshipCardState extends State<StudentCardView> {
   late TextEditingController letterController;
 
   @override
@@ -84,7 +41,8 @@ class _MentorshipCardState extends State<MentorshipCard> {
               children: <Widget>[
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      widget.mentor.profileData?.avatar ?? kDefaultImageUrl),
+                      widget.mentor.mentee.profileData?.avatar ??
+                          kDefaultImageUrl),
                   radius: 40,
                 ),
                 Expanded(
@@ -94,7 +52,7 @@ class _MentorshipCardState extends State<MentorshipCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          '${widget.mentor.firstName} ${widget.mentor.lastName}',
+                          '${widget.mentor.mentee.firstName} ${widget.mentor.mentee.lastName}',
                           style: const TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.bold,
@@ -103,7 +61,7 @@ class _MentorshipCardState extends State<MentorshipCard> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          widget.mentor.profileData?.occupation ?? '',
+                          widget.mentor.mentee.profileData?.occupation ?? '',
                           style: TextStyle(
                             color: Colors.grey[700],
                             fontFamily: 'Poppins',
@@ -111,7 +69,7 @@ class _MentorshipCardState extends State<MentorshipCard> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          widget.mentor.profileData?.company ?? '',
+                          widget.mentor.mentee.profileData?.company ?? '',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -128,7 +86,7 @@ class _MentorshipCardState extends State<MentorshipCard> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(
-                widget.mentor.profileData?.bio ?? '',
+                widget.mentor.mentee.profileData?.bio ?? '',
                 style: const TextStyle(
                   color: Colors.black,
                   fontFamily: 'Poppins',
@@ -161,7 +119,7 @@ class _MentorshipCardState extends State<MentorshipCard> {
                                 ),
                               ),
                               Text(
-                                '${widget.mentor.profileData?.yearExperience ?? 1} years',
+                                '${widget.mentor.mentee.profileData?.yearExperience ?? 1} years',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(fontFamily: 'Poppins'),
                               )
@@ -181,7 +139,8 @@ class _MentorshipCardState extends State<MentorshipCard> {
                                 ),
                               ),
                               Text(
-                                widget.mentor.profileData?.university ?? "-",
+                                widget.mentor.mentee.profileData?.university ??
+                                    "-",
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(fontFamily: 'Poppins'),
                               )
@@ -199,25 +158,21 @@ class _MentorshipCardState extends State<MentorshipCard> {
                       onPressed: () {
                         showAlert(
                           context,
-                          title:
-                              'Do you want to become a student of this mentor?',
-                          description: 'Send the cover letter to mentor',
+                          title: 'You apply the student',
+                          description: '',
                           buttonLabel: 'OK',
                           onPressed: () {
-                            context.read<MentoringBloc>().add(
-                                MentoringOkPressed(
-                                    id: widget.mentor.id,
-                                    letter: letterController.text));
+                            context.router.popForced();
                           },
-                          input: TextField(
-                            controller: letterController,
-                            decoration: const InputDecoration(
-                                hintText: 'Enter the letter',
-                                hintStyle: TextStyle(
-                                    fontSize: 14, fontFamily: 'Poppins'),
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 20)),
-                          ),
+                          // input: TextField(
+                          //   controller: letterController,
+                          //   decoration: const InputDecoration(
+                          //       hintText: 'Enter the letter',
+                          //       hintStyle: TextStyle(
+                          //           fontSize: 14, fontFamily: 'Poppins'),
+                          //       contentPadding:
+                          //           EdgeInsets.symmetric(horizontal: 20)),
+                          // ),
                         );
                       },
                     ),
@@ -230,28 +185,4 @@ class _MentorshipCardState extends State<MentorshipCard> {
       ),
     );
   }
-}
-
-void showAlert(
-  BuildContext context, {
-  required String title,
-  required String description,
-  required String buttonLabel,
-   Widget? input,
-  required Function()? onPressed,
-  Function()? onPressedCancel,
-}) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return SduAlert(
-        title: title,
-        description: description,
-        buttonLabel: buttonLabel,
-        onPressed: onPressed,
-        onPressedCancel: onPressedCancel,
-        input: input,
-      );
-    },
-  );
 }
