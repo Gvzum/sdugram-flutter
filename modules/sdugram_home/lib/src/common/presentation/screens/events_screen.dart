@@ -12,7 +12,6 @@ import 'package:sdugram_home/src/common/presentation/blocs/home_state.dart';
 import 'package:sdugram_home/src/common/presentation/widgets/event_card_view.dart';
 import 'package:sdugram_home/src/common/presentation/widgets/event_detail_screen_popover.dart';
 import 'package:sdugram_home/src/common/presentation/widgets/payment_method_popup.dart';
-// import 'package:intl/intl.dart';
 
 @RoutePage()
 class EventsScreen extends StatelessWidget {
@@ -43,7 +42,6 @@ class EventsScreen extends StatelessWidget {
         failure: (failure) {
           SduOverlayLoader().hide();
           context.router.navigateNamed('/error/${failure.message}');
-          // print(failure.message);
         },
         success: (article) {
           SduOverlayLoader().hide();
@@ -55,7 +53,6 @@ class EventsScreen extends StatelessWidget {
         },
         addSuccess: () {
           SduOverlayLoader().hide();
-          // print('success add card');
         },
         addTicketSuccess: () {
           SduOverlayLoader().hide();
@@ -91,12 +88,19 @@ class EventsScreen extends StatelessWidget {
                   logoUrl: article.author.avatar ?? kDefaultImageUrl,
                   clubName: article.author.username,
                   info: article.title,
+                  isSaved: article.isSaved,
                   time:
                       '${DateTime.now().difference(article.publishedDate).inHours} hours ago published',
                   onTap: () {
                     context
                         .read<HomeBloc>()
                         .add(HomeEventPressed(id: article.id));
+                  },
+                  onSave: () {
+                    context.read<HomeBloc>().add(HomeSaveButtonPressed(article.id));
+                  },
+                  onUndoSave: () {
+                    context.read<HomeBloc>().add(HomeUndoSaveButtonPressed(article.id));
                   },
                 );
               }),

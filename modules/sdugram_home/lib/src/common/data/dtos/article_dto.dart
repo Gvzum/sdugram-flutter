@@ -18,6 +18,8 @@ class ArticleDto {
   @JsonKey(name: 'published_date')
   final DateTime publishedDate;
   final AuthorDto author;
+  @JsonKey(name: 'is_saved')
+  final bool isSaved;
 
   ArticleDto(
       {required this.title,
@@ -28,7 +30,8 @@ class ArticleDto {
       required this.categories,
       this.event,
       required this.publishedDate,
-      required this.author});
+      required this.author,
+      required this.isSaved});
 
   factory ArticleDto.fromJson(Map<String, dynamic> json) =>
       _$ArticleDtoFromJson(json);

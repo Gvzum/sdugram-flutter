@@ -9,6 +9,9 @@ import 'package:sdugram_home/src/common/data/dtos/create_ticket_request.dart';
 import 'package:sdugram_home/src/common/data/dtos/list_article_response_dto.dart';
 import 'package:sdugram_home/src/common/data/dtos/list_credit_card_response_dto.dart';
 import 'package:sdugram_core/data.dart';
+import 'package:sdugram_home/src/common/domain/models/save_article_model.dart';
+
+import '../dtos/save_article_request.dart';
 
 part 'home_source.g.dart';
 
@@ -61,5 +64,15 @@ abstract class HomeSource {
   @GET('/integration/blog/articles/?status=ACTIVE&author={author}')
   Future<ListArticleResponseDto> getActiveArticlesByAuthor({
     @Query('author') required String author,
+  });
+
+  @POST('/integration/blog/saved-article/')
+  Future<void> saveArticle({
+    @Body() required SaveArticleRequest request,
+  });
+
+  @POST('/integration/blog/undo-saved-article/')
+  Future<void> undoSaveArticle({
+    @Body() required SaveArticleRequest request,
   });
 }

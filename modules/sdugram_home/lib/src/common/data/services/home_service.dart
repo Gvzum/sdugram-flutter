@@ -18,12 +18,17 @@ import 'package:sdugram_home/src/common/domain/behaviors/fetch_articles_by_autho
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_cards_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_club_detail_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_clubs_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/save_article_behavior.dart';
 import 'package:sdugram_home/src/common/domain/models/article_detail_model.dart';
 import 'package:sdugram_home/src/common/domain/models/article_model.dart';
 import 'package:sdugram_core/config.dart';
 import 'package:sdugram_core/src/common/domain/models/user_profile_model.dart';
 import 'package:sdugram_home/src/common/domain/models/create_ticket.dart';
 import 'package:sdugram_home/src/common/domain/models/credit_card_model.dart';
+import 'package:sdugram_home/src/common/domain/models/save_article_model.dart';
+
+import '../../domain/behaviors/undo_save_article_behavior.dart';
+import '../dtos/save_article_request.dart';
 
 @lazySingleton
 class HomeService
@@ -37,7 +42,9 @@ class HomeService
         ConfirmTicketBehavior,
         FetchClubsBehavior,
         FetchClubDetailBehavior,
-        FetchArticlesByAuthorBehavior {
+        FetchArticlesByAuthorBehavior,
+        SaveArticleBehavior,
+        UndoSaveArticleBehavior {
   final HomeSource _homeSource;
 
   HomeService({required HomeSource homeSource}) : _homeSource = homeSource;
@@ -162,6 +169,28 @@ class HomeService
     } on DioException catch (e) {
       return ErrorResult(
           e.handleError('Error occurred while fetching some data'));
+    }
+  }
+
+  @override
+  Future<Result<void>> saveArticle({required int articleId}) async {
+    try {
+      await _homeSource.saveArticle(request: SaveArticleRequest(articleId: articleId));
+      return SuccessResult(null);
+    } on DioException catch (e) {
+      return ErrorResult(
+          e.handleError('Error occurred while fetching save article data'));
+    }
+  }
+
+  @override
+  Future<Result<void>> undoSaveArticle({required int articleId}) async {
+    try {
+      await _homeSource.undoSaveArticle(request: SaveArticleRequest(articleId: articleId));
+      return SuccessResult(null);
+    } on DioException catch (e) {
+      return ErrorResult(
+          e.handleError('Error occurred while fetching undo save article data'));
     }
   }
 }

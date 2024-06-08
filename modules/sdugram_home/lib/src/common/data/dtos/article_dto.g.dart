@@ -20,6 +20,7 @@ ArticleDto _$ArticleDtoFromJson(Map<String, dynamic> json) => ArticleDto(
           : EventDto.fromJson(json['event'] as Map<String, dynamic>),
       publishedDate: DateTime.parse(json['published_date'] as String),
       author: AuthorDto.fromJson(json['author'] as Map<String, dynamic>),
+      isSaved: json['is_saved'] as bool,
     );
 
 Map<String, dynamic> _$ArticleDtoToJson(ArticleDto instance) {
@@ -41,5 +42,6 @@ Map<String, dynamic> _$ArticleDtoToJson(ArticleDto instance) {
   writeNotNull('event', instance.event?.toJson());
   val['published_date'] = instance.publishedDate.toIso8601String();
   val['author'] = instance.author.toJson();
+  val['is_saved'] = instance.isSaved;
   return val;
 }

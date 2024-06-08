@@ -12,6 +12,8 @@ import 'package:sdugram_home/src/common/domain/behaviors/fetch_articles_by_autho
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_cards_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_club_detail_behavior.dart';
 import 'package:sdugram_home/src/common/domain/behaviors/fetch_clubs_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/save_article_behavior.dart';
+import 'package:sdugram_home/src/common/domain/behaviors/undo_save_article_behavior.dart';
 
 import '../data/services/home_service.dart';
 
@@ -86,4 +88,17 @@ abstract class HomeModule {
       HomeService homeService,
       ) =>
       homeService;
+
+  @factoryMethod
+  SaveArticleBehavior saveArticleBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
+
+  @factoryMethod
+  UndoSaveArticleBehavior undoSaveArticleBehavior(
+      HomeService homeService,
+      ) =>
+      homeService;
+
 }

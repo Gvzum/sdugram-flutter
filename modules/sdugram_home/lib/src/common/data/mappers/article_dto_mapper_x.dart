@@ -12,6 +12,7 @@ extension ArticleDtoMapperX on ArticleDto {
           categories: categories.map((e) => e.name).toList(),
           event: event?.toModel(),
           publishedDate: publishedDate,
-          author: author);
+          author: author,
+          isSaved: isSaved);
 
 }

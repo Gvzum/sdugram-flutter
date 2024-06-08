@@ -4,27 +4,52 @@ import 'package:flutter/widgets.dart';
 import 'package:sdugram_core/presentation.dart';
 
 class EventCardView extends StatefulWidget {
-  const EventCardView({
+  EventCardView({
     super.key,
     required this.logoUrl,
     required this.clubName,
     required this.info,
+    this.isSaved = false,
     required this.time,
-    this.onTap, required this.bgUrl,
+    this.onTap,
+    required this.bgUrl,
+    this.onSave,
+    this.onUndoSave,
   });
 
   final String logoUrl;
   final String bgUrl;
   final String clubName;
   final String info;
+  late bool isSaved;
   final String time;
   final Function()? onTap;
+  final Function()? onSave;
+  final Function()? onUndoSave;
 
   @override
   State<EventCardView> createState() => _SocialMediaCardState();
 }
 
 class _SocialMediaCardState extends State<EventCardView> {
+
+  void _toggleSave() async {
+    if (widget.isSaved) {
+      if (widget.onUndoSave != null) {
+        await widget.onUndoSave!();
+      }
+    } else {
+      // Call the API to add to saved
+      if (widget.onSave != null) {
+        await widget.onSave!();
+      }
+    }
+
+    setState(() {
+      widget.isSaved = !widget.isSaved;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,10 +79,30 @@ class _SocialMediaCardState extends State<EventCardView> {
                     fontSize: 14,
                     color: Colors.black),
               ),
-              trailing: const Icon(Icons.more_vert),
+              // trailing: const Icon(Icons.bookmark_outlined),
+              trailing: IconButton(
+                icon: Icon(
+                  widget.isSaved
+                      ? Icons.bookmark
+                      : Icons.bookmark_outline,
+                  color: kDefaultTextColor,
+                ),
+                onPressed: _toggleSave,
+                  // Add your logic here
+
+
+                  // setState(() {
+                  //   widget.isSaved = !widget.isSaved;
+                  // });
+                  // print('Before widget save article');
+                  // widget.onSave;
+                  // print('After widget save article');
+              ),
             ),
-            Image.network(widget.bgUrl,
-                width: double.infinity, height: 390, fit: BoxFit.cover),
+            Image.network(
+                widget.bgUrl,
+                width: double.infinity, height: 390, fit: BoxFit.cover
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

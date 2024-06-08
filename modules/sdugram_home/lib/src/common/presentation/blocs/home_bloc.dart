@@ -10,8 +10,11 @@ import 'package:sdugram_home/src/common/domain/use_cases/delete_ticket_use_case.
 import 'package:sdugram_home/src/common/domain/use_cases/fetch_article_use_case.dart';
 import 'package:sdugram_home/src/common/domain/use_cases/fetch_articles_use_case.dart';
 import 'package:sdugram_home/src/common/domain/use_cases/fetch_cards_use_case.dart';
+import 'package:sdugram_home/src/common/domain/use_cases/save_article_use_case.dart';
 import 'package:sdugram_home/src/common/presentation/blocs/home_event.dart';
 import 'package:sdugram_home/src/common/presentation/blocs/home_state.dart';
+
+import '../../domain/use_cases/undo_save_article_use_case.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -22,6 +25,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final CreateTicketUseCase _createTicketUseCase;
   final DeleteTicketUseCase _deleteTicketUseCase;
   final ConfirmTicketUseCase _confirmTicketUseCase;
+  final SaveArticleUseCase _saveArticleUseCase;
+  final UndoSaveArticleUseCase _undoSaveArticleUseCase;
 
   HomeBloc(
       this._fetchArticlesUseCase,
@@ -30,7 +35,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       this._createCardUseCase,
       this._createTicketUseCase,
       this._deleteTicketUseCase,
-      this._confirmTicketUseCase)
+      this._confirmTicketUseCase,
+      this._saveArticleUseCase,
+      this._undoSaveArticleUseCase)
       : super(const HomeState()) {
     _setupHandlers();
     add(HomeStarted());
@@ -44,6 +51,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomePayTicketPressed>(createTicket);
     on<HomeYesButtonPressed>(confirmTicket);
     on<HomeCancelButtonPressed>(deleteTicket);
+    on<HomeSaveButtonPressed>(saveArticle);
+    on<HomeUndoSaveButtonPressed>(undoSaveArticle);
   }
 
   Future<void> fetchArticles(
@@ -173,5 +182,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(
       detailEventState: const HomeEventDetailDeleteTicketSuccess(),
     ));
+  }
+
+  Future<FutureOr<void>> saveArticle(
+    HomeSaveButtonPressed event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _saveArticleUseCase(event.articleId);
+  }
+
+  Future<FutureOr<void>> undoSaveArticle(
+    HomeUndoSaveButtonPressed event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _undoSaveArticleUseCase(event.articleId);
   }
 }

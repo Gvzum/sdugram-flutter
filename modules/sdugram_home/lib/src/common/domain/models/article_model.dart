@@ -10,6 +10,7 @@ class ArticleModel {
   final EventModel? event;
   final DateTime publishedDate;
   final AuthorModel author;
+  final bool isSaved;
 
   ArticleModel(
       {required this.title,
@@ -20,7 +21,8 @@ class ArticleModel {
       required this.categories,
       this.event,
       required this.publishedDate,
-      required this.author});
+      required this.author,
+      required this.isSaved});
 }
 
 class ListArticleModel {

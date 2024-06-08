@@ -35,6 +35,18 @@ class HomeYesButtonPressed extends HomeEvent {}
 
 class HomeCancelButtonPressed extends HomeEvent {}
 
+class HomeSaveButtonPressed extends HomeEvent {
+  final int articleId;
+
+  HomeSaveButtonPressed(this.articleId);
+}
+
+class HomeUndoSaveButtonPressed extends HomeEvent {
+  final int articleId;
+
+  HomeUndoSaveButtonPressed(this.articleId);
+}
+
 // class LoginButtonPressed extends LoginEvent {
 //   final String username;
 //   final String password;
