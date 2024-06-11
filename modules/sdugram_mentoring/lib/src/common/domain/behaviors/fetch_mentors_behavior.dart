@@ -2,5 +2,5 @@ import 'package:sdugram_core/domain.dart';
 import 'package:sdugram_core/src/common/domain/models/user_profile_model.dart';
 
 abstract class FetchMentorsBehavior {
-  Future<Result<List<UserProfileModel>>> fetchClubs();
+  Future<Result<List<UserProfileModel>>> fetchMentors();
 }

@@ -54,109 +54,111 @@ class _LoginScreenState extends State<LoginScreen> {
               ? const Scaffold(body: Center(child: CircularLoader()))
               : Scaffold(
                   body: SafeArea(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 450,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 16.0),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 65,
-                                  ),
-                                  AssetsGen.images.logo
-                                      .image(fit: BoxFit.contain),
-                                  const SizedBox(
-                                    height: 24,
-                                  ),
-                                  const Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  const SizedBox(
-                                    height: 24,
-                                  ),
-                                  SduInput(
-                                    labelText: 'Username',
-                                    controller: _emailInput,
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  SduInput(
-                                    obscureText: true,
-                                    labelText: 'Password',
-                                    controller: _passwordInput,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  state is LoginFailure
-                                      ? const Text(
-                                          "Incorrect username or password",
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 450,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 65,
+                                    ),
+                                    AssetsGen.images.logo
+                                        .image(fit: BoxFit.contain),
+                                    const SizedBox(
+                                      height: 24,
+                                    ),
+                                    const Text(
+                                      'Login',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    const SizedBox(
+                                      height: 24,
+                                    ),
+                                    SduInput(
+                                      labelText: 'Username',
+                                      controller: _emailInput,
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    SduInput(
+                                      obscureText: true,
+                                      labelText: 'Password',
+                                      controller: _passwordInput,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    state is LoginFailure
+                                        ? const Text(
+                                            "Incorrect username or password",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
+                                        : const SizedBox.shrink(),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: SduButton.primary(
-                              label: 'Log In',
-                              trailingIcon: const Icon(
-                                Icons.navigate_next,
-                                color: Colors.white,
-                                size: 20,
+                          Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: SduButton.primary(
+                                label: 'Log In',
+                                trailingIcon: const Icon(
+                                  Icons.navigate_next,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                size: SduButtonSize.first,
+                                onPressed: () {
+                                  blocContext.read<LoginBloc>().add(
+                                      LoginButtonPressed(
+                                          username: _emailInput.text,
+                                          password: _passwordInput.text));
+                                },
                               ),
-                              size: SduButtonSize.first,
-                              onPressed: () {
-                                blocContext.read<LoginBloc>().add(
-                                    LoginButtonPressed(
-                                        username: _emailInput.text,
-                                        password: _passwordInput.text));
-                              },
                             ),
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Dont you have an account yet?',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            InkWell(
-                              child: const Text(
-                                'Signup',
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Dont you have an account yet?',
                                 style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontFamily: 'Poppins',
-                                    decoration: TextDecoration.underline),
+                                  fontFamily: 'Poppins',
+                                ),
                               ),
-                              onTap: () {
-                                context.router.replaceNamed('/register');
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              InkWell(
+                                child: const Text(
+                                  'Signup',
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontFamily: 'Poppins',
+                                      decoration: TextDecoration.underline),
+                                ),
+                                onTap: () {
+                                  context.router.replaceNamed('/register');
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

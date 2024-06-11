@@ -2,54 +2,145 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/presentation.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/chat/mentoring_chat_bloc.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/chat/mentoring_chat_state.dart';
-import 'package:sdugram_mentoring/src/common/presentation/widgets/student_cart_view.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_state.dart';
 
 class MyMentorsScreen extends StatelessWidget {
   const MyMentorsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MentoringChatBloc, MentoringChatState>(
-      listener: (context, state) {
-        state.navigation.whenOrNull(
-          loading: () {
-            SduOverlayLoader().show(context);
-          },
-          createSuccess: () {
-            SduOverlayLoader().hide();
-            context.router.popForced();
-          },
-        );
-      },
-      builder: (context, state) {
-        return state.mentoringStatus.maybeWhen(success: (mentors) {
-          return Scaffold(
-            backgroundColor: kBackgroundColor,
-            body: ListView.builder(
-                itemCount: mentors.length,
-                itemBuilder: (context, index) {
-                  final mentor = mentors[index];
-                  return StudentCardView(
-                    mentor: mentor,
-                  );
-                }),
-          );
-        }, loading: () {
-          return const Scaffold(body: Center(child: CircularLoader()));
-        }, orElse: () {
-          return const SizedBox();
-        });
-      },
+    final List<RequestMessage> messages = [
+      RequestMessage(
+        name: 'Thomas Simmons',
+        message: 'YOU: OK',
+        imageUrl: 'https://via.placeholder.com/150',
+        time: '15:23',
+        unreadCount: 2,
+      ),
+      RequestMessage(
+        name: 'Thomas Simmons',
+        message: 'YOU: OK',
+        imageUrl: 'https://via.placeholder.com/150',
+        time: '15:23',
+        unreadCount: 2,
+      ),
+      // ... o
+      RequestMessage(
+        name: 'Thomas Simmons',
+        message: 'YOU: OK',
+        imageUrl: 'https://via.placeholder.com/150',
+        time: '15:23',
+        unreadCount: 2,
+      ),
+      // ... o
+      RequestMessage(
+        name: 'Thomas Simmons',
+        message: 'YOU: OK',
+        imageUrl: 'https://via.placeholder.com/150',
+        time: '15:23',
+        unreadCount: 2,
+      ),
+      // ... other chat messages
+    ];
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocBuilder<MentoringRequestBloc, MentoringRequestState>(
+                buildWhen: (oldState, newState) {
+                  return oldState.mentoringStatus != newState.mentoringStatus;
+                },
+
+                builder: (context, state) {
+              return state.mentoringStatus.when(
+                initial: () {
+                  return const SizedBox.shrink();
+                },
+                loading: () {
+                  return const CircularLoader();
+                },
+                failure: (failure) {
+                  return Center(child: Text(failure.message));
+                },
+                success: (mentees) {
+                  return mentees.isNotEmpty
+                      ? InkWell(
+                          onTap: () {
+                            context.router.pushNamed('/requests');
+                          },
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 65,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Requests',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      StudentRequestIcon(
+                                        firstIcon: mentees[0]
+                                                .mentee
+                                                .profileData
+                                                ?.avatar ??
+                                            kDefaultImageUrl,
+                                        count: mentees.length,
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_forward,
+                                        size: 24,
+                                        color: kTextColor,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink();
+                },
+                emptySuccess: () {
+                  return const SizedBox.shrink();
+                },
+              );
+            }),
+            Container(
+              height: 8,
+              color: kBackgroundColor,
+            ),
+            Column(
+              children: messages.map((message) {
+                return RequestItem(
+                  message: message,
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class ChatItem extends StatelessWidget {
-  final ChatMessage message;
+class RequestItem extends StatelessWidget {
+  final RequestMessage message;
 
-  const ChatItem({super.key, required this.message});
+  const RequestItem({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -82,14 +173,14 @@ class ChatItem extends StatelessWidget {
   }
 }
 
-class ChatMessage {
+class RequestMessage {
   final String name;
   final String message;
   final String imageUrl;
   final String time;
   final int unreadCount;
 
-  ChatMessage({
+  RequestMessage({
     required this.name,
     required this.message,
     required this.imageUrl,
@@ -101,13 +192,11 @@ class ChatMessage {
 class StudentRequestIcon extends StatelessWidget {
   const StudentRequestIcon({
     required this.firstIcon,
-    required this.secondIcon,
     super.key,
     required this.count,
   });
 
   final String firstIcon;
-  final String secondIcon;
   final int count;
 
   @override
@@ -115,25 +204,6 @@ class StudentRequestIcon extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.bottomStart,
       children: [
-        Positioned(
-          top: 0,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.network(
-              firstIcon,
-              height: 40,
-              width: 40,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  height: 40,
-                  width: 40,
-                  color: kBackgroundColor,
-                );
-              },
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.only(left: 25, top: 0),
           child: Container(
@@ -145,7 +215,7 @@ class StudentRequestIcon extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: Image.network(
-                secondIcon,
+                firstIcon,
                 height: 40,
                 width: 40,
                 fit: BoxFit.cover,

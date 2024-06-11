@@ -89,6 +89,10 @@ class AppRouter extends $AppRouter {
           path: '/profile-form',
         ),
         AutoRoute(
+          page: MentorRequestRoute.page,
+          path: '/requests',
+        ),
+        AutoRoute(
           page: MainRoute.page,
           path: '/sdugram',
           initial: true,

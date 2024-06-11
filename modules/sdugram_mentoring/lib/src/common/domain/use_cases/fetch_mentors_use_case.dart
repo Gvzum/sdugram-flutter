@@ -10,6 +10,6 @@ class FetchMentorsUseCase implements Callable<void, List<UserProfileModel>> {
 
   @override
   Future<Result<List<UserProfileModel>>> call(_) {
-    return _fetchArticlesBehavior.fetchClubs();
+    return _fetchArticlesBehavior.fetchMentors();
   }
 }

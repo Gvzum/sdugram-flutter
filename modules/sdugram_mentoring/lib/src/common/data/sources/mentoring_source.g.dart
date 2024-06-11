@@ -75,20 +75,21 @@ class _MentoringSource implements MentoringSource {
   }
 
   @override
-  Future<List<MenteeRequestDto>> getMentees({required int mentor}) async {
+  Future<BaseListResponseDto<MenteeRequestDto>> getMentees(
+      {required int mentor}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'mentor': mentor};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<MenteeRequestDto>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseListResponseDto<MenteeRequestDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/integration/mentor/mentee-request/',
+              '/integration/mentor/mentee-request/?request_status=IN_PROGRESS',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -97,11 +98,39 @@ class _MentoringSource implements MentoringSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map(
-            (dynamic i) => MenteeRequestDto.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = BaseListResponseDto<MenteeRequestDto>.fromJson(
+      _result.data!,
+      (json) => MenteeRequestDto.fromJson(json as Map<String, dynamic>),
+    );
     return value;
+  }
+
+  @override
+  Future<void> applyMentees({
+    required int id,
+    required MentorAcceptRequestDto request,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/integration/mentor/handle-mentee-to-mentor/${id}/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

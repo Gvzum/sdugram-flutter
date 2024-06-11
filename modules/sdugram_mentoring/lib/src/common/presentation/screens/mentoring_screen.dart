@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/config.dart';
 import 'package:sdugram_core/presentation.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/chat/mentoring_chat_bloc.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/mentoring_bloc.dart';
-import 'package:sdugram_mentoring/src/common/presentation/screens/all_mentors_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sdugram_mentoring/sdugram_mentoring.dart';
+
+import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart';import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
 class MentoringScreen extends StatefulWidget {
@@ -39,7 +38,7 @@ class _MentoringScreenState extends State<MentoringScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => context.di<MentoringBloc>()),
-        BlocProvider(create: (_) => context.di<MentoringChatBloc>()),
+        BlocProvider(create: (_) => context.di<MentoringRequestBloc>()),
       ],
       child: Scaffold(
         backgroundColor: kBackgroundColor,
@@ -47,11 +46,11 @@ class _MentoringScreenState extends State<MentoringScreen> {
           title: const SduInputSearch(),
           backgroundColor: kBackgroundColor,
         ),
-        body: SduSegmentedControlTab(
+        body: const SduSegmentedControlTab(
           options: [
-            const TabOption(title: 'All mentors', view: AllMentorsScreen()),
+            TabOption(title: 'All mentors', view: AllMentorsScreen()),
             // if (isMentor)
-            //   TabOption(title: 'My Students', view: const MyMentorsScreen()),
+              TabOption(title: 'Requests', view: MyMentorsScreen()),
           ],
         ),
       ),

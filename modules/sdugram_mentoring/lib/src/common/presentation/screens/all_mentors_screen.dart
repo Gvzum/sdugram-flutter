@@ -191,36 +191,33 @@ class _MentorshipCardState extends State<MentorshipCard> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: 130,
-                    child: SduButton.primary(
-                      label: 'Apply',
-                      size: SduButtonSize.first,
-                      onPressed: () {
-                        showAlert(
-                          context,
-                          title:
-                              'Do you want to become a student of this mentor?',
-                          description: 'Send the cover letter to mentor',
-                          buttonLabel: 'OK',
-                          onPressed: () {
-                            context.read<MentoringBloc>().add(
-                                MentoringOkPressed(
-                                    id: widget.mentor.id,
-                                    letter: letterController.text));
-                          },
-                          input: TextField(
-                            controller: letterController,
-                            decoration: const InputDecoration(
-                                hintText: 'Enter the letter',
-                                hintStyle: TextStyle(
-                                    fontSize: 14, fontFamily: 'Poppins'),
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 20)),
-                          ),
-                        );
-                      },
-                    ),
+                  SduButton.primary(
+                    label: 'Apply',
+                    size: SduButtonSize.first,
+                    onPressed: () {
+                      showAlert(
+                        context,
+                        title:
+                            'Do you want to become a student of this mentor?',
+                        description: 'Send the cover letter to mentor',
+                        buttonLabel: 'OK',
+                        onPressed: () {
+                          context.read<MentoringBloc>().add(
+                              MentoringOkPressed(
+                                  id: widget.mentor.id,
+                                  letter: letterController.text));
+                        },
+                        input: TextField(
+                          controller: letterController,
+                          decoration: const InputDecoration(
+                              hintText: 'Enter the letter',
+                              hintStyle: TextStyle(
+                                  fontSize: 14, fontFamily: 'Poppins'),
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 20)),
+                        ),
+                      );
+                    },
                   )
                 ],
               ),
