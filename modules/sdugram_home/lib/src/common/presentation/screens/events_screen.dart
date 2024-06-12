@@ -117,7 +117,7 @@ class EventsScreen extends StatelessWidget {
         BccPopoverPage(
           pageBuilder: (context) {
             final String date =
-                DateFormat("MMM d yyyy • HH:mm").format(article.publishedDate);
+                DateFormat("MMM d yyyy • HH:mm").format(article.event!.startTime);
             return EventDetailScreenPopover(
               startTime: date,
               location: article.event?.location ?? 'SDU',
