@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/presentation.dart';
 import 'package:sdugram_mentoring/src/common/domain/models/chat_message_item.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_bloc.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_state.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_state.dart';
 
@@ -11,23 +13,6 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ChatMessageItem> messages = [
-      ChatMessageItem(
-        name: 'Thomas Simmons',
-        message: 'YOU: OK',
-        imageUrl: 'https://via.placeholder.com/150',
-        time: '15:23',
-        unreadCount: 2,
-      ),
-      ChatMessageItem(
-        name: 'Thomas Simmons',
-        message: 'YOU: OK',
-        imageUrl: 'https://via.placeholder.com/150',
-        time: '15:23',
-        unreadCount: 2,
-      ),
-      // ... other chat messages
-    ];
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -106,15 +91,27 @@ class ChatScreen extends StatelessWidget {
               height: 8,
               color: kBackgroundColor,
             ),
-            SizedBox(
-              height: MediaQuery.sizeOf(context).height,
-              child: Column(
-                children: messages.map((message) {
-                  return ChatItem(
-                    message: message,
+            BlocBuilder<ChatBloc, ChatState>(
+              builder: (context, state) {
+                return state.chatStatus.when(initial: () {
+                  return const SizedBox.shrink();
+                }, loading: () {
+                  return const CircularLoader();
+                }, failure: (failure) {
+                  return Center(child: Text(failure.message));
+                }, success: (messages) {
+                  return SizedBox(
+                    height: MediaQuery.sizeOf(context).height,
+                    child: Column(
+                      children: messages.map((message) {
+                        return ChatItem(
+                          message: message,
+                        );
+                      }).toList(),
+                    ),
                   );
-                }).toList(),
-              ),
+                });
+              },
             ),
           ],
         ),
@@ -135,7 +132,7 @@ class ChatItem extends StatelessWidget {
         backgroundImage: NetworkImage(message.imageUrl),
       ),
       title: Text(message.name),
-      subtitle: Text(message.message),
+      subtitle: Text(message.message ?? ''),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         context.router.pushNamed('/chat-detail');

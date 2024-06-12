@@ -134,13 +134,13 @@ class _MentoringSource implements MentoringSource {
   }
 
   @override
-  Future<BaseListResponseDto<MenteeRequestDto>> getChats() async {
+  Future<BaseListResponseDto<ChatBaseDto>> getChats() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseListResponseDto<MenteeRequestDto>>(Options(
+        _setStreamType<BaseListResponseDto<ChatBaseDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -156,9 +156,9 @@ class _MentoringSource implements MentoringSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = BaseListResponseDto<MenteeRequestDto>.fromJson(
+    final value = BaseListResponseDto<ChatBaseDto>.fromJson(
       _result.data!,
-      (json) => MenteeRequestDto.fromJson(json as Map<String, dynamic>),
+      (json) => ChatBaseDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

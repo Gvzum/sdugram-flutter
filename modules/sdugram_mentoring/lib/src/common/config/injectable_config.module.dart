@@ -10,7 +10,7 @@ import 'package:dio/dio.dart' as _i4;
 import 'package:injectable/injectable.dart' as _i1;
 import 'package:sdugram_core/config.dart' as _i5;
 import 'package:sdugram_mentoring/src/common/config/mentoring_module.dart'
-    as _i17;
+    as _i20;
 import 'package:sdugram_mentoring/src/common/data/services/mentoring_service.dart'
     as _i6;
 import 'package:sdugram_mentoring/src/common/data/sources/mentoring_source.dart'
@@ -19,22 +19,28 @@ import 'package:sdugram_mentoring/src/common/domain/behaviors/apply_mentees_beha
     as _i10;
 import 'package:sdugram_mentoring/src/common/domain/behaviors/create_request_to_mentor_behavior.dart'
     as _i9;
+import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_chat_list_behavior.dart'
+    as _i11;
 import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_mentees_behavior.dart'
     as _i8;
 import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_mentors_behavior.dart'
     as _i7;
 import 'package:sdugram_mentoring/src/common/domain/use_cases/apply_mentees_use_case.dart'
-    as _i11;
-import 'package:sdugram_mentoring/src/common/domain/use_cases/create_request_to_mentor_use_case.dart'
-    as _i13;
-import 'package:sdugram_mentoring/src/common/domain/use_cases/fetch_mentees_use_case.dart'
     as _i12;
-import 'package:sdugram_mentoring/src/common/domain/use_cases/fetch_mentors_use_case.dart'
+import 'package:sdugram_mentoring/src/common/domain/use_cases/create_request_to_mentor_use_case.dart'
     as _i14;
-import 'package:sdugram_mentoring/src/common/presentation/blocs/mentoring_bloc.dart'
-    as _i15;
-import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart'
+import 'package:sdugram_mentoring/src/common/domain/use_cases/fetch_chat_list_use_case.dart'
     as _i16;
+import 'package:sdugram_mentoring/src/common/domain/use_cases/fetch_mentees_use_case.dart'
+    as _i13;
+import 'package:sdugram_mentoring/src/common/domain/use_cases/fetch_mentors_use_case.dart'
+    as _i15;
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_bloc.dart'
+    as _i18;
+import 'package:sdugram_mentoring/src/common/presentation/blocs/mentoring_bloc.dart'
+    as _i17;
+import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart'
+    as _i19;
 
 class SdugramMentoringPackageModule extends _i1.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -55,24 +61,30 @@ class SdugramMentoringPackageModule extends _i1.MicroPackageModule {
         () => mentoringModule.createRequest(gh<_i6.MentoringService>()));
     gh.factory<_i10.ApplyMenteesBehavior>(
         () => mentoringModule.apply(gh<_i6.MentoringService>()));
-    gh.factory<_i11.ApplyMenteesUseCase>(
-        () => _i11.ApplyMenteesUseCase(gh<_i10.ApplyMenteesBehavior>()));
-    gh.factory<_i12.FetchMenteesUseCase>(
-        () => _i12.FetchMenteesUseCase(gh<_i8.FetchMenteesBehavior>()));
-    gh.factory<_i13.CreateRequestToMentorUseCase>(() =>
-        _i13.CreateRequestToMentorUseCase(
+    gh.factory<_i11.FetchChatListBehavior>(
+        () => mentoringModule.fetchChatList(gh<_i6.MentoringService>()));
+    gh.factory<_i12.ApplyMenteesUseCase>(
+        () => _i12.ApplyMenteesUseCase(gh<_i10.ApplyMenteesBehavior>()));
+    gh.factory<_i13.FetchMenteesUseCase>(
+        () => _i13.FetchMenteesUseCase(gh<_i8.FetchMenteesBehavior>()));
+    gh.factory<_i14.CreateRequestToMentorUseCase>(() =>
+        _i14.CreateRequestToMentorUseCase(
             gh<_i9.CreateRequestToMentorBehavior>()));
-    gh.factory<_i14.FetchMentorsUseCase>(
-        () => _i14.FetchMentorsUseCase(gh<_i7.FetchMentorsBehavior>()));
-    gh.factory<_i15.MentoringBloc>(() => _i15.MentoringBloc(
-          gh<_i14.FetchMentorsUseCase>(),
-          gh<_i13.CreateRequestToMentorUseCase>(),
+    gh.factory<_i15.FetchMentorsUseCase>(
+        () => _i15.FetchMentorsUseCase(gh<_i7.FetchMentorsBehavior>()));
+    gh.factory<_i16.FetchChatListUseCase>(
+        () => _i16.FetchChatListUseCase(gh<_i11.FetchChatListBehavior>()));
+    gh.factory<_i17.MentoringBloc>(() => _i17.MentoringBloc(
+          gh<_i15.FetchMentorsUseCase>(),
+          gh<_i14.CreateRequestToMentorUseCase>(),
         ));
-    gh.factory<_i16.MentoringRequestBloc>(() => _i16.MentoringRequestBloc(
-          gh<_i12.FetchMenteesUseCase>(),
+    gh.factory<_i18.ChatBloc>(
+        () => _i18.ChatBloc(gh<_i16.FetchChatListUseCase>()));
+    gh.factory<_i19.MentoringRequestBloc>(() => _i19.MentoringRequestBloc(
+          gh<_i13.FetchMenteesUseCase>(),
           gh<_i10.ApplyMenteesBehavior>(),
         ));
   }
 }
 
-class _$MentoringModule extends _i17.MentoringModule {}
+class _$MentoringModule extends _i20.MentoringModule {}

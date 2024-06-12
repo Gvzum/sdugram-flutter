@@ -7,6 +7,8 @@ import 'package:sdugram_mentoring/sdugram_mentoring.dart';
 
 import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart';import 'package:shared_preferences/shared_preferences.dart';
 
+import '../blocs/chat_bloc.dart';
+
 @RoutePage()
 class MentoringScreen extends StatefulWidget {
   const MentoringScreen({super.key});
@@ -39,6 +41,7 @@ class _MentoringScreenState extends State<MentoringScreen> {
       providers: [
         BlocProvider(create: (_) => context.di<MentoringBloc>()),
         BlocProvider(create: (_) => context.di<MentoringRequestBloc>()),
+        BlocProvider(create: (_) => context.di<ChatBloc>()),
       ],
       child: Scaffold(
         backgroundColor: kBackgroundColor,
@@ -50,7 +53,7 @@ class _MentoringScreenState extends State<MentoringScreen> {
           options: [
             TabOption(title: 'All mentors', view: AllMentorsScreen()),
             // if (isMentor)
-              TabOption(title: 'Requests', view: ChatScreen()),
+            TabOption(title: 'Requests', view: ChatScreen()),
           ],
         ),
       ),

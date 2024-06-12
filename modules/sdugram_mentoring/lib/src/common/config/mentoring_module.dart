@@ -8,6 +8,8 @@ import 'package:sdugram_mentoring/src/common/domain/behaviors/create_request_to_
 import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_mentees_behavior.dart';
 import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_mentors_behavior.dart';
 
+import '../domain/behaviors/fetch_chat_list_behavior.dart';
+
 @module
 abstract class MentoringModule {
   @factoryMethod
@@ -43,4 +45,11 @@ abstract class MentoringModule {
       MentoringService mentoringService,
       ) =>
       mentoringService;
+
+  @factoryMethod
+  FetchChatListBehavior fetchChatList(
+      MentoringService mentoringService,
+      ) =>
+      mentoringService;
+
 }
