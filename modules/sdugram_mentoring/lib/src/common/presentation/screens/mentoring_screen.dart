@@ -50,7 +50,7 @@ class _MentoringScreenState extends State<MentoringScreen> {
           options: [
             TabOption(title: 'All mentors', view: AllMentorsScreen()),
             // if (isMentor)
-              TabOption(title: 'Requests', view: MyMentorsScreen()),
+              TabOption(title: 'Requests', view: ChatScreen()),
           ],
         ),
       ),

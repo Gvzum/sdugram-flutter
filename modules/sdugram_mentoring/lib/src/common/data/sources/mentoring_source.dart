@@ -33,4 +33,8 @@ abstract class MentoringSource {
     @Path() required int id,
     @Body() required MentorAcceptRequestDto request,
   });
+
+  @GET('/integration/mentor/chat/')
+  Future<BaseListResponseDto<MenteeRequestDto>> getChats();
+
 }

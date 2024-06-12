@@ -12,6 +12,12 @@ part of 'mentoring_route_module.dart';
 abstract class _$MentoringRouteModule extends AutoRouterModule {
   @override
   final Map<String, PageFactory> pagesMap = {
+    ChatDetailRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ChatDetailScreen(),
+      );
+    },
     MentorRequestRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -25,6 +31,20 @@ abstract class _$MentoringRouteModule extends AutoRouterModule {
       );
     },
   };
+}
+
+/// generated route for
+/// [ChatDetailScreen]
+class ChatDetailRoute extends PageRouteInfo<void> {
+  const ChatDetailRoute({List<PageRouteInfo>? children})
+      : super(
+          ChatDetailRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatDetailRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

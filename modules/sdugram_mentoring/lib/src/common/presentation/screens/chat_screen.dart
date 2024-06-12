@@ -2,39 +2,24 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/presentation.dart';
+import 'package:sdugram_mentoring/src/common/domain/models/chat_message_item.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_state.dart';
 
-class MyMentorsScreen extends StatelessWidget {
-  const MyMentorsScreen({super.key});
+class ChatScreen extends StatelessWidget {
+  const ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<RequestMessage> messages = [
-      RequestMessage(
+    final List<ChatMessageItem> messages = [
+      ChatMessageItem(
         name: 'Thomas Simmons',
         message: 'YOU: OK',
         imageUrl: 'https://via.placeholder.com/150',
         time: '15:23',
         unreadCount: 2,
       ),
-      RequestMessage(
-        name: 'Thomas Simmons',
-        message: 'YOU: OK',
-        imageUrl: 'https://via.placeholder.com/150',
-        time: '15:23',
-        unreadCount: 2,
-      ),
-      // ... o
-      RequestMessage(
-        name: 'Thomas Simmons',
-        message: 'YOU: OK',
-        imageUrl: 'https://via.placeholder.com/150',
-        time: '15:23',
-        unreadCount: 2,
-      ),
-      // ... o
-      RequestMessage(
+      ChatMessageItem(
         name: 'Thomas Simmons',
         message: 'YOU: OK',
         imageUrl: 'https://via.placeholder.com/150',
@@ -49,10 +34,8 @@ class MyMentorsScreen extends StatelessWidget {
           children: [
             BlocBuilder<MentoringRequestBloc, MentoringRequestState>(
                 buildWhen: (oldState, newState) {
-                  return oldState.mentoringStatus != newState.mentoringStatus;
-                },
-
-                builder: (context, state) {
+              return oldState.mentoringStatus != newState.mentoringStatus;
+            }, builder: (context, state) {
               return state.mentoringStatus.when(
                 initial: () {
                   return const SizedBox.shrink();
@@ -123,12 +106,15 @@ class MyMentorsScreen extends StatelessWidget {
               height: 8,
               color: kBackgroundColor,
             ),
-            Column(
-              children: messages.map((message) {
-                return RequestItem(
-                  message: message,
-                );
-              }).toList(),
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height,
+              child: Column(
+                children: messages.map((message) {
+                  return ChatItem(
+                    message: message,
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),
@@ -137,10 +123,10 @@ class MyMentorsScreen extends StatelessWidget {
   }
 }
 
-class RequestItem extends StatelessWidget {
-  final RequestMessage message;
+class ChatItem extends StatelessWidget {
+  final ChatMessageItem message;
 
-  const RequestItem({super.key, required this.message});
+  const ChatItem({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -150,43 +136,12 @@ class RequestItem extends StatelessWidget {
       ),
       title: Text(message.name),
       subtitle: Text(message.message),
-      trailing: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(12),
-            border: const Border(bottom: BorderSide(color: Colors.grey))),
-        constraints: const BoxConstraints(
-          minWidth: 24,
-          minHeight: 24,
-        ),
-        child: Text(
-          message.unreadCount.toString(),
-          style: const TextStyle(color: Colors.white, fontSize: 12),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        // TODO: Implement chat message tap
+        context.router.pushNamed('/chat-detail');
       },
     );
   }
-}
-
-class RequestMessage {
-  final String name;
-  final String message;
-  final String imageUrl;
-  final String time;
-  final int unreadCount;
-
-  RequestMessage({
-    required this.name,
-    required this.message,
-    required this.imageUrl,
-    required this.time,
-    this.unreadCount = 0,
-  });
 }
 
 class StudentRequestIcon extends StatelessWidget {

@@ -93,6 +93,10 @@ class AppRouter extends $AppRouter {
           path: '/requests',
         ),
         AutoRoute(
+          page: ChatDetailRoute.page,
+          path: '/chat-detail',
+        ),
+        AutoRoute(
           page: MainRoute.page,
           path: '/sdugram',
           initial: true,
