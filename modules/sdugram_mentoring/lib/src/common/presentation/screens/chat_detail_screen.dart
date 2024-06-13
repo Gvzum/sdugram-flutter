@@ -1,14 +1,17 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sdugram_auth/sdugram_auth.dart';
 import 'package:sdugram_core/config.dart';
 import 'package:sdugram_core/presentation.dart';
+import 'package:sdugram_mentoring/sdugram_mentoring.dart';
+import 'package:web_socket_channel/io.dart';
+
 import 'package:sdugram_mentoring/src/common/domain/models/chat_message_details_model.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_bloc.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_detail/chat_detail_bloc.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_detail/chat_detail_state.dart';
-import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_state.dart';
-import 'package:sdugram_mentoring/src/common/presentation/dvos/messages_dvo.dart';
 
 @RoutePage()
 class ChatDetailScreen extends StatefulWidget {
@@ -21,6 +24,96 @@ class ChatDetailScreen extends StatefulWidget {
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
+  late IOWebSocketChannel _channel;
+  late TextEditingController _controller;
+  late Future<void> _futureConnection;
+  late ScaffoldMessengerState _scaffoldMessenger;
+
+  List<Messages> _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+    _futureConnection = connectWebSocket();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Capture the reference to ScaffoldMessenger in didChangeDependencies
+    _scaffoldMessenger = ScaffoldMessenger.of(context);
+  }
+
+  Future<void> connectWebSocket() async {
+    try {
+      final storage = SecureStorageSource();
+      final tokenDto = await storage.getToken();
+      final token = tokenDto?.accessToken;
+      print('Token brother: $token');
+      _channel = IOWebSocketChannel.connect(
+          Uri.parse('wss://sdugram.kz/ws/chat/${widget.id}/'),
+          headers: {'Authorization': 'Bearer $token'});
+      _channel.stream.listen(
+        (message) {
+          // {"command": "new_message", "message": {"id": 12, "author": "gvzum", "content": "How are you?", "timestamp": "2024-06-13 05:06:27.355680+00:00"}}
+          final messageJson = jsonDecode(message);
+          print('MessageJson: $messageJson');
+          print('MessageJson command: ${messageJson['command']}');
+
+          if (messageJson['command'] == 'new_message') {
+            final message = MessageDto(
+              id: messageJson['message']['id'],
+              content: messageJson['message']['content'],
+              sender: messageJson['message']['author'],
+              createdAt: DateTime.now(),
+            );
+            setState(() {
+              _messages.insert(0, message);
+            });
+            print("I inserted message: $message");
+          }
+          print('Received: ${message}');
+        },
+        onError: (error) {
+          print('Error dkkkkk $error');
+          _scaffoldMessenger.showSnackBar(
+            SnackBar(content: Text('WebSocket Error: $error')),
+          );
+        },
+        onDone: () {
+          print('WebSocket closed');
+        },
+      );
+    } catch (e) {
+      print('Exception fuuuuu: $e');
+      _scaffoldMessenger.showSnackBar(
+        SnackBar(content: Text('WebSocket Exception: $e')),
+      );
+    }
+  }
+
+  void _sendMessage() {
+    if (_controller.text.isNotEmpty) {
+      final payload = SendMessagePayload(
+        command: 'new_message',
+        message: _controller.text,
+      );
+      // _channel.sink.add(payload.toString());
+      final t = payload.toJson().toString();
+      _channel.sink.add(jsonEncode(payload.toJson()));
+      _controller.clear();
+    }
+  }
+
+  @override
+  void dispose() {
+    print('Dispose called');
+    _channel.sink.close();
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -37,6 +130,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         }, failure: (failure) {
           return Center(child: Text(failure.message));
         }, success: (details) {
+          _messages = details.messages;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -83,24 +177,28 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         ],
                       ),
                     ),
-                    child: Column(
-                      children: <Widget>[
-                        Flexible(
-                          child: ListView.builder(
-                            itemCount: details.messages.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final message = details.messages[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Bubble(
-                                  message: message.content,
-                                  isMe: message.sender == state.userId,
-                                ),
-                              );
-                            },
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 70),
+                      child: Column(
+                        children: <Widget>[
+                          Flexible(
+                            child: ListView.builder(
+                              itemCount: details.messages.length,
+                              reverse: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                final message = details.messages[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Bubble(
+                                    message: message.content,
+                                    isMe: message.sender == state.userId,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Positioned(
@@ -118,6 +216,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                           Expanded(
                             child: TextFormField(
                               keyboardType: TextInputType.text,
+                              controller: _controller,
                               decoration: const InputDecoration(
                                 hintText: 'Enter Message',
                                 border: InputBorder.none,
@@ -125,7 +224,12 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _sendMessage();
+                              // context
+                              //     .read<ChatDetailBloc>()
+                              //     .add(ChatEventDetailStarted(id: widget.id));
+                            },
                             icon: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
                               child: Container(
@@ -236,17 +340,19 @@ class Bubble extends StatelessWidget {
   }
 }
 
-extension ChatMessageDetailX on ChatMessageDetailsModel {
-  List<MessagesDvo> toDvo(ChatMessageDetailsModel details, int userId) {
-    return details.messages
-        .map(
-          (e) => MessagesDvo(
-              id: e.id,
-              content: e.content,
-              createdAt: e.createdAt,
-              sender: e.sender,
-              isMe: e.id == userId),
-        )
-        .toList();
+class SendMessagePayload {
+  final String command;
+  final String message;
+
+  SendMessagePayload({
+    required this.command,
+    required this.message,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'command': command,
+      'message': message,
+    };
   }
 }
