@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/presentation.dart';
 import 'package:sdugram_mentoring/src/common/domain/models/chat_message_item.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_bloc.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_event.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_state.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_bloc.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_event.dart';
 import 'package:sdugram_mentoring/src/common/presentation/blocs/request/mentoring_request_state.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -13,107 +15,113 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            BlocBuilder<MentoringRequestBloc, MentoringRequestState>(
-                buildWhen: (oldState, newState) {
-              return oldState.mentoringStatus != newState.mentoringStatus;
-            }, builder: (context, state) {
-              return state.mentoringStatus.when(
-                initial: () {
-                  return const SizedBox.shrink();
-                },
-                loading: () {
-                  return const CircularLoader();
-                },
-                failure: (failure) {
-                  return Center(child: Text(failure.message));
-                },
-                success: (mentees) {
-                  return mentees.isNotEmpty
-                      ? InkWell(
-                          onTap: () {
-                            context.router.pushNamed('/requests');
-                          },
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 65,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    'Requests',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<MentoringRequestBloc>().add(MentoringRequestStarted());
+        context.read<ChatBloc>().add(ChatEventStarted());
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              BlocBuilder<MentoringRequestBloc, MentoringRequestState>(
+                  buildWhen: (oldState, newState) {
+                return oldState.mentoringStatus != newState.mentoringStatus;
+              }, builder: (context, state) {
+                return state.mentoringStatus.when(
+                  initial: () {
+                    return const SizedBox.shrink();
+                  },
+                  loading: () {
+                    return const CircularLoader();
+                  },
+                  failure: (failure) {
+                    return Center(child: Text(failure.message));
+                  },
+                  success: (mentees) {
+                    return mentees.isNotEmpty
+                        ? InkWell(
+                            onTap: () {
+                              context.router.pushNamed('/requests');
+                            },
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 65,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Requests',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      StudentRequestIcon(
-                                        firstIcon: mentees[0]
-                                                .mentee
-                                                .profileData
-                                                ?.avatar ??
-                                            kDefaultImageUrl,
-                                        count: mentees.length,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      const Icon(
-                                        Icons.arrow_forward,
-                                        size: 24,
-                                        color: kTextColor,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    Row(
+                                      children: [
+                                        StudentRequestIcon(
+                                          firstIcon: mentees[0]
+                                                  .mentee
+                                                  .profileData
+                                                  ?.avatar ??
+                                              kDefaultImageUrl,
+                                          count: mentees.length,
+                                        ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        const Icon(
+                                          Icons.arrow_forward,
+                                          size: 24,
+                                          color: kTextColor,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      : const SizedBox.shrink();
+                          )
+                        : const SizedBox.shrink();
+                  },
+                  emptySuccess: () {
+                    return const SizedBox.shrink();
+                  },
+                );
+              }),
+              Container(
+                height: 8,
+                color: kBackgroundColor,
+              ),
+              BlocBuilder<ChatBloc, ChatState>(
+                builder: (context, state) {
+                  return state.chatStatus.when(initial: () {
+                    return const SizedBox.shrink();
+                  }, loading: () {
+                    return const CircularLoader();
+                  }, failure: (failure) {
+                    return Center(child: Text(failure.message));
+                  }, success: (messages) {
+                    return SizedBox(
+                      height: MediaQuery.sizeOf(context).height,
+                      child: Column(
+                        children: messages.map((message) {
+                          return ChatItem(
+                            message: message,
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  });
                 },
-                emptySuccess: () {
-                  return const SizedBox.shrink();
-                },
-              );
-            }),
-            Container(
-              height: 8,
-              color: kBackgroundColor,
-            ),
-            BlocBuilder<ChatBloc, ChatState>(
-              builder: (context, state) {
-                return state.chatStatus.when(initial: () {
-                  return const SizedBox.shrink();
-                }, loading: () {
-                  return const CircularLoader();
-                }, failure: (failure) {
-                  return Center(child: Text(failure.message));
-                }, success: (messages) {
-                  return SizedBox(
-                    height: MediaQuery.sizeOf(context).height,
-                    child: Column(
-                      children: messages.map((message) {
-                        return ChatItem(
-                          message: message,
-                        );
-                      }).toList(),
-                    ),
-                  );
-                });
-              },
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

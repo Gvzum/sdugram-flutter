@@ -12,37 +12,42 @@ class AllMentorsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MentoringBloc, MentoringState>(
-      listener: (context, state) {
-        state.navigation.whenOrNull(
-          loading: () {
-            SduOverlayLoader().show(context);
-          },
-          createSuccess: () {
-            SduOverlayLoader().hide();
-            context.router.popForced();
-          },
-        );
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<MentoringBloc>().add(MentoringStarted());
       },
-      builder: (context, state) {
-        return state.mentoringStatus.maybeWhen(success: (mentors) {
-          return Scaffold(
-            backgroundColor: kBackgroundColor,
-            body: ListView.builder(
-                itemCount: mentors.length,
-                itemBuilder: (context, index) {
-                  final mentor = mentors[index];
-                  return MentorshipCard(
-                    mentor: mentor,
-                  );
-                }),
+      child: BlocConsumer<MentoringBloc, MentoringState>(
+        listener: (context, state) {
+          state.navigation.whenOrNull(
+            loading: () {
+              SduOverlayLoader().show(context);
+            },
+            createSuccess: () {
+              SduOverlayLoader().hide();
+              context.router.popForced();
+            },
           );
-        }, loading: () {
-          return const Scaffold(body: Center(child: CircularLoader()));
-        }, orElse: () {
-          return const SizedBox();
-        });
-      },
+        },
+        builder: (context, state) {
+          return state.mentoringStatus.maybeWhen(success: (mentors) {
+            return Scaffold(
+              backgroundColor: kBackgroundColor,
+              body: ListView.builder(
+                  itemCount: mentors.length,
+                  itemBuilder: (context, index) {
+                    final mentor = mentors[index];
+                    return MentorshipCard(
+                      mentor: mentor,
+                    );
+                  }),
+            );
+          }, loading: () {
+            return const Scaffold(body: Center(child: CircularLoader()));
+          }, orElse: () {
+            return const SizedBox();
+          });
+        },
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/config.dart';
 import 'package:sdugram_core/presentation.dart';
 import 'package:sdugram_profile/src/common/presentation/blocs/profile_bloc.dart';
+import 'package:sdugram_profile/src/common/presentation/blocs/profile_event.dart';
 import 'package:sdugram_profile/src/common/presentation/blocs/profile_state.dart';
 
 @RoutePage()
@@ -32,100 +33,105 @@ class ProfileScreen extends StatelessWidget {
         body: BlocProvider(
           create: (context) => context.di<ProfileBloc>(),
           child:
-              BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
-            return state.profileStatus.when(
-              initial: () {
-                return const SizedBox.shrink();
-              },
-              loading: () {
-                return const CircularLoader();
-              },
-              failure: (failure) {
-                return Text(failure.message);
-              },
-              success: (user) {
-                return ListView(
-                  children: [
-                    const SizedBox(height: 32),
-                    CircleAvatar(
-                      radius: 60,
-                      child: ClipOval(
-                        child: Image.network(
-                          user.profileData?.avatar ?? kDefaultImageUrl,
-                          fit: BoxFit.contain,
+          RefreshIndicator(
+            onRefresh: () async {
+              context.read<ProfileBloc>().add(ProfileStarted());
+            },
+                child: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+                            return state.profileStatus.when(
+                initial: () {
+                  return const SizedBox.shrink();
+                },
+                loading: () {
+                  return const CircularLoader();
+                },
+                failure: (failure) {
+                  return Text(failure.message);
+                },
+                success: (user) {
+                  return ListView(
+                    children: [
+                      const SizedBox(height: 32),
+                      CircleAvatar(
+                        radius: 60,
+                        child: ClipOval(
+                          child: Image.network(
+                            user.profileData?.avatar ?? kDefaultImageUrl,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    Center(
-                      child: Text(
-                        '${user.firstName} ${user.lastName}',
-                        style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins'),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Center(
-                      child: Text(
-                        user.profileType ?? 'Guest',
-                        style: const TextStyle(
-                            fontSize: 18, fontFamily: 'Poppins'),
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    // const ProfileOption(icon: Icons.save, text: 'Saved posts'),
-                    // const ProfileOption(
-                    //     icon: Icons.help_outline, text: 'Help and support'),
-                    // const ProfileOption(
-                    //     icon: Icons.privacy_tip, text: 'Privacy policy'),
-                    // const ProfileOption(
-                    //     icon: Icons.info_outline,
-                    //     text: 'About SDUgram',
-                    //     isNew: true),
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 4),
-                      decoration: BoxDecoration(
-                          color: kButtonBackgroundColor,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: kPrimaryColor)),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.person_add,
-                          color: kPrimaryColor,
+                      const SizedBox(height: 16),
+                      Center(
+                        child: Text(
+                          '${user.firstName} ${user.lastName}',
+                          style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins'),
                         ),
-                        title: const Text(
-                          'Do you want to become a mentor?',
-                          style: TextStyle(color: kPrimaryColor),
-                        ),
-                        trailing: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
-                          child: const Icon(Icons.chevron_right,
-                              color: kPrimaryColor),
-                        ),
-                        onTap: () {
-                          context.router.navigateNamed('/profile-form');
-                        },
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: SduButton.primary(
-                        label: 'logout',
-                        size: SduButtonSize.first,
-                        onPressed: () {
-                          context.router.replaceNamed('/login/nothing');
-                        },
+                      const SizedBox(height: 4),
+                      Center(
+                        child: Text(
+                          user.profileType ?? 'Guest',
+                          style: const TextStyle(
+                              fontSize: 18, fontFamily: 'Poppins'),
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            );
-          }),
+                      const SizedBox(height: 32),
+                      // const ProfileOption(icon: Icons.save, text: 'Saved posts'),
+                      // const ProfileOption(
+                      //     icon: Icons.help_outline, text: 'Help and support'),
+                      // const ProfileOption(
+                      //     icon: Icons.privacy_tip, text: 'Privacy policy'),
+                      // const ProfileOption(
+                      //     icon: Icons.info_outline,
+                      //     text: 'About SDUgram',
+                      //     isNew: true),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: kButtonBackgroundColor,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: kPrimaryColor)),
+                        child: ListTile(
+                          leading: const Icon(
+                            Icons.person_add,
+                            color: kPrimaryColor,
+                          ),
+                          title: const Text(
+                            'Do you want to become a mentor?',
+                            style: TextStyle(color: kPrimaryColor),
+                          ),
+                          trailing: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            child: const Icon(Icons.chevron_right,
+                                color: kPrimaryColor),
+                          ),
+                          onTap: () {
+                            context.router.navigateNamed('/profile-form');
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: SduButton.primary(
+                          label: 'logout',
+                          size: SduButtonSize.first,
+                          onPressed: () {
+                            context.router.replaceNamed('/login/nothing');
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                            );
+                          }),
+              ),
         ));
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sdugram_core/presentation.dart';
 import 'package:sdugram_tickets/src/common/domain/models/ticket_model.dart';
 import 'package:sdugram_tickets/src/common/presentation/blocs/ticket_bloc.dart';
+import 'package:sdugram_tickets/src/common/presentation/blocs/ticket_event.dart';
 import 'package:sdugram_tickets/src/common/presentation/blocs/ticket_state.dart';
 import 'package:sdugram_tickets/src/common/presentation/widgets/qr_code_popover.dart';
 import 'package:intl/intl.dart';
@@ -13,25 +14,30 @@ class ActiveTicketScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TicketBloc, TicketState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return state.activeTicketStatus.maybeWhen(success: (tickets) {
-          return Scaffold(
-            backgroundColor: kBackgroundColor,
-            body: ListView.builder(
-                itemCount: tickets.length,
-                itemBuilder: (context, index) {
-                  final ticket = tickets[index];
-                  return EventTicketCard(ticket: ticket);
-                }),
-          );
-        }, loading: () {
-          return const Scaffold(body: Center(child: CircularLoader()));
-        }, orElse: () {
-          return const SizedBox();
-        });
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<TicketBloc>().add(TicketsStarted());
       },
+      child: BlocConsumer<TicketBloc, TicketState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return state.activeTicketStatus.maybeWhen(success: (tickets) {
+            return Scaffold(
+              backgroundColor: kBackgroundColor,
+              body: ListView.builder(
+                  itemCount: tickets.length,
+                  itemBuilder: (context, index) {
+                    final ticket = tickets[index];
+                    return EventTicketCard(ticket: ticket);
+                  }),
+            );
+          }, loading: () {
+            return const Scaffold(body: Center(child: CircularLoader()));
+          }, orElse: () {
+            return const SizedBox();
+          });
+        },
+      ),
     );
   }
 }

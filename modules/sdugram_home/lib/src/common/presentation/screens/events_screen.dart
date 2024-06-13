@@ -20,93 +20,98 @@ class EventsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeBloc, HomeState>(listener: (blocContext, state) {
-      state.eventState.whenOrNull(failure: (failure) {
-        if (failure is UnauthorizedFailure) {
-          SduOverlayLoader().hide();
-          blocContext.router.replaceNamed('/login/nothing');
-        } else {
-          SduOverlayLoader().hide();
-          SduAlert(
-              title: failure.message,
-              description: '',
-              buttonLabel: 'buttonLabel',
-              onPressed: () {});
-        }
-      });
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<HomeBloc>().add(HomeStarted());
+      },
+      child: BlocConsumer<HomeBloc, HomeState>(listener: (blocContext, state) {
+        state.eventState.whenOrNull(failure: (failure) {
+          if (failure is UnauthorizedFailure) {
+            SduOverlayLoader().hide();
+            blocContext.router.replaceNamed('/login/nothing');
+          } else {
+            SduOverlayLoader().hide();
+            SduAlert(
+                title: failure.message,
+                description: '',
+                buttonLabel: 'buttonLabel',
+                onPressed: () {});
+          }
+        });
 
-      state.detailEventState.when(
-        initial: () {},
-        loading: () {
-          SduOverlayLoader().show(context);
-        },
-        failure: (failure) {
-          SduOverlayLoader().hide();
-          context.router.navigateNamed('/error/${failure.message}');
-          // print(failure.message);
-        },
-        success: (article) {
-          SduOverlayLoader().hide();
-          openConfirmPopup(blocContext, article);
-        },
-        cards: (cards) {
-          SduOverlayLoader().hide();
-          _showPaymentMethodPopup(blocContext, cards, state.eventId);
-        },
-        addSuccess: () {
-          SduOverlayLoader().hide();
-          // print('success add card');
-        },
-        addTicketSuccess: () {
-          SduOverlayLoader().hide();
-          showAlert(context,
-              title: 'Are you sure you have a seat?',
-              description: '13:40',
-              buttonLabel: 'Yes', onPressed: () {
-            blocContext.read<HomeBloc>().add(HomeYesButtonPressed());
-          }, onPressedCancel: () {
-            blocContext.read<HomeBloc>().add(HomeCancelButtonPressed());
-          });
-        },
-        confirmTicket: () {
-          SduOverlayLoader().hide();
-          context.router.popForced();
-          context.router.replaceNamed('/success');
-        },
-        deleteTicket: () {
-          SduOverlayLoader().hide();
-          context.router.popForced();
-        },
-      );
-    }, builder: (blocContext, state) {
-      return state.eventState.maybeWhen(success: (articles) {
-        return Scaffold(
-          backgroundColor: kBackgroundColor,
-          body: ListView.builder(
-              itemCount: articles.results.length,
-              itemBuilder: (context, index) {
-                final article = articles.results[index];
-                return EventCardView(
-                  bgUrl: article.backgroundImage ?? kDefaultImageUrl,
-                  logoUrl: article.author.avatar ?? kDefaultImageUrl,
-                  clubName: article.author.username,
-                  info: article.title,
-                  time:
-                      '${DateTime.now().difference(article.publishedDate).inHours} hours ago published',
-                  onTap: () {
-                    context
-                        .read<HomeBloc>()
-                        .add(HomeEventPressed(id: article.id));
-                  },
-                );
-              }),
+        state.detailEventState.when(
+          initial: () {},
+          loading: () {
+            SduOverlayLoader().show(context);
+          },
+          failure: (failure) {
+            SduOverlayLoader().hide();
+            context.router.navigateNamed('/error/${failure.message}');
+            // print(failure.message);
+          },
+          success: (article) {
+            SduOverlayLoader().hide();
+            openConfirmPopup(blocContext, article);
+          },
+          cards: (cards) {
+            SduOverlayLoader().hide();
+            _showPaymentMethodPopup(blocContext, cards, state.eventId);
+          },
+          addSuccess: () {
+            SduOverlayLoader().hide();
+            // print('success add card');
+          },
+          addTicketSuccess: () {
+            SduOverlayLoader().hide();
+            showAlert(context,
+                title: 'Are you sure you have a seat?',
+                description: '13:40',
+                buttonLabel: 'Yes', onPressed: () {
+              blocContext.read<HomeBloc>().add(HomeYesButtonPressed());
+            }, onPressedCancel: () {
+              blocContext.read<HomeBloc>().add(HomeCancelButtonPressed());
+            });
+          },
+          confirmTicket: () {
+            SduOverlayLoader().hide();
+            context.router.popForced();
+            context.router.replaceNamed('/success');
+          },
+          deleteTicket: () {
+            SduOverlayLoader().hide();
+            context.router.popForced();
+          },
         );
-      }, loading: () {
-        return const Scaffold(body: Center(child: CircularLoader()));
-      }, orElse: () {
-        return const SizedBox();
-      });
-    });
+      }, builder: (blocContext, state) {
+        return state.eventState.maybeWhen(success: (articles) {
+          return Scaffold(
+            backgroundColor: kBackgroundColor,
+            body: ListView.builder(
+                itemCount: articles.results.length,
+                itemBuilder: (context, index) {
+                  final article = articles.results[index];
+                  return EventCardView(
+                    bgUrl: article.backgroundImage ?? kDefaultImageUrl,
+                    logoUrl: article.author.avatar ?? kDefaultImageUrl,
+                    clubName: article.author.username,
+                    info: article.title,
+                    time:
+                        '${DateTime.now().difference(article.publishedDate).inHours} hours ago published',
+                    onTap: () {
+                      context
+                          .read<HomeBloc>()
+                          .add(HomeEventPressed(id: article.id));
+                    },
+                  );
+                }),
+          );
+        }, loading: () {
+          return const Scaffold(body: Center(child: CircularLoader()));
+        }, orElse: () {
+          return const SizedBox();
+        });
+      }),
+    );
   }
 
   Future<void> openConfirmPopup(
