@@ -1,4 +1,5 @@
 class ChatMessageItem {
+  final int id;
   final String name;
   final String? message;
   final String imageUrl;
@@ -9,5 +10,6 @@ class ChatMessageItem {
     required this.message,
     required this.imageUrl,
     required this.time,
+    required this.id,
   });
 }

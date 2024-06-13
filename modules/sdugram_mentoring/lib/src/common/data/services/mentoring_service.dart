@@ -6,13 +6,16 @@ import 'package:sdugram_core/src/common/domain/models/user_profile_model.dart';
 import 'package:sdugram_mentoring/src/common/data/dtos/mentee_request_dto.dart';
 import 'package:sdugram_mentoring/src/common/data/dtos/mentor_accept_request_dto.dart';
 import 'package:sdugram_mentoring/src/common/data/dtos/mentor_request_dto.dart';
+import 'package:sdugram_mentoring/src/common/data/mappers/chat_detail_mapper.dart';
 import 'package:sdugram_mentoring/src/common/data/mappers/chat_list_mapper.dart';
 import 'package:sdugram_mentoring/src/common/data/sources/mentoring_source.dart';
 import 'package:sdugram_mentoring/src/common/domain/behaviors/apply_mentees_behavior.dart';
 import 'package:sdugram_mentoring/src/common/domain/behaviors/create_request_to_mentor_behavior.dart';
+import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_chat_detail_behavior.dart';
 import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_chat_list_behavior.dart';
 import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_mentees_behavior.dart';
 import 'package:sdugram_mentoring/src/common/domain/behaviors/fetch_mentors_behavior.dart';
+import 'package:sdugram_mentoring/src/common/domain/models/chat_message_details_model.dart';
 import 'package:sdugram_mentoring/src/common/domain/models/chat_message_item.dart';
 import 'package:sdugram_mentoring/src/common/domain/models/mentee_request_model.dart';
 
@@ -23,7 +26,8 @@ class MentoringService
         CreateRequestToMentorBehavior,
         FetchMenteesBehavior,
         ApplyMenteesBehavior,
-        FetchChatListBehavior {
+        FetchChatListBehavior,
+        FetchChatDetailBehavior {
   final MentoringSource _mentoringSource;
 
   MentoringService({required MentoringSource mentoringSource})
@@ -88,6 +92,18 @@ class MentoringService
     try {
       final result = await _mentoringSource.getChats();
       return SuccessResult(result.results.map((e) => e.toModel()).toList());
+    } on DioException catch (e) {
+      return ErrorResult(
+          e.handleError('Error occurred while fetching chat list'));
+    }
+  }
+
+  @override
+  Future<Result<ChatMessageDetailsModel>> fetchChatDetail(
+      {required int id}) async {
+    try {
+      final result = await _mentoringSource.getChatDetail(id: id);
+      return SuccessResult(result.toModel());
     } on DioException catch (e) {
       return ErrorResult(
           e.handleError('Error occurred while fetching chat list'));

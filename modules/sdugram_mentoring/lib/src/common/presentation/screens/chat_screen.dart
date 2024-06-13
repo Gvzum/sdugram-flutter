@@ -135,7 +135,7 @@ class ChatItem extends StatelessWidget {
       subtitle: Text(message.message ?? ''),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        context.router.pushNamed('/chat-detail');
+        context.router.pushNamed('/chat-detail/${message.id}');
       },
     );
   }

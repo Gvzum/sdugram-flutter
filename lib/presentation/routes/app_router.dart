@@ -94,7 +94,7 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: ChatDetailRoute.page,
-          path: '/chat-detail',
+          path: '/chat-detail/:id',
         ),
         AutoRoute(
           page: MainRoute.page,

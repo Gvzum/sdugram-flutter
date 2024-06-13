@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sdugram_core/domain.dart';
+import 'package:sdugram_mentoring/src/common/domain/models/chat_message_details_model.dart';
 import 'package:sdugram_mentoring/src/common/domain/models/chat_message_item.dart';
 
 part 'chat_state.freezed.dart';
@@ -25,6 +26,7 @@ sealed class ChatStatus with _$ChatStatus {
   const factory ChatStatus.success(List<ChatMessageItem> listChats) =
   ChatSuccess;
 }
+
 
 @freezed
 sealed class ChatNavigationStatus with _$ChatNavigationStatus {

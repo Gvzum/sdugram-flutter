@@ -6,10 +6,10 @@ import '../../domain/models/chat_message_item.dart';
 
 extension ChatListMapper on ChatBaseDto {
   ChatMessageItem toModel() => ChatMessageItem(
-    name: participants[0].username,
-    message: lastMessage?.content ?? '',
-    time: lastMessage?.createdAt ?? DateTime.now(),
-    imageUrl: participants[0].profileData?.avatar ?? kDefaultImageUrl,
-  );
-
+        name: participants[0].username,
+        message: lastMessage?.content ?? '',
+        time: lastMessage?.createdAt ?? DateTime.now(),
+        imageUrl: participants[0].profileData?.avatar ?? kDefaultImageUrl,
+        id: id,
+      );
 }

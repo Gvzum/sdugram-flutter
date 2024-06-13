@@ -1,10 +1,20 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sdugram_core/config.dart';
+import 'package:sdugram_core/presentation.dart';
+import 'package:sdugram_mentoring/src/common/domain/models/chat_message_details_model.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_bloc.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_detail/chat_detail_bloc.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_detail/chat_detail_state.dart';
+import 'package:sdugram_mentoring/src/common/presentation/blocs/chat_state.dart';
+import 'package:sdugram_mentoring/src/common/presentation/dvos/messages_dvo.dart';
 
 @RoutePage()
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  const ChatDetailScreen({super.key, @PathParam('id') required this.id});
+
+  final int id;
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
@@ -13,138 +23,132 @@ class ChatDetailScreen extends StatefulWidget {
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(size: 16),
-        backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            const Text(
-              'Selina Kyle',
-              style: TextStyle(color: Colors.black, fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            Positioned(
-              right: 0,
-              child: Container(
-                width: 40,
-                height: 40,
-                margin: const EdgeInsets.fromLTRB(0, 5, 10, 0),
-                child: CircleAvatar(
-                  backgroundImage:
-                      const NetworkImage('https://i.pravatar.cc/110'),
-                  backgroundColor: Colors.grey[200],
-                  minRadius: 30,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                Flexible(
-                  child: ListView.builder(
-                    itemCount: 1,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              'Today',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
-                            Bubble(
-                              message: 'Hi How are you ?',
-                              isMe: true,
-                            ),
-                            Bubble(
-                              message: 'have you seen the docs yet?',
-                              isMe: true,
-                            ),
-                            Text(
-                              'Feb 25, 2018',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
-                            Bubble(
-                              message: 'i am fine !',
-                              isMe: false,
-                            ),
-                            Bubble(
-                              message: 'yes i\'ve seen the docs',
-                              isMe: false,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(-2, 0),
-                  blurRadius: 5,
-                ),
-              ]),
-              child: Row(
+    return BlocProvider(
+      create: (_) => context.di<ChatDetailBloc>(param1: widget.id),
+      child: BlocBuilder<ChatDetailBloc, ChatDetailState>(
+          builder: (context, state) {
+        return state.chatDetailStatus.when(initial: () {
+          return const SizedBox.shrink();
+        }, loading: () {
+          return const Scaffold(
+              body: Center(
+            child: CircularLoader(),
+          ));
+        }, failure: (failure) {
+          return Center(child: Text(failure.message));
+        }, success: (details) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              iconTheme: const IconThemeData(size: 16),
+              backgroundColor: Colors.white,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.camera,
-                      color: Color(0xff3E8DF3),
-                    ),
+                  Text(
+                    details.name,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Poppins',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.image,
-                      color: Color(0xff3E8DF3),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter Message',
-                        border: InputBorder.none,
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      margin: const EdgeInsets.fromLTRB(0, 5, 10, 0),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(details.avatar),
+                        backgroundColor: Colors.grey[200],
+                        minRadius: 30,
                       ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.send,
-                      color: Color(0xff3E8DF3),
                     ),
                   ),
                 ],
               ),
             ),
-          )
-        ],
-      ),
+            body: SafeArea(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFFF5F5F5),
+                          Color(0xFFE0E9FD), // Sky blue color
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Flexible(
+                          child: ListView.builder(
+                            itemCount: details.messages.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final message = details.messages[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Bubble(
+                                  message: message.content,
+                                  isMe: message.sender == state.userId,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    width: MediaQuery.of(context).size.width,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: Row(
+                        children: <Widget>[
+                          const Padding(
+                            padding: EdgeInsets.only(left: 15),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter Message',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                color: kPrimaryColor,
+                                child: const Icon(
+                                  Icons.arrow_upward,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+      }),
     );
   }
 }
@@ -183,8 +187,8 @@ class Bubble extends StatelessWidget {
                               1
                             ],
                           colors: [
-                              Color(0xFFF6D365),
-                              Color(0xFFFDA085),
+                              Color(0x2E699CFF),
+                              Color(0x2E699CFF),
                             ])
                       : const LinearGradient(
                           begin: Alignment.topRight,
@@ -194,8 +198,8 @@ class Bubble extends StatelessWidget {
                               1
                             ],
                           colors: [
-                              Color(0xFFEBF5FC),
-                              Color(0xFFEBF5FC),
+                              Color(0xFFFFFFFF),
+                              Color(0xFFFFFFFF),
                             ]),
                   borderRadius: isMe
                       ? const BorderRadius.only(
@@ -218,9 +222,8 @@ class Bubble extends StatelessWidget {
                     Text(
                       message,
                       textAlign: isMe ? TextAlign.end : TextAlign.start,
-                      style: TextStyle(
-                        color: isMe ? Colors.white : Colors.grey,
-                      ),
+                      style: const TextStyle(
+                          color: Colors.black, fontFamily: 'Poppins'),
                     )
                   ],
                 ),
@@ -230,5 +233,20 @@ class Bubble extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+extension ChatMessageDetailX on ChatMessageDetailsModel {
+  List<MessagesDvo> toDvo(ChatMessageDetailsModel details, int userId) {
+    return details.messages
+        .map(
+          (e) => MessagesDvo(
+              id: e.id,
+              content: e.content,
+              createdAt: e.createdAt,
+              sender: e.sender,
+              isMe: e.id == userId),
+        )
+        .toList();
   }
 }

@@ -13,9 +13,15 @@ abstract class _$MentoringRouteModule extends AutoRouterModule {
   @override
   final Map<String, PageFactory> pagesMap = {
     ChatDetailRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ChatDetailRouteArgs>(
+          orElse: () => ChatDetailRouteArgs(id: pathParams.getInt('id')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ChatDetailScreen(),
+        child: ChatDetailScreen(
+          key: args.key,
+          id: args.id,
+        ),
       );
     },
     MentorRequestRoute.name: (routeData) {
@@ -35,16 +41,41 @@ abstract class _$MentoringRouteModule extends AutoRouterModule {
 
 /// generated route for
 /// [ChatDetailScreen]
-class ChatDetailRoute extends PageRouteInfo<void> {
-  const ChatDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class ChatDetailRoute extends PageRouteInfo<ChatDetailRouteArgs> {
+  ChatDetailRoute({
+    Key? key,
+    required int id,
+    List<PageRouteInfo>? children,
+  }) : super(
           ChatDetailRoute.name,
+          args: ChatDetailRouteArgs(
+            key: key,
+            id: id,
+          ),
+          rawPathParams: {'id': id},
           initialChildren: children,
         );
 
   static const String name = 'ChatDetailRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ChatDetailRouteArgs> page =
+      PageInfo<ChatDetailRouteArgs>(name);
+}
+
+class ChatDetailRouteArgs {
+  const ChatDetailRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'ChatDetailRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for
